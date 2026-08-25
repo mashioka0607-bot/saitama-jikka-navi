@@ -1,0 +1,43 @@
+{
+  "site_name": "埼玉実家片付けナビ",
+  "tagline": "遠方からの実家片付け・遺品整理を、自治体ルールまで含めて迷わず進めるガイド",
+  "base_url": "https://example.jp",
+  "affiliate_url": "",
+  "operator_name": "埼玉実家片付けナビ編集部",
+  "contact_email": "",
+  "official_sources": [
+    {
+      "title": "川越市｜遺品整理に係る不用品の処分について",
+      "url": "https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002380/1019544.html"
+    },
+    {
+      "title": "川越市｜一般廃棄物収集運搬許可業者一覧",
+      "url": "https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002455/1002456/1002466.html"
+    },
+    {
+      "title": "川越市｜粗大ごみ・特定適正処理困難物の出し方",
+      "url": "https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002469/1002474/1002476.html"
+    },
+    {
+      "title": "消費者庁｜ステルスマーケティング規制",
+      "url": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/stealth_marketing/"
+    }
+  ],
+  "ga4_id": "",
+  "offers": [
+    {
+      "id": "primary",
+      "name": "遺品整理の無料見積もり",
+      "url": "",
+      "reward_note": "ASP承認後に設定",
+      "label": "無料見積もり先を確認する"
+    },
+    {
+      "id": "secondary",
+      "name": "遺品整理・片付け比較",
+      "url": "",
+      "reward_note": "ASP承認後に設定",
+      "label": "比較できる窓口を確認する"
+    }
+  ]
+}
