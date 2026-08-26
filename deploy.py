@@ -23,6 +23,7 @@ if static_pages.exists():
 # Ensure curated pages are discoverable in both sitemap formats.
 curated_urls = [
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
+    'https://saitama-jikka-navi.pages.dev/kawagoe-shi/katazuke-hiyou-urenai/',
 ]
 xml_path = DIST / 'sitemap.xml'
 if xml_path.exists():
