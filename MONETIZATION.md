@@ -11,7 +11,7 @@ Updated: 2026-08-27
    - Prepare the commercial-intent page before applying; do not insert a guessed tracking URL or imply partnership before approval.
 
 2. Estate-clearance offers
-   - Life Reset public comparison data has shown conflicting values by ASP/source; therefore dashboard terms are authoritative before implementation.
+   - Life Reset is publicly listed at 7,300 JPY (tax excluded) via TownLife Affiliate in current third-party ASP comparison data; still treat the logged-in dashboard as authoritative before implementation because cross-ASP pricing differs.
    - Use cleanup offers mainly on `遠方`, `見積`, `施設入居後`, `立会い不要` and similar cleanup-first intent.
    - Heart Service 13,200 JPY promotion was previously observed as ended. Do not plan around it unless a live ASP dashboard independently confirms a current equivalent.
 
@@ -41,9 +41,13 @@ CRITICAL CURRENT-STATUS NOTE (verified 2026-08-27): Kawagoe City's buyer/tenant 
 
 This non-ad municipal option improves decision quality and trust. Link to the official Kawagoe City source rather than paraphrasing eligibility too aggressively. Do not imply the empty-home bank guarantees a buyer or is suitable for every property.
 
-SERP note (2026-08-27): broad `川越市 遺品整理` remains a poor first battlefield. Current local operators already emphasize no-additional-fee estimates, vacant-home contents, valuables, remote/photo reporting and related features. Do not publish another generic `おすすめ5選` clone.
+## Current SERP gap (verified 2026-08-27)
 
-SERP note (2026-08-27): `片付け費用が払えない実家 + 売却/残置物` remains explicitly commercial in Kawagoe. A local real-estate article dated 2026-04-03 directly targets inability to pay cleanup costs and sale with contents remaining. Continue treating this as the highest-value bridge between cleanup and property disposition.
+Broad `川越市 遺品整理` remains a poor first battlefield. Current local operators already emphasize free estimates, no-additional-fee promises, remote handling, valuables search, vacant-home contents and concrete room-size pricing. Mitsumoa also exposes provider answers about when extra charges occur. Do not publish another generic `おすすめ5選` clone.
+
+The useful gap is not another price table; it is a **same-condition total-cost comparison**. On estimate/comparison content, require readers to compare: initial quoted total, what is excluded, conditions that trigger extra charges, cancellation fee, amount/room scope used for the quote, appliance-recycling treatment, valuables/hold-box handling, buyback credit, and who transports household waste under what lawful arrangement. This directly answers the uncertainty competitors leave after saying `追加料金なし`.
+
+`片付け費用が払えない実家 + 売却/残置物` remains explicitly commercial in Kawagoe. A local real-estate article dated 2026-04-03 directly targets inability to pay cleanup costs and sale with contents remaining. Continue treating this as the highest-value bridge between cleanup and property disposition.
 
 When an offer is approved:
 
@@ -57,7 +61,7 @@ When an offer is approved:
 
 ## Legal / trust rule for Kawagoe
 
-Kawagoe's current official waste-carrier list was updated 2026-04-06. It shows 14 permit holders in the `引越` category for household waste temporarily generated in large quantities. Kawagoe's FY2026 waste plan says temporary large-volume household waste should be self-delivered to city facilities or entrusted to designated Kawagoe general-waste collection/transport permit holders (with a limited fallback for unavoidable cases). For cleanup/estate-clearance content, ask users to confirm who actually transports disposal items and under what permit/contract arrangement. This is a trust differentiator, not a scare tactic. Avoid implying that every cleanup company itself must hold the collection permit if it lawfully coordinates with an authorized carrier.
+Kawagoe's current official waste-carrier list was updated 2026-04-06. It shows 14 permit holders in the `引越` category for household waste temporarily generated in large quantities. For cleanup/estate-clearance content, ask users to confirm who actually transports disposal items and under what permit/contract arrangement. This is a trust differentiator, not a scare tactic. Avoid implying that every cleanup company itself must hold the collection permit if it lawfully coordinates with an authorized carrier.
 
 ## Search / indexing status
 
