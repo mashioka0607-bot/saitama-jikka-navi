@@ -5,18 +5,14 @@ Updated: 2026-08-27
 ## Primary monetization path
 
 1. HIGHEST PRIORITY — TownLife Empty Home Solution (`タウンライフ空き家解決`)
-   - CONFIRMED from TownLife Affiliate's public recommended-program page:
-     - conversion: free estimate/request (`無料見積もり請求`)
-     - payout: 10,000 JPY per approved result (11,000 JPY tax-inclusive display)
-     - stated approval rate: about 85%
-     - target includes Tokyo/Saitama/Chiba/Kanagawa, so Kawagoe is in target geography
-     - note: payout can vary by acquisition method, so the logged-in program screen remains the final source before implementation
-   - Best verified monetization fit for `片付け費用が高い/払えない + 売却/残置物` traffic.
-   - TownLife also provides a diagnosis-version LP. After approval, prefer a context-matched landing path rather than a generic banner.
+   - CONFIRMED from TownLife Affiliate's public recommended-program page that the program is actively promoted and its conversion point is a free request/inquiry.
+   - TownLife's public series page also exposes a diagnosis-version LP and chatbot/form assets.
+   - IMPORTANT: the public recommended page currently shows a 10,000 JPY / 80–90% block immediately before the Empty Home section; do not attribute those numbers to Empty Home unless the logged-in program screen explicitly confirms them. Treat payout/approval rate as UNVERIFIED for Empty Home until dashboard confirmation.
+   - Best monetization fit for `片付け費用が高い/払えない + 売却/残置物` traffic if dashboard economics are competitive.
    - Prepare commercial-intent pages before applying; do not insert a guessed tracking URL or imply partnership before approval.
 
 2. Estate-clearance offers
-   - Life Reset public comparison data has shown a TownLife listing at 7,300 JPY (tax excluded), but verify the exact logged-in reward, conversion point, exclusions, approval window and service area before implementing.
+   - Life Reset public comparison data currently shows conflicting live-looking values by ASP/source: TownLife listing 7,300 JPY (tax excluded), Rentracks 2,255 JPY, BannerBridge 1,352 JPY; another comparison page marks an AFRo 1,800 JPY listing ended. Therefore dashboard terms are authoritative before implementation.
    - Use cleanup offers mainly on `遠方`, `見積`, `施設入居後`, `立会い不要` and similar cleanup-first intent.
    - Heart Service 13,200 JPY promotion was previously observed as ended. Do not plan around it unless a live ASP dashboard independently confirms a current equivalent.
 
@@ -24,7 +20,7 @@ Updated: 2026-08-27
 
 Prioritize request-stage intent rather than broad informational traffic:
 
-- `片付け費用が高い／払えない + 売却・残置物` → PRIMARY: TownLife Empty Home Solution
+- `片付け費用が高い／払えない + 売却・残置物` → PRIMARY TEST: TownLife Empty Home Solution once payout is dashboard-confirmed
 - 退去・売却期限あり → empty-home CTA + cleanup CTA
 - 空き家の家財撤去 → empty-home CTA + cleanup CTA
 - 相続した空き家をどうするか → empty-home CTA
@@ -41,6 +37,8 @@ Do not make the high-intent sale page look like a disguised affiliate landing pa
 1. ordinary private-market appraisal / brokerage or purchase consultation;
 2. Kawagoe City's empty-home bank where the property/owner meets its requirements;
 3. consultation about sale with remaining contents when cleanup cost or deadline makes pre-clearance impractical.
+
+CRITICAL CURRENT-STATUS NOTE (verified 2026-08-27): Kawagoe City's buyer/tenant page says there are currently NO registered properties and it is not accepting utilization applications at present. The owner-facing page still accepts eligible property registration, subject to requirements (including no existing brokerage agreement). Therefore describe the bank as a municipal registration option for eligible owners, NOT as a currently stocked marketplace or an immediate buyer-finding route. Re-check this status before publishing time-sensitive availability claims.
 
 This non-ad municipal option improves decision quality and trust. Link to the official Kawagoe City source rather than paraphrasing eligibility too aggressively. Do not imply the empty-home bank guarantees a buyer or is suitable for every property.
 
@@ -60,14 +58,14 @@ When an offer is approved:
 
 ## Legal / trust rule for Kawagoe
 
-Kawagoe's current official waste-carrier list was updated 2026-04-06. It shows 14 permit holders in the `引越` category for household waste temporarily generated in large quantities. Kawagoe's FAQ says such waste should be taken directly to a city facility, put out in smaller batches, or entrusted for a fee to a permitted private operator. For cleanup/estate-clearance content, ask users to confirm who actually transports disposal items and under what permit/contract arrangement. This is a trust differentiator, not a scare tactic. Avoid implying that every cleanup company itself must hold the collection permit if it lawfully coordinates with an authorized carrier.
+Kawagoe's current official waste-carrier list was updated 2026-04-06. It shows 14 permit holders in the `引越` category for household waste temporarily generated in large quantities. Kawagoe's FY2026 waste plan says temporary large-volume household waste should be self-delivered to city facilities or entrusted to designated Kawagoe general-waste collection/transport permit holders (with a limited fallback for unavoidable cases). For cleanup/estate-clearance content, ask users to confirm who actually transports disposal items and under what permit/contract arrangement. This is a trust differentiator, not a scare tactic. Avoid implying that every cleanup company itself must hold the collection permit if it lawfully coordinates with an authorized carrier.
 
 ## Search / indexing status
 
 - Public Google results have surfaced the site homepage, so discovery has started.
 - Do not spend another cycle debugging sitemap submission while pages are discoverable.
 - Next Search Console checks: query-level impressions, indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, and CTR/title performance.
-- Next URL-inspection priority after the homepage: `/kawagoe-shi/katazuke-hiyou-urenai/`, because it maps to the strongest verified payout path.
+- Next URL-inspection priority after the homepage: `/kawagoe-shi/katazuke-hiyou-urenai/`, because it maps to the strongest commercial-intent bridge.
 - Use URL inspection requests selectively rather than bulk submission.
 
 ## Go / no-go checkpoints
