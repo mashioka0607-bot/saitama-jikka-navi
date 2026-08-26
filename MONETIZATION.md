@@ -62,8 +62,9 @@ Kawagoe's current official waste-carrier list was updated 2026-04-06. It shows 1
 
 ## Search / indexing status
 
-- Public Google results have surfaced the site homepage, so discovery has started.
-- Do not spend another cycle debugging sitemap submission while pages are discoverable.
+- Public Google `site:` checks are not authoritative enough to treat as an indexing source of truth. Earlier runs surfaced the homepage, while a fresh 2026-08-27 public search returned no result for either the high-intent URL or the site-name query.
+- Therefore do not infer deindexing or indexing success from public search alone; Search Console URL Inspection / Pages report is the source of truth.
+- Do not spend another cycle debugging sitemap submission unless Search Console reports a crawl/discovery problem.
 - Next Search Console checks: query-level impressions, indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, and CTR/title performance.
 - Next URL-inspection priority after the homepage: `/kawagoe-shi/katazuke-hiyou-urenai/`, because it maps to the strongest commercial-intent bridge.
 - Use URL inspection requests selectively rather than bulk submission.
