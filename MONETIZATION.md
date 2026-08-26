@@ -5,14 +5,13 @@ Updated: 2026-08-27
 ## Primary monetization path
 
 1. HIGHEST PRIORITY — TownLife Empty Home Solution (`タウンライフ空き家解決`)
-   - CONFIRMED from TownLife Affiliate's public recommended-program page that the program is actively promoted and its conversion point is a free request/inquiry.
-   - TownLife's public series page also exposes a diagnosis-version LP and chatbot/form assets.
-   - IMPORTANT: the public recommended page currently shows a 10,000 JPY / 80–90% block immediately before the Empty Home section; do not attribute those numbers to Empty Home unless the logged-in program screen explicitly confirms them. Treat payout/approval rate as UNVERIFIED for Empty Home until dashboard confirmation.
-   - Best monetization fit for `片付け費用が高い/払えない + 売却/残置物` traffic if dashboard economics are competitive.
-   - Prepare commercial-intent pages before applying; do not insert a guessed tracking URL or imply partnership before approval.
+   - CONFIRMED 2026-08-27 from TownLife Affiliate's official recommended-program page: conversion point = free estimate request; payout = 10,000 JPY per approved result (11,000 JPY tax-inclusive display); approval rate approximately 85%; target includes Tokyo/Kanagawa/Saitama/Chiba plus Shizuoka/Aichi/Osaka/Kyoto/Hyogo/Hiroshima. The page notes payout can vary by acquisition method, so the logged-in dashboard remains authoritative for the exact account/tracking link.
+   - TownLife's public series page exposes a diagnosis-version LP and chatbot/form assets.
+   - This is the current first monetization test for `片付け費用が高い/払えない + 売却/残置物` traffic because the query bridges cleanup pain to a free property-disposition comparison.
+   - Prepare the commercial-intent page before applying; do not insert a guessed tracking URL or imply partnership before approval.
 
 2. Estate-clearance offers
-   - Life Reset public comparison data currently shows conflicting live-looking values by ASP/source: TownLife listing 7,300 JPY (tax excluded), Rentracks 2,255 JPY, BannerBridge 1,352 JPY; another comparison page marks an AFRo 1,800 JPY listing ended. Therefore dashboard terms are authoritative before implementation.
+   - Life Reset public comparison data has shown conflicting values by ASP/source; therefore dashboard terms are authoritative before implementation.
    - Use cleanup offers mainly on `遠方`, `見積`, `施設入居後`, `立会い不要` and similar cleanup-first intent.
    - Heart Service 13,200 JPY promotion was previously observed as ended. Do not plan around it unless a live ASP dashboard independently confirms a current equivalent.
 
@@ -20,7 +19,7 @@ Updated: 2026-08-27
 
 Prioritize request-stage intent rather than broad informational traffic:
 
-- `片付け費用が高い／払えない + 売却・残置物` → PRIMARY TEST: TownLife Empty Home Solution once payout is dashboard-confirmed
+- `片付け費用が高い／払えない + 売却・残置物` → PRIMARY: TownLife Empty Home Solution
 - 退去・売却期限あり → empty-home CTA + cleanup CTA
 - 空き家の家財撤去 → empty-home CTA + cleanup CTA
 - 相続した空き家をどうするか → empty-home CTA
@@ -62,8 +61,7 @@ Kawagoe's current official waste-carrier list was updated 2026-04-06. It shows 1
 
 ## Search / indexing status
 
-- Public Google `site:` checks are not authoritative enough to treat as an indexing source of truth. Earlier runs surfaced the homepage, while a fresh 2026-08-27 public search returned no result for either the high-intent URL or the site-name query.
-- Therefore do not infer deindexing or indexing success from public search alone; Search Console URL Inspection / Pages report is the source of truth.
+- Public Google `site:` checks are not authoritative enough to treat as an indexing source of truth. Search Console URL Inspection / Pages report is the source of truth.
 - Do not spend another cycle debugging sitemap submission unless Search Console reports a crawl/discovery problem.
 - Next Search Console checks: query-level impressions, indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, and CTR/title performance.
 - Next URL-inspection priority after the homepage: `/kawagoe-shi/katazuke-hiyou-urenai/`, because it maps to the strongest commercial-intent bridge.
