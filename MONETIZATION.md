@@ -29,6 +29,15 @@ Prioritize request-stage intent rather than broad informational traffic:
 - 施設入居後の実家片付け → cleanup CTA, then disposition CTA if home will become vacant
 - 貴重品探索 / 買取相殺 → cleanup CTA
 
+### New official decision routes: manage vs demolish (added 2026-08-27)
+
+Kawagoe City provides two useful non-ad routes that sharpen the `売る/貸す/保有/解体` decision rather than pushing every reader directly to an affiliate offer.
+
+1. **Keep/manage:** Kawagoe City has a cooperation agreement with the Kawagoe Silver Human Resources Center to promote proper empty-home management. For an owner who is not ready to sell or rent, this is a legitimate official route to investigate instead of pretending that `do nothing` is costless. Link to the City's current guidance and describe it as a management-service route, not as a free municipal service.
+2. **Demolish:** Kawagoe City's official demolition guidance explicitly lists both benefits and drawbacks: demolition can remove repair/vegetation-management burden and make land easier to sell, but demolition costs money, can remove residential-land property-tax reductions, and some sites may not be rebuildable. The City also links a Kawagoe-version demolition-cost simulator. Before a reader commits to demolition, make them compare `sell with building/contents`, `manage`, `rent`, and `demolish + sell land` rather than treating demolition as an automatic next step.
+
+Editorial implication: on the existing high-intent disposition page, the neutral decision box should include an official management route and the City's demolition guidance/cost simulator. This adds practical value exactly where commercial intent is high, without creating another thin city page. Watch Search Console for `空き家 管理`, `実家 管理`, `解体費用`, `解体して売る`, `更地 売却` modifiers. If these appear, strengthen the existing page first.
+
 ### New decision path: sell vs rent vs keep/manage vs demolish (added 2026-08-27)
 
 Current Kawagoe SERPs increasingly frame inherited-home intent as a decision among `売る・貸す・管理/保有・解体`, not merely `片付ける/売る`. Kawagoe City itself promotes JTI's `マイホーム借上げ制度` for homes that are not currently occupied, including homes left vacant through inheritance. The City states that, because of Saitama Prefecture's cooperation agreement with JTI, properties in Saitama can use the scheme without the usual owner age threshold; eligibility and contract conditions still need to be checked with the program.
@@ -106,7 +115,7 @@ Kawagoe's self-delivery guidance also matters operationally: self-delivery is pr
 - Public Google `site:` checks are not authoritative enough to treat as an indexing source of truth. Search Console URL Inspection / Pages report is the source of truth.
 - Do not spend another cycle debugging sitemap submission unless Search Console reports a crawl/discovery problem.
 - Next Search Console checks: query-level impressions, indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, and CTR/title performance.
-- Specifically watch for `買取`, `リユース`, `処分費用`, `片付け費用`, `残置物`, `売却`, `解体`, `貸す`, `賃貸`, `活用`, `売るか貸すか` modifiers before creating a separate article. If impressions emerge, strengthen the existing page first.
+- Specifically watch for `買取`, `リユース`, `処分費用`, `片付け費用`, `残置物`, `売却`, `解体`, `解体費用`, `解体して売る`, `更地 売却`, `空き家 管理`, `実家 管理`, `貸す`, `賃貸`, `活用`, `売るか貸すか` modifiers before creating a separate article. If impressions emerge, strengthen the existing page first.
 - Next URL-inspection priority after the homepage: `/kawagoe-shi/katazuke-hiyou-urenai/`, because it maps to the strongest commercial-intent bridge.
 - Use URL inspection requests selectively rather than bulk submission.
 
