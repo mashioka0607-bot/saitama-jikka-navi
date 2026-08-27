@@ -29,6 +29,19 @@ Prioritize request-stage intent rather than broad informational traffic:
 - 施設入居後の実家片付け → cleanup CTA, then disposition CTA if home will become vacant
 - 貴重品探索 / 買取相殺 → cleanup CTA
 
+### Reuse-first cost reduction funnel (added 2026-08-27)
+
+Kawagoe City's official bulky-waste page, updated 2026-06-03, explicitly recommends considering reuse before disposal and links residents to the `おいくら` bulk purchase-estimate service under the City's reuse partnership. The City also operates `つばさ館`, which accepts certain reusable clothing, miscellaneous goods, bags, tableware, ceramics and books; it does not accept PCs, appliances or large furniture through that reuse intake.
+
+For readers whose core problem is `片付け費用が高い/払えない`, use a trust-first cost-minimization sequence before the property-disposition CTA:
+
+1. Separate potentially saleable/reusable items first and obtain a reuse/buyback estimate where appropriate.
+2. For items the owner can lawfully and safely handle, compare municipal collection/self-delivery options and their practical constraints.
+3. Obtain cleanup-company estimates only for the remaining workload, comparing the same scope and total-cost conditions.
+4. If the remaining cleanup cost is still disproportionate, or a sale/demolition deadline exists, compare disposing of the property with contents remaining before committing to full clearance.
+
+This is an editorial decision framework, not a promise that reuse will generate meaningful proceeds. Do not imply `おいくら` is operated by Kawagoe City; describe it accurately as an external service the City links to under its reuse initiative. Do not turn the municipal link into an affiliate link unless a separately approved commercial relationship exists and is clearly disclosed.
+
 ### Trust-first disposition comparison
 
 Do not make the high-intent sale page look like a disguised affiliate landing page. Kawagoe City has an official empty-home bank for owners/managers who want to sell or rent eligible vacant homes; the owner-facing page was updated 2026-06-08. On disposition-intent pages, present three legitimate paths before the commercial CTA:
@@ -45,11 +58,11 @@ This non-ad municipal option improves decision quality and trust. Link to the of
 
 ## Current SERP gap (verified 2026-08-27)
 
-Broad `川越市 遺品整理` remains a poor first battlefield. Current local operators already emphasize free estimates, no-additional-fee promises, remote handling, valuables search, vacant-home contents and concrete room-size pricing. Mitsumoa also exposes provider answers about when extra charges occur. Do not publish another generic `おすすめ5選` clone.
+Broad `川越市 遺品整理` remains a poor first battlefield. Current local operators already emphasize free estimates, no-additional-fee promises, remote handling, valuables search, vacant-home contents and concrete room-size pricing. Do not publish another generic `おすすめ5選` clone.
 
 The useful gap is not another price table; it is a **same-condition total-cost comparison**. On estimate/comparison content, require readers to compare: initial quoted total, what is excluded, conditions that trigger extra charges, cancellation fee, amount/room scope used for the quote, appliance-recycling treatment, valuables/hold-box handling, buyback credit, and who transports household waste under what lawful arrangement. This directly answers the uncertainty competitors leave after saying `追加料金なし`.
 
-`片付け費用が払えない実家 + 売却/残置物` remains explicitly commercial in Kawagoe. A local real-estate article dated 2026-04-03 directly targets inability to pay cleanup costs and sale with contents remaining. Continue treating this as the highest-value bridge between cleanup and property disposition.
+`片付け費用が払えない実家 + 売却/残置物` remains the highest-value bridge between cleanup and property disposition. Strengthen the existing high-intent page rather than spawning overlapping city-name pages.
 
 When an offer is approved:
 
@@ -68,20 +81,23 @@ TownLife's official promotion instructions currently state that site publishers 
 Therefore, before applying for `タウンライフ空き家解決`:
 
 1. Use `/kawagoe-shi/katazuke-hiyou-urenai/` as the planned placement page.
-2. Replace the current future-tense ad note with an explicit disclosure visible before/near the future commercial CTA, e.g. `PR：本ページには広告を掲載します。広告経由で申込みがあった場合、当サイトが報酬を受け取ることがあります。掲載内容・比較基準は広告の有無にかかわらず編集方針に基づいて作成します。`
-3. Keep the municipal consultation/empty-home-bank alternatives visible so the page is not a disguised affiliate-only landing page.
+2. Keep an explicit PR disclosure visible before/near the future commercial CTA.
+3. Keep the municipal consultation/empty-home-bank/reuse alternatives visible so the page is not a disguised affiliate-only landing page.
 4. Apply in the TownLife dashboard only after the disclosure is live.
 5. After approval, insert only the issued tracking URL; never guess or hard-code a non-issued affiliate URL.
 
 ## Legal / trust rule for Kawagoe
 
-Kawagoe's current official waste-carrier list was updated 2026-04-06. It shows 14 permit holders in the `引越` category for household waste temporarily generated in large quantities. For cleanup/estate-clearance content, ask users to confirm who actually transports disposal items and under what permit/contract arrangement. This is a trust differentiator, not a scare tactic. Avoid implying that every cleanup company itself must hold the collection permit if it lawfully coordinates with an authorized carrier.
+Kawagoe's current official waste guidance states that household-waste collection requires municipal authorization; industrial-waste, secondhand-dealer, or another municipality's authorization is not enough to collect Kawagoe household waste. For cleanup/estate-clearance content, ask users to confirm who actually transports disposal items and under what permit/contract arrangement. This is a trust differentiator, not a scare tactic. Avoid implying that every cleanup company itself must hold the collection permit if it lawfully coordinates with an authorized carrier.
+
+Kawagoe's self-delivery guidance also matters operationally: self-delivery is principally limited to the person who generated the household waste, unloading is generally done by the person bringing it, and identification may be requested. Do not present self-delivery as an effortless substitute for professional clearance, especially for remote heirs or large/heavy contents.
 
 ## Search / indexing status
 
 - Public Google `site:` checks are not authoritative enough to treat as an indexing source of truth. Search Console URL Inspection / Pages report is the source of truth.
 - Do not spend another cycle debugging sitemap submission unless Search Console reports a crawl/discovery problem.
 - Next Search Console checks: query-level impressions, indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, and CTR/title performance.
+- Specifically watch for `買取`, `リユース`, `処分費用`, `片付け費用`, `残置物`, `売却`, `解体` modifiers before creating a separate reuse article. If impressions emerge, strengthen the existing page first.
 - Next URL-inspection priority after the homepage: `/kawagoe-shi/katazuke-hiyou-urenai/`, because it maps to the strongest commercial-intent bridge.
 - Use URL inspection requests selectively rather than bulk submission.
 
