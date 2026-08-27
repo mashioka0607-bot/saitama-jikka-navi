@@ -39,6 +39,8 @@ Do not make the high-intent sale page look like a disguised affiliate landing pa
 
 CRITICAL CURRENT-STATUS NOTE (verified 2026-08-27): Kawagoe City's buyer/tenant page says there are currently NO registered properties and it is not accepting utilization applications at present. The owner-facing page still accepts eligible property registration, subject to requirements (including no existing brokerage agreement). Therefore describe the bank as a municipal registration option for eligible owners, NOT as a currently stocked marketplace or an immediate buyer-finding route. Re-check this status before publishing time-sensitive availability claims.
 
+Kawagoe City also has a newer official consultation route (verified 2026-08-27; city page updated 2026-06-08) under its cooperation agreement with the Saitama Real Estate Transaction Association, Western Saitama Branch. Owners, managers and heirs can seek generally free consultation from licensed real-estate professionals about inheritance, management, rental, sale and demolition. Use this as a neutral non-ad option on high-intent pages for readers who genuinely do not know whether to clean, sell, rent or demolish first. Do not imply that downstream brokerage, demolition or inheritance work is free; the city states those services can become paid under a separate contract.
+
 This non-ad municipal option improves decision quality and trust. Link to the official Kawagoe City source rather than paraphrasing eligibility too aggressively. Do not imply the empty-home bank guarantees a buyer or is suitable for every property.
 
 ## Current SERP gap (verified 2026-08-27)
@@ -58,6 +60,18 @@ When an offer is approved:
 - Track `affiliate_click` by page/context/offer in GA4 before scaling traffic.
 - Do not claim an advertiser is a 川越市許可業者 unless verified from the municipality's current list.
 - Keep PR/ad disclosure adjacent to commercial links and avoid unsupported superiority claims.
+
+### TownLife approval gate — do this before applying
+
+TownLife's official promotion instructions currently state that site publishers must first create at least one page relevant to the advertised service, then apply for media/program partnership. Their review checks whether the media content matches the ad, whether PR activity is disclosed, and whether the page avoids excessive or disparaging claims; the stated review target is within about 3 business days.
+
+Therefore, before applying for `タウンライフ空き家解決`:
+
+1. Use `/kawagoe-shi/katazuke-hiyou-urenai/` as the planned placement page.
+2. Replace the current future-tense ad note with an explicit disclosure visible before/near the future commercial CTA, e.g. `PR：本ページには広告を掲載します。広告経由で申込みがあった場合、当サイトが報酬を受け取ることがあります。掲載内容・比較基準は広告の有無にかかわらず編集方針に基づいて作成します。`
+3. Keep the municipal consultation/empty-home-bank alternatives visible so the page is not a disguised affiliate-only landing page.
+4. Apply in the TownLife dashboard only after the disclosure is live.
+5. After approval, insert only the issued tracking URL; never guess or hard-code a non-issued affiliate URL.
 
 ## Legal / trust rule for Kawagoe
 
