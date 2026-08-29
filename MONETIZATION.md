@@ -1,6 +1,6 @@
 # Monetization runbook
 
-Updated: 2026-08-29
+Updated: 2026-08-30
 
 ## Primary monetization path
 
@@ -24,6 +24,16 @@ Prioritize request-stage intent rather than broad informational traffic:
 - 相続した空き家をどうするか → empty-home CTA
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
+
+## NEW 2026-08-30 — generic `実家じまい` SERP is becoming crowded
+
+Fresh SERP review shows multiple purpose-built sites now occupying the broad `実家じまい` journey: some present themselves as neutral editorial media with expert/editorial-policy trust signals, others use situation diagnosis (`親が亡くなった / 施設入居 / 空き家 / 遠方`), and others lead directly with `片付ける前・解体する前に査定`. This means a broad `実家じまい 完全ガイド` or generic portal clone is no longer a good next-page bet for this site.
+
+Decision: do **not** pivot into a generic `実家じまい` content hub and do not compete by adding many broad lifecycle articles. Keep the Kawagoe/local-primary-source advantage and bottom-of-funnel wedge: `片付け費用が高い/払えない`, `残置物あり`, `片付けずに売却`, `遠方`, `名義が親のまま`, and other concrete blockers immediately before a commercial decision.
+
+Quality implication: competitors are increasingly publishing explicit editorial/monitoring credentials and structured decision paths. Before scaling page count, strengthen visible trust on existing pages: explain what is official/local information vs editorial guidance, keep municipal/non-ad routes beside commercial routes, disclose PR clearly when affiliate links go live, and avoid claiming neutrality if revenue can arise from referrals.
+
+GSC implication: watch `実家じまい` only as a discovery modifier, not as a primary target. If it appears, combine it with the blocker that generated the impression (`費用`, `売却`, `残置物`, `遠方`, `相続登記`, etc.) and optimize the existing blocker page instead of creating a generic `実家じまい` page.
 
 ## NEW 2026-08-29 — unsellable inherited land / final-exit intent
 
@@ -84,6 +94,7 @@ Kawagoe's official waste guidance states that household-waste collection require
 - Public Google `site:` checks are not authoritative enough to treat as indexing truth. Search Console URL Inspection / Pages report is the source of truth.
 - Next Search Console checks: query-level impressions; indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`; CTR/title performance.
 - Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`.
+- Treat `実家じまい` as a modifier/discovery term rather than a standalone page target unless GSC proves otherwise.
 - Strengthen the existing high-intent page before creating overlapping pages when impressions emerge.
 
 ## Go / no-go checkpoints
