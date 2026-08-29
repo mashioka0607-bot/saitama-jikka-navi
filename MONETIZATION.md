@@ -25,6 +25,14 @@ Prioritize request-stage intent rather than broad informational traffic:
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
 
+## NEW 2026-08-30 — local freshness opportunity: Sep 27 empty-home/inheritance event
+
+Kawagoe City published an official `空き家・相続もんだい解決フェスタ` for 2026-09-27 at Wakaba Walk. The agenda directly overlaps this site's decision funnel: inherited-home basics, demolition, reuse/buyback, real-estate utilization, inheritance/trust/finance, and free individual consultation. Reservations for the individual consultation open 2026-09-01 at 09:00 through Kawagoe City's empty-home counter.
+
+Decision: **do not create an event page** and do not chase event traffic with a disposable article. This is short-lived informational intent, not the core revenue wedge. Instead, use it as a freshness/trust signal on the existing Kawagoe high-intent page only if Search Console begins showing `川越 空き家 相談`, `川越 相続 相談`, `実家 相続 相談 埼玉`, or similar queries before the event. If added, mark the date clearly and remove/replace the notice after 2026-09-27 so stale event copy does not remain.
+
+Strategic implication: the city's own event bundles `不用品回収・買取 + 相続 + 不動産 + 解体 + 利活用`, independently validating the site's decision-order architecture. Keep the commercial page focused on comparing these routes before committing to full clearance; do not turn it into a generic event/news site.
+
 ## NEW 2026-08-30 — `家＋残置物をまとめて解決` is becoming a product category
 
 A concrete market signal now validates the site's core wedge beyond ordinary SEO copy: HOUSE REVO's `イエウリ` and Haseko-group `カシコシュ` launched `おうちまるごと買取` in February 2026, explicitly combining real-estate sale with remaining-household-goods handling. Their stated problem is the burden of separately coordinating a real-estate company, clearance/estate-cleanout company and reuse shop, especially for distant heirs. This is stronger evidence that `残置物あり + 売却` is not merely an article keyword; providers are productizing the exact job-to-be-done.
@@ -103,7 +111,7 @@ Kawagoe's official waste guidance states that household-waste collection require
 
 - Public Google `site:` checks are not authoritative enough to treat as indexing truth. Search Console URL Inspection / Pages report is the source of truth.
 - Next Search Console checks: query-level impressions; indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`; CTR/title performance.
-- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`, and one-stop-disposition terms `家財そのまま`, `家財ごと`, `処分込み`, `片付け不要`, `遠方 実家 片付け 売却`.
+- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`, one-stop-disposition terms `家財そのまま`, `家財ごと`, `処分込み`, `片付け不要`, `遠方 実家 片付け 売却`, and short-lived local discovery terms `川越 空き家 相談`, `川越 相続 相談`, `実家 相続 相談 埼玉` through 2026-09-27.
 - Treat `実家じまい` as a modifier/discovery term rather than a standalone page target unless GSC proves otherwise.
 - Strengthen the existing high-intent page before creating overlapping pages when impressions emerge.
 
