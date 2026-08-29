@@ -35,6 +35,14 @@ Commercial implication: this creates a useful bottom-of-funnel branch for querie
 
 Do not create a standalone page yet. First watch Search Console for impressions containing `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`. If those modifiers appear on the existing high-intent page, add a compact `売れない場合の最終ルート` section there. A dedicated article is justified only after query evidence or clear ranking opportunity appears.
 
+## NEW 2026-08-29 — inherited-home sale paperwork intent
+
+Current SERPs show fresh 2026 content targeting `亡くなった親の家を売る + 必要書類/流れ`, which is commercially useful because the reader is already close to a sale decision. Kawagoe City's primary information gives a local, concrete angle: heirs can request fixed-asset certificates by counter or mail; the city lists a land/building valuation certificate as usable for ownership-transfer registration and a `名寄帳` as a way to see the deceased owner's land/building holdings in the city. For a deceased owner, the city requires documents showing death and the applicant's inheritance relationship, with a certified legal-heir information list accepted as an alternative in the stated cases. Fees are 200 JPY per stated unit for valuation certificates and the property ledger.
+
+Editorial accuracy rule: do **not** say `名寄帳 is required for inheritance registration`. It is useful for identifying holdings/avoiding omissions, while the exact documents required for registration or sale depend on the case. Keep legal-procedure claims tied to Legal Affairs Bureau / professional guidance.
+
+Commercial implication: add GSC watch terms `実家 売却 必要書類`, `亡くなった親の家 売る 流れ`, `相続 不動産 評価証明`, `相続 名寄帳`, `川越 相続 評価証明`. Do not create a standalone paperwork article yet. If impressions appear, first add a compact local checklist to the existing high-intent sale page, ending in `書類を全部揃える前でも、現状の売却可能性を確認` rather than delaying the valuation/solution CTA.
+
 ## Current SERP direction
 
 Current competitors increasingly lead with `現状買取`, `残置物あり`, `片付け前に相談/査定`, while broader inherited-home consultation competitors lead with situation diagnosis rather than generic contractor rankings. Continue to avoid generic `川越市 遺品整理おすすめN選` content.
@@ -75,7 +83,7 @@ Kawagoe's official waste guidance states that household-waste collection require
 
 - Public Google `site:` checks are not authoritative enough to treat as indexing truth. Search Console URL Inspection / Pages report is the source of truth.
 - Next Search Console checks: query-level impressions; indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`; CTR/title performance.
-- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, plus NEW `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`.
+- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`.
 - Strengthen the existing high-intent page before creating overlapping pages when impressions emerge.
 
 ## Go / no-go checkpoints
