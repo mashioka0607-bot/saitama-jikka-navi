@@ -25,6 +25,16 @@ Prioritize request-stage intent rather than broad informational traffic:
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
 
+## NEW 2026-08-30 — `家＋残置物をまとめて解決` is becoming a product category
+
+A concrete market signal now validates the site's core wedge beyond ordinary SEO copy: HOUSE REVO's `イエウリ` and Haseko-group `カシコシュ` launched `おうちまるごと買取` in February 2026, explicitly combining real-estate sale with remaining-household-goods handling. Their stated problem is the burden of separately coordinating a real-estate company, clearance/estate-cleanout company and reuse shop, especially for distant heirs. This is stronger evidence that `残置物あり + 売却` is not merely an article keyword; providers are productizing the exact job-to-be-done.
+
+Decision: strengthen the existing high-intent page around the **decision sequence**, not a specific provider: `家財を全部処分してから査定` should not be presented as the default. First determine whether the property can be valued/sold with contents remaining, then compare the net result and responsibility split against separate clearance. Keep municipal/reuse routes visible for items the owner wants to retain or dispose of independently.
+
+New GSC watch modifiers: `家財そのまま 売却`, `家財ごと 売却`, `家と家財 まとめて`, `残置物 処分込み 買取`, `片付け不要 不動産買取`, `遠方 実家 片付け 売却`. If impressions appear, optimize `/kawagoe-shi/katazuke-hiyou-urenai/` before creating another page.
+
+CTA implication: when the TownLife tracking link is available, test wording closer to the job-to-be-done — `片付け費用を決める前に、家財が残った状態で取れる選択肢を確認` — rather than generic `空き家を無料相談`. Do not claim TownLife itself buys contents or guarantees no-clearance sale; the CTA must promise only comparison/consultation that the actual offer supports.
+
 ## NEW 2026-08-30 — generic `実家じまい` SERP is becoming crowded
 
 Fresh SERP review shows multiple purpose-built sites now occupying the broad `実家じまい` journey: some present themselves as neutral editorial media with expert/editorial-policy trust signals, others use situation diagnosis (`親が亡くなった / 施設入居 / 空き家 / 遠方`), and others lead directly with `片付ける前・解体する前に査定`. This means a broad `実家じまい 完全ガイド` or generic portal clone is no longer a good next-page bet for this site.
@@ -93,7 +103,7 @@ Kawagoe's official waste guidance states that household-waste collection require
 
 - Public Google `site:` checks are not authoritative enough to treat as indexing truth. Search Console URL Inspection / Pages report is the source of truth.
 - Next Search Console checks: query-level impressions; indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`; CTR/title performance.
-- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`.
+- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`, and one-stop-disposition terms `家財そのまま`, `家財ごと`, `処分込み`, `片付け不要`, `遠方 実家 片付け 売却`.
 - Treat `実家じまい` as a modifier/discovery term rather than a standalone page target unless GSC proves otherwise.
 - Strengthen the existing high-intent page before creating overlapping pages when impressions emerge.
 
