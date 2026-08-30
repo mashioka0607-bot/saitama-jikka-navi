@@ -25,6 +25,18 @@ Prioritize request-stage intent rather than broad informational traffic:
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
 
+## NEW 2026-08-30 — `0円譲渡 / 有償引取 / 100%引取` SERP needs a trust-first branch
+
+Fresh SERP review now shows aggressive offers around `どんな空き家でも100%引き取り`, while a newly updated 2026-08-17 editorial result explicitly distinguishes ordinary purchase, zero-yen transfer and paid takeover. This is commercially close to users searching `実家 売れない 手放したい`, but the money flow and owner outcome differ materially between these routes.
+
+Decision: **do not copy the `100%引取` promise and do not create a provider-ranking page.** Strengthen the site's decision framework instead. For a supposedly unsellable inherited home, compare in this order: (1) ordinary brokerage/purchase or empty-home solution, including sale with contents remaining; (2) zero-yen transfer where legally/practically feasible; (3) paid takeover only after checking exactly who pays whom, transfer/registration costs, remaining-property obligations, cancellation terms and when ownership actually changes; (4) national land-surrender system only for eligible inherited land, not an intact house.
+
+Trust reason: the National Consumer Affairs Center warns consumers not to sign real-estate sale contracts without understanding the transaction and notes that a completed home sale cannot simply be unconditionally cancelled. It also documents cases where owners of hard-to-sell land were charged upfront measurement/advertising/commission money and then could no longer contact the business. Separately, its 2025 estate-clearance warning recommends multiple estimates and confirming scope, price, payment and cancellation terms. These do not prove that paid empty-home takeovers are inherently improper; they justify a contract/fee checklist rather than a blanket endorsement.
+
+GSC watch additions: `空き家 0円譲渡`, `実家 0円でも売れない`, `空き家 有償引取`, `空き家 引き取り 費用`, `空き家 100% 引き取り`, `実家 手放す お金払う`. If impressions emerge on the existing `売れない/手放したい` intent, add a compact comparison table there before creating a new page.
+
+Conversion implication: this branch should still route a potentially marketable house to the primary empty-home comparison CTA **before** a paid-takeover fallback. CTA candidate once the approved tracking URL exists: `お金を払って手放す前に、売却・活用できる余地を確認する`. Never imply that TownLife guarantees purchase, zero-clearance sale or acceptance of every property.
+
 ## NEW 2026-08-30 — local freshness opportunity: Sep 27 empty-home/inheritance event
 
 Kawagoe City published an official `空き家・相続もんだい解決フェスタ` for 2026-09-27 at Wakaba Walk. The agenda directly overlaps this site's decision funnel: inherited-home basics, demolition, reuse/buyback, real-estate utilization, inheritance/trust/finance, and free individual consultation. Reservations for the individual consultation open 2026-09-01 at 09:00 through Kawagoe City's empty-home counter.
@@ -111,7 +123,7 @@ Kawagoe's official waste guidance states that household-waste collection require
 
 - Public Google `site:` checks are not authoritative enough to treat as indexing truth. Search Console URL Inspection / Pages report is the source of truth.
 - Next Search Console checks: query-level impressions; indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`; CTR/title performance.
-- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`, one-stop-disposition terms `家財そのまま`, `家財ごと`, `処分込み`, `片付け不要`, `遠方 実家 片付け 売却`, and short-lived local discovery terms `川越 空き家 相談`, `川越 相続 相談`, `実家 相続 相談 埼玉` through 2026-09-27.
+- Priority modifiers now include: `片付け費用`, `残置物`, `売却`, `片付けずに売却`, `そのまま売却`, `解体`, `管理`, `貸す`, `売るか貸すか`, `売れない`, `手放したい`, `処分`, `国庫帰属`, `負動産`, plus sale-readiness terms `必要書類`, `売る流れ`, `評価証明`, `名寄帳`, one-stop-disposition terms `家財そのまま`, `家財ごと`, `処分込み`, `片付け不要`, `遠方 実家 片付け 売却`, final-exit terms `0円譲渡`, `0円でも売れない`, `有償引取`, `引き取り 費用`, `100% 引き取り`, `手放す お金払う`, and short-lived local discovery terms `川越 空き家 相談`, `川越 相続 相談`, `実家 相続 相談 埼玉` through 2026-09-27.
 - Treat `実家じまい` as a modifier/discovery term rather than a standalone page target unless GSC proves otherwise.
 - Strengthen the existing high-intent page before creating overlapping pages when impressions emerge.
 
