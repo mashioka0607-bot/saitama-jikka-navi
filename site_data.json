@@ -31,17 +31,17 @@
   "offers": [
     {
       "id": "primary",
-      "name": "遺品整理の無料見積もり",
+      "name": "空き家の売却・活用・解体をまとめて相談",
       "url": "",
-      "reward_note": "ASP承認後に設定",
-      "label": "無料見積もり先を確認する"
+      "reward_note": "ASP承認・成果条件確認後に専用URLを設定",
+      "label": "片付け費用を決める前に、実家の選択肢を確認する"
     },
     {
       "id": "secondary",
       "name": "遺品整理・片付け比較",
       "url": "",
-      "reward_note": "ASP承認後に設定",
-      "label": "比較できる窓口を確認する"
+      "reward_note": "ASP承認・成果条件確認後に設定",
+      "label": "片付けを依頼する場合の比較先を確認する"
     }
   ]
 }
