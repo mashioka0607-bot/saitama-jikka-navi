@@ -25,6 +25,18 @@ high_intent = DIST / 'kawagoe-shi' / 'katazuke-hiyou-urenai' / 'index.html'
 if high_intent.exists():
     page = high_intent.read_text(encoding='utf-8')
 
+    # Keep search snippet and first-view copy consistent with the exit-first funnel.
+    old_description = '川越市の実家片付け費用が高い・払えないときの進め方。買取・リユース、自治体処分、片付け業者を比較し、相続した空き家なら税制も確認してから売却・賃貸・管理を判断します。'
+    new_description = '川越市の実家片付け費用が高い・払えないときの進め方。全撤去を契約する前に、残置物ありで売却・買取・賃貸・管理など家の出口を確認し、必要な分だけ片付ける方法を解説します。'
+    old_lead = '川越市の実家で見積額が高くても、すぐ全撤去を契約する必要はありません。売れる物を先に分け、自治体処分と業者依頼を使い分けます。相続した空き家なら、売る・貸すを決める前に税制上の条件も確認します。'
+    new_lead = '川越市の実家で片付け見積が高くても、すぐ全撤去を契約する必要はありません。まず重要品を確保し、家財が残った現況で売却・買取・賃貸・管理などの出口を確認します。相続・名義・税制を確認したうえで、必要な物だけ買取・自治体処分・業者依頼へ進むと、不要な片付け費用を避けやすくなります。'
+    if old_description in page:
+        page = page.replace(old_description, new_description)
+        print('Aligned high-intent meta description with exit-first strategy')
+    if old_lead in page:
+        page = page.replace(old_lead, new_lead)
+        print('Aligned high-intent hero lead with exit-first strategy')
+
     # Keep the page aligned with the site-wide exit-first strategy. Do not lead
     # visitors into paying for disposal before they know whether the home can be
     # sold, rented, managed, or otherwise handled with belongings still inside.
