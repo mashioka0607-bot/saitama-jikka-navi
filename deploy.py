@@ -25,6 +25,15 @@ high_intent = DIST / 'kawagoe-shi' / 'katazuke-hiyou-urenai' / 'index.html'
 if high_intent.exists():
     page = high_intent.read_text(encoding='utf-8')
 
+    # Keep the page aligned with the site-wide exit-first strategy. Do not lead
+    # visitors into paying for disposal before they know whether the home can be
+    # sold, rented, managed, or otherwise handled with belongings still inside.
+    old_steps = '''<section class="section"><h2>おすすめの順番は5ステップ</h2><div class="grid"><div class="card"><small>STEP 1</small><h3>重要品を確保</h3><p>通帳、印鑑、権利書類、保険証券、写真・形見などを先に探索します。</p></div><div class="card"><small>STEP 2</small><h3>売れる物を査定</h3><p>家具・家電・貴金属などは処分前に買取可能性を確認し、廃棄量を減らします。</p></div><div class="card"><small>STEP 3</small><h3>自治体処分を確認</h3><p>自分で対応できる量なら、市の戸別収集や自己搬入条件を確認します。</p></div><div class="card"><small>STEP 4</small><h3>残りだけ業者比較</h3><p>仕分け・搬出・清掃・買取・一般廃棄物の運搬方法まで条件を揃えて比較します。</p></div><div class="card"><small>STEP 5</small><h3>税制を確認して出口比較</h3><p>相続空き家なら特例の条件を確認してから、売却・賃貸・管理を比較します。</p></div></div>'''
+    new_steps = '''<section class="section"><h2>おすすめの順番は5ステップ</h2><div class="grid"><div class="card"><small>STEP 1</small><h3>重要品を確保</h3><p>通帳、印鑑、権利書類、保険証券、写真・形見などを先に探索します。</p></div><div class="card"><small>STEP 2</small><h3>残置物ありで出口確認</h3><p>片付け契約の前に、家財が残った現況で売却・買取・賃貸・管理・解体を相談できるか確認します。</p></div><div class="card"><small>STEP 3</small><h3>名義・相続・税制を確認</h3><p>相続登記や空き家特例など、出口の選び方に影響する条件を先に確認します。</p></div><div class="card"><small>STEP 4</small><h3>売れる物と自治体処分を確認</h3><p>出口が見えてから、買取可能品と自分で処分できる物を分け、不要な廃棄コストを減らします。</p></div><div class="card"><small>STEP 5</small><h3>必要な分だけ業者比較</h3><p>最後に残った作業だけ、仕分け・搬出・清掃・一般廃棄物の運搬方法まで条件を揃えて比較します。</p></div></div>'''
+    if old_steps in page:
+        page = page.replace(old_steps, new_steps)
+        print('Aligned high-intent page steps with exit-first strategy')
+
     # Partnership-review hygiene: disclose advertising clearly even before the
     # first affiliate URL is issued. This avoids the weaker future-tense wording.
     old_adnote = '<div class="adnote">広告掲載時は「PR」「広告」をリンク付近に明示します。</div>'
