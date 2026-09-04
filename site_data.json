@@ -6,70 +6,23 @@
   "operator_name": "埼玉実家片付けナビ編集部",
   "contact_email": "",
   "official_sources": [
-    {
-      "title": "川越市｜無許可の不用品回収業者を利用しないでください",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002380/1019544.html"
-    },
-    {
-      "title": "川越市｜引っ越し等で出る多量のごみはどのように出せばよいですか？",
-      "url": "https://www.city.kawagoe.saitama.jp/faq/faq-gomi/1012638/1012640.html"
-    },
-    {
-      "title": "川越市｜一般廃棄物収集運搬業許可業者",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002455/1002456/1002466.html"
-    },
-    {
-      "title": "川越市｜粗大ごみの戸別収集（処分前のリユース・一括買取見積り案内）",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002469/1002474/1002476.html"
-    },
-    {
-      "title": "川越市｜空き家・空き地等の相談（相続・管理・賃貸・売却・解体）",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1020433.html"
-    },
-    {
-      "title": "川越市｜空家等の適切な管理（空き家の持ち主応援隊・管理料金目安・売却/賃貸/解体相談）",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1003046.html"
-    },
-    {
-      "title": "川越市｜相続した空き家の譲渡所得3,000万円特別控除",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1003048.html"
-    },
-    {
-      "title": "川越市｜2026保存版 空き家対策読本",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1020543.html"
-    },
-    {
-      "title": "川越市｜空き家バンク（売りたい・貸したい方）",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1003032/1003036.html"
-    },
-    {
-      "title": "川越市｜相続登記はお済みですか（2024年4月から申請義務化）",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/zeikin/1001996/1001997/1002000.html"
-    },
-    {
-      "title": "川越市｜登記相談（相続での不動産登記手続き）",
-      "url": "https://www.city.kawagoe.saitama.jp/kurashi/sodan/1002247/1002253.html"
-    },
-    {
-      "title": "消費者庁｜ステルスマーケティング規制",
-      "url": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/stealth_marketing/"
-    }
+    {"title":"川越市｜無許可の不用品回収業者を利用しないでください","url":"https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002380/1019544.html"},
+    {"title":"川越市｜引っ越し等で出る多量のごみはどのように出せばよいですか？","url":"https://www.city.kawagoe.saitama.jp/faq/faq-gomi/1012638/1012640.html"},
+    {"title":"川越市｜一般廃棄物収集運搬業許可業者","url":"https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002455/1002456/1002466.html"},
+    {"title":"川越市｜粗大ごみの戸別収集（処分前のリユース・一括買取見積り案内）","url":"https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002469/1002474/1002476.html"},
+    {"title":"川越市｜空き家・空き地等の相談（相続・管理・賃貸・売却・解体）","url":"https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1020433.html"},
+    {"title":"川越市｜空家等の適切な管理（空き家の持ち主応援隊・管理料金目安・売却/賃貸/解体相談）","url":"https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1003046.html"},
+    {"title":"川越市｜相続した空き家の譲渡所得3,000万円特別控除","url":"https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1003048.html"},
+    {"title":"川越市｜2026保存版 空き家対策読本","url":"https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1020543.html"},
+    {"title":"川越市｜空き家バンク（売りたい・貸したい方）","url":"https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1003032/1003036.html"},
+    {"title":"川越市｜相続登記はお済みですか（2024年4月から申請義務化）","url":"https://www.city.kawagoe.saitama.jp/kurashi/zeikin/1001996/1001997/1002000.html"},
+    {"title":"川越市｜登記相談（相続での不動産登記手続き）","url":"https://www.city.kawagoe.saitama.jp/kurashi/sodan/1002247/1002253.html"},
+    {"title":"川越市｜空き家・相続もんだい解決フェスタ（2026年9月27日・実家の相続セミナー等）","url":"https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1022509.html"},
+    {"title":"消費者庁｜ステルスマーケティング規制","url":"https://www.caa.go.jp/policies/policy/representation/fair_labeling/stealth_marketing/"}
   ],
   "ga4_id": "",
   "offers": [
-    {
-      "id": "primary",
-      "name": "空き家の売却・活用・解体をまとめて相談",
-      "url": "",
-      "reward_note": "ASP承認・成果条件確認後に専用URLを設定",
-      "label": "片付け費用を決める前に、実家の選択肢を確認する"
-    },
-    {
-      "id": "secondary",
-      "name": "遺品整理・片付け比較",
-      "url": "",
-      "reward_note": "ASP承認・成果条件確認後に設定",
-      "label": "片付けを依頼する場合の比較先を確認する"
-    }
+    {"id":"primary","name":"空き家の売却・活用・解体をまとめて相談","url":"","reward_note":"ASP承認・成果条件確認後に専用URLを設定","label":"片付け費用を決める前に、実家の選択肢を確認する"},
+    {"id":"secondary","name":"遺品整理・片付け比較","url":"","reward_note":"ASP承認・成果条件確認後に設定","label":"片付けを依頼する場合の比較先を確認する"}
   ]
 }
