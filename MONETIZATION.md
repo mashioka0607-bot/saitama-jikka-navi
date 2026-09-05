@@ -26,6 +26,17 @@ Updated: 2026-09-06
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
 
+## 2026-09-06 SERP convergence: rejected-property + contents-left is one commercial intent
+
+Current commercial SERPs increasingly combine the same anxieties on one landing page: `他社で断られた`, `残置物・昔の荷物が残ったまま`, `老朽化`, `遠方で管理できない`, and `解体費用をかけられない`. This is stronger evidence that these should not become separate thin articles.
+
+Strategic implication:
+- Treat `不動産会社に断られた + 荷物そのまま` as a high-intent modifier of the existing disposition page, not a new location/content silo.
+- Add a compact decision branch to `/kawagoe-shi/katazuke-hiyou-urenai/` only when implementation bandwidth permits: `一社に断られた → すぐ全撤去/解体しない → 現況で別の売却・買取可能性を比較 → 川越市の宅建士相談/空き家バンクも確認`.
+- Do not claim every difficult property can be sold. Competitors explicitly say purchase may be possible, not guaranteed.
+- GSC priority modifiers now include combinations, not just single terms: `不動産会社 断られた 荷物`, `売れない実家 残置物`, `古い実家 片付けずに売却`, `解体費用 払えない 空き家`.
+- If these impressions appear, optimize the existing page title/FAQ/internal CTA before creating any new page.
+
 ## Disposition-first rule for expensive cleanup
 
 For `片付け費用が高い/払えない`, full clearance is not the default prerequisite for valuation or disposition.
@@ -112,7 +123,7 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
-- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`, `相続登記前 売却`, `名義変更前 査定`, `売れない実家`, `空き家 手放したい`, `不動産会社 断られた 空き家`, `相続土地 国庫帰属 実家`
+- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`, `相続登記前 売却`, `名義変更前 査定`, `売れない実家`, `空き家 手放したい`, `不動産会社 断られた 空き家`, `相続土地 国庫帰属 実家`, `不動産会社 断られた 荷物`, `売れない実家 残置物`, `古い実家 片付けずに売却`, `解体費用 払えない 空き家`
 
 If impressions overlap the existing high-intent page, optimize it before creating another page. In particular, do not create a standalone `相続登記前` or `国庫帰属` page until GSC shows distinct demand; first test an FAQ/section inside the existing disposition page if impressions appear.
 
