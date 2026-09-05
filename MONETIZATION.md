@@ -17,6 +17,7 @@ Updated: 2026-09-05
 
 - `片付け費用が高い／払えない + 売却・残置物` → PRIMARY: empty-home/disposition comparison
 - `片付けずに売却 / 残置物あり売却 / 実家そのまま売却` → PRIMARY: disposition comparison before full clearance
+- `相続登記前 / 名義変更前 + 実家売却・査定` → PRIMARY: explain that consultation/valuation can precede completion of every procedure, while legal completion requirements must be confirmed with the relevant professional; do not promise a sale can close before required registration.
 - `空き家 維持費 / 実家 持ち続ける 費用 / 固定資産税 + 管理` → PRIMARY: annual carrying-cost check, then disposition comparison
 - 退去・売却期限あり → empty-home CTA + cleanup CTA
 - 空き家の家財撤去 → empty-home CTA + cleanup CTA
@@ -60,7 +61,7 @@ Strategic implication:
 
 ## Current SERP direction
 
-Competitors increasingly lead with `現状買取`, `残置物あり`, `片付け前に相談/査定`. Avoid generic `川越市 遺品整理おすすめN選` and broad `実家じまい` content hubs.
+Competitors increasingly lead with `現状買取`, `残置物あり`, `片付け前に相談/査定`. A newer 2026 SERP pattern also answers `相続登記前でも相談できますか` directly beside `残置物ありで査定できますか`, suggesting these are adjacent pre-sale anxieties rather than separate content silos. Avoid generic `川越市 遺品整理おすすめN選` and broad `実家じまい` content hubs.
 
 The useful gap is a decision framework immediately before spending money: compare disposition with contents remaining, reuse/buyback, municipal disposal where practical, cleanup quotes on identical scope, rent/manage, and demolition only after cost/tax checks.
 
@@ -99,9 +100,9 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
-- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`
+- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`, `相続登記前 売却`, `名義変更前 査定`
 
-If impressions overlap the existing high-intent page, optimize it before creating another page.
+If impressions overlap the existing high-intent page, optimize it before creating another page. In particular, do not create a standalone `相続登記前` page until GSC shows distinct demand; first test an FAQ/section inside the existing disposition page if impressions appear.
 
 ## Scaling rule
 
