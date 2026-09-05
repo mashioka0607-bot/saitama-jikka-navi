@@ -48,6 +48,16 @@ Strategic implication:
 - Do not publish generic cost figures without sourced assumptions; let users enter their actual annual amounts where possible.
 - Conversion bridge: `片付け代だけでなく、1年持ち続ける総額を見てから出口を決める` → empty-home/disposition comparison.
 
+## Provider demand data: sale-first intent validated (2026-09-05)
+
+TownLife's June 2026 monthly report says its surveyed empty-home users exceeded 1,000. In that provider dataset, 100% selected `売却したい`, 71% also expressed interest in rental/minpaku, 98% owned detached houses, and 73% reported buildings aged 41+ years. Treat these figures as TownLife user data, not population-level statistics.
+
+Strategic implication:
+- Keep the primary CTA sale/disposition-first rather than generic cleanup comparison. The commercial audience reaching an empty-home solution service is demonstrably sale-oriented.
+- Secondary copy can preserve rental/management as alternatives because users may consider multiple exits, but do not dilute the first CTA with a long equal-weight menu.
+- For older detached homes, decision content should explicitly surface `売れるか`, `残置物を先に捨てる必要があるか`, `解体前に査定すべきか`, and `維持費を払い続けるか` before cleanup-company selection.
+- Search Console test: segment queries/pages that include `売却`, `買取`, `残置物`, `片付け前`, `解体前` and compare CTR/affiliate-click rate against cleanup-only modifiers. If sale-intent impressions exist, optimize the existing decision page before adding pages.
+
 ## Current SERP direction
 
 Competitors increasingly lead with `現状買取`, `残置物あり`, `片付け前に相談/査定`. Avoid generic `川越市 遺品整理おすすめN選` and broad `実家じまい` content hubs.
@@ -89,7 +99,7 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
-- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`
+- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`
 
 If impressions overlap the existing high-intent page, optimize it before creating another page.
 
