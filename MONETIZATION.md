@@ -1,6 +1,6 @@
 # Monetization runbook
 
-Updated: 2026-08-31
+Updated: 2026-09-05
 
 ## Primary monetization path
 
@@ -42,6 +42,16 @@ CTA principle after an approved tracking URL exists: `片付け費用を決め�
 Competitors increasingly lead with `現状買取`, `残置物あり`, `片付け前に相談/査定`. Avoid generic `川越市 遺品整理おすすめN選` and broad `実家じまい` content hubs.
 
 The useful gap is a decision framework immediately before spending money: compare disposition with contents remaining, reuse/buyback, municipal disposal where practical, cleanup quotes on identical scope, rent/manage, and demolition only after cost/tax checks.
+
+### 2026-09-05 market validation: whole-home sale is becoming a product category
+
+`イエウリ × カシコシュ` launched `おうちまるごと買取`, explicitly combining remaining-contents sorting/buyback with a property purchase auction. Its official page currently covers Saitama and states that 1,300+ real-estate companies participate in the purchase auction. This directly validates the site's `do not fully clear first; compare the property's exit and reusable contents together` thesis.
+
+Strategic implication:
+- Do not copy the service or turn the site into a single-provider advert.
+- Strengthen neutral comparison language around `家＋荷物の最終手取り` and the difference between purchase and brokerage.
+- Treat HOUSE REVO / イエウリ as a potential direct partnership or referral lead because the product matches the site's highest-intent traffic unusually well. No public ASP payout was confirmed in the 2026-09-05 search, so do not insert a link as an affiliate or state a reward until direct/ASP terms are verified.
+- Keep TownLife as the confirmed primary monetization candidate until a better verified commercial agreement exists.
 
 ## Trust-first comparison
 
