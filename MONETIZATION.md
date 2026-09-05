@@ -1,6 +1,6 @@
 # Monetization runbook
 
-Updated: 2026-09-05
+Updated: 2026-09-06
 
 ## Primary monetization path
 
@@ -17,6 +17,7 @@ Updated: 2026-09-05
 
 - `片付け費用が高い／払えない + 売却・残置物` → PRIMARY: empty-home/disposition comparison
 - `片付けずに売却 / 残置物あり売却 / 実家そのまま売却` → PRIMARY: disposition comparison before full clearance
+- `売れない実家 / 空き家を手放したい / 不動産会社に断られた` → PRIMARY: re-check sale/purchase/other exits before irreversible demolition or disposal; SECONDARY: explain official last-resort routes accurately
 - `相続登記前 / 名義変更前 + 実家売却・査定` → PRIMARY: explain that consultation/valuation can precede completion of every procedure, while legal completion requirements must be confirmed with the relevant professional; do not promise a sale can close before required registration.
 - `空き家 維持費 / 実家 持ち続ける 費用 / 固定資産税 + 管理` → PRIMARY: annual carrying-cost check, then disposition comparison
 - 退去・売却期限あり → empty-home CTA + cleanup CTA
@@ -38,6 +39,17 @@ For `片付け費用が高い/払えない`, full clearance is not the default p
 Fresh 2026 SERPs increasingly state that valuation can begin before full clearance and some purchase routes accept contents remaining. Kawagoe City's 2026-06-08 consultation framework likewise covers inheritance, management, rental, sale and demolition rather than assuming cleanup first.
 
 CTA principle after an approved tracking URL exists: `片付け費用を決める前に、家財が残った状態で取れる選択肢を確認`. Do not claim the affiliate service guarantees purchase, contents acceptance, or no-clearance sale.
+
+## Sell-failed / hand-it-back angle (validated 2026-09-06)
+
+Kawagoe City updated its official owner-unknown-land prevention page on 2026-07-21 and explicitly points heirs to the national `相続土地国庫帰属制度` and the Saitama Legal Affairs Bureau consultation desk. This creates a useful high-intent adjacent cluster: `売れない実家`, `空き家 手放したい`, `不動産会社に断られた`, `国に返したい`.
+
+Guardrail and conversion logic:
+- Do NOT present national reversion as an easy way to hand a house to the government. The national scheme is for qualifying inherited land; land with a building is not eligible for approval.
+- Official government guidance states an application fee of JPY 14,000 per parcel and, after approval, a management contribution generally starting at JPY 200,000, with some land calculated by area.
+- Therefore a user with a standing inherited house should compare sale/purchase/other realistic exits before paying for demolition merely to pursue national reversion.
+- This is commercially stronger than a generic explainer because `売れない/手放したい` indicates an owner already seeking an exit. Bridge to the empty-home/disposition comparison, while keeping Kawagoe City / Legal Affairs Bureau as visible non-ad alternatives.
+- Do not create a standalone national-reversion article yet. First test GSC impressions for the modifiers below and add a concise FAQ/decision branch to the existing high-intent page only if demand appears.
 
 ## Carrying-cost angle (validated 2026-09-05)
 
@@ -100,9 +112,9 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
-- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`, `相続登記前 売却`, `名義変更前 査定`
+- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`, `相続登記前 売却`, `名義変更前 査定`, `売れない実家`, `空き家 手放したい`, `不動産会社 断られた 空き家`, `相続土地 国庫帰属 実家`
 
-If impressions overlap the existing high-intent page, optimize it before creating another page. In particular, do not create a standalone `相続登記前` page until GSC shows distinct demand; first test an FAQ/section inside the existing disposition page if impressions appear.
+If impressions overlap the existing high-intent page, optimize it before creating another page. In particular, do not create a standalone `相続登記前` or `国庫帰属` page until GSC shows distinct demand; first test an FAQ/section inside the existing disposition page if impressions appear.
 
 ## Scaling rule
 
