@@ -17,6 +17,7 @@ Updated: 2026-09-05
 
 - `片付け費用が高い／払えない + 売却・残置物` → PRIMARY: empty-home/disposition comparison
 - `片付けずに売却 / 残置物あり売却 / 実家そのまま売却` → PRIMARY: disposition comparison before full clearance
+- `空き家 維持費 / 実家 持ち続ける 費用 / 固定資産税 + 管理` → PRIMARY: annual carrying-cost check, then disposition comparison
 - 退去・売却期限あり → empty-home CTA + cleanup CTA
 - 空き家の家財撤去 → empty-home CTA + cleanup CTA
 - 相続した空き家をどうするか → empty-home CTA
@@ -36,6 +37,16 @@ For `片付け費用が高い/払えない`, full clearance is not the default p
 Fresh 2026 SERPs increasingly state that valuation can begin before full clearance and some purchase routes accept contents remaining. Kawagoe City's 2026-06-08 consultation framework likewise covers inheritance, management, rental, sale and demolition rather than assuming cleanup first.
 
 CTA principle after an approved tracking URL exists: `片付け費用を決める前に、家財が残った状態で取れる選択肢を確認`. Do not claim the affiliate service guarantees purchase, contents acceptance, or no-clearance sale.
+
+## Carrying-cost angle (validated 2026-09-05)
+
+Kawagoe City's 2026 vacant-home guide explicitly lists `空き家を持ち続けることで、どのくらい費用がかかるのか（税金、維持費）` as a typical owner concern. The city's management guidance also requires regular repairs, pruning and weed removal, while current local cleanup SERPs increasingly emphasize recurring garden/management costs after a one-time house clearance.
+
+Strategic implication:
+- Add `持ち続ける年間コスト` as a decision input, not as another thin city page.
+- Best implementation is a calculator/table inside the existing high-intent decision page: fixed-asset tax + insurance + utilities/minimum services + garden/ventilation/inspection + travel + expected repairs, compared with sale/rent/manage/demolish routes.
+- Do not publish generic cost figures without sourced assumptions; let users enter their actual annual amounts where possible.
+- Conversion bridge: `片付け代だけでなく、1年持ち続ける総額を見てから出口を決める` → empty-home/disposition comparison.
 
 ## Current SERP direction
 
@@ -78,7 +89,7 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
-- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`
+- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`
 
 If impressions overlap the existing high-intent page, optimize it before creating another page.
 
