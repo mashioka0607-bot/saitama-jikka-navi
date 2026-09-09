@@ -19,6 +19,10 @@ REPLACEMENTS = [
         "if(typeof gtag==='function'){{gtag('event','affiliate_click',{{offer:a.dataset.offer,context:a.dataset.context}})}}",
     ),
     (
+        "window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'diagnosis_complete'});",
+        "if(typeof gtag==='function'){gtag('event','diagnosis_complete')};",
+    ),
+    (
         ".adnote{text-align:center;padding:6px 16px;background:#f4f6f5;color:#6d756f;font-size:11px}",
         "",
     ),
@@ -28,6 +32,7 @@ FORBIDDEN_AFTER = [
     "ASP提携承認後にリンクを設定します。現在は情報提供のみです。",
     "広告を掲載する場合は「PR」「広告」をリンク付近にも明示します。",
     "window.dataLayer=window.dataLayer||[];window.dataLayer.push({{event:'affiliate_click'",
+    "window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'diagnosis_complete'});",
     ".adnote{text-align:center",
 ]
 
@@ -45,11 +50,11 @@ def main() -> int:
 
     leftovers = [needle for needle in FORBIDDEN_AFTER if needle in text]
     if leftovers:
-        raise SystemExit(f"Quality gate failed; stale public placeholders remain: {leftovers}")
+        raise SystemExit(f"Quality gate failed; stale public placeholders or unguarded analytics remain: {leftovers}")
 
     if changed:
         PATH.write_text(text, encoding="utf-8")
-        print("Patched build.py: hidden empty offers, removed placeholder ad note/CSS, switched affiliate_click to gtag.")
+        print("Patched build.py: hidden empty offers, removed placeholder ad note/CSS, and guarded affiliate/diagnosis analytics with gtag.")
     else:
         print("build.py already passes the P0 quality patch checks; no changes needed.")
     return 0
