@@ -28,6 +28,16 @@ REPLACEMENTS = [
     ),
 ]
 
+SEO_BLOCK = r'''
+# SEO discovery files: keep these generated from the same build as the HTML.
+urls = [canonical('/')]
+urls += [canonical('/' + p['slug'].strip('/') + '/') for p in PAGES]
+urls += [canonical('/shindan/'), canonical('/faq/'), canonical('/operator/'), canonical('/advertising-policy/'), canonical('/privacy/')]
+urls = list(dict.fromkeys(urls))
+(DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{esc(u)}</loc></url>\n' for u in urls) + '</urlset>\n', encoding='utf-8')
+(DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: ' + canonical('/sitemap.xml') + '\n', encoding='utf-8')
+'''
+
 FORBIDDEN_AFTER = [
     "ASP提携承認後にリンクを設定します。現在は情報提供のみです。",
     "広告を掲載する場合は「PR」「広告」をリンク付近にも明示します。",
@@ -48,15 +58,21 @@ def main() -> int:
             text = text.replace(old, new, 1)
             changed = True
 
+    if "DIST/'sitemap.xml'" not in text:
+        text = text.rstrip() + "\n\n" + SEO_BLOCK.strip() + "\n"
+        changed = True
+
     leftovers = [needle for needle in FORBIDDEN_AFTER if needle in text]
     if leftovers:
         raise SystemExit(f"Quality gate failed; stale public placeholders or unguarded analytics remain: {leftovers}")
+    if "DIST/'sitemap.xml'" not in text or "DIST/'robots.txt'" not in text:
+        raise SystemExit("SEO quality gate failed: sitemap.xml or robots.txt generation is missing")
 
     if changed:
         PATH.write_text(text, encoding="utf-8")
-        print("Patched build.py: hidden empty offers, removed placeholder ad note/CSS, and guarded affiliate/diagnosis analytics with gtag.")
+        print("Patched build.py: P0 quality fixes plus sitemap.xml and robots.txt generation.")
     else:
-        print("build.py already passes the P0 quality patch checks; no changes needed.")
+        print("build.py already passes the P0 + SEO discovery patch checks; no changes needed.")
     return 0
 
 
