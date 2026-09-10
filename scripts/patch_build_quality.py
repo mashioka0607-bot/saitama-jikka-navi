@@ -28,6 +28,9 @@ REPLACEMENTS = [
     ),
 ]
 
+# Insert discovery-file generation immediately before the build's final summary print.
+# Appending it after the module body is unsafe because build.py executes top-to-bottom;
+# an appended block can end up after the completion message or after future exit logic.
 SEO_BLOCK = r'''
 # SEO discovery files: keep these generated from the same build as the HTML.
 urls = [canonical('/')]
@@ -59,7 +62,11 @@ def main() -> int:
             changed = True
 
     if "DIST/'sitemap.xml'" not in text:
-        text = text.rstrip() + "\n\n" + SEO_BLOCK.strip() + "\n"
+        marker = "print('built',len(PAGES),'pages + core pages')"
+        count = text.count(marker)
+        if count != 1:
+            raise SystemExit(f"Refusing SEO patch: expected exactly 1 build-summary marker, found {count}")
+        text = text.replace(marker, SEO_BLOCK.strip() + "\n\n" + marker, 1)
         changed = True
 
     leftovers = [needle for needle in FORBIDDEN_AFTER if needle in text]
@@ -70,7 +77,7 @@ def main() -> int:
 
     if changed:
         PATH.write_text(text, encoding="utf-8")
-        print("Patched build.py: P0 quality fixes plus sitemap.xml and robots.txt generation.")
+        print("Patched build.py: P0 quality fixes plus sitemap.xml and robots.txt generation before build completion.")
     else:
         print("build.py already passes the P0 + SEO discovery patch checks; no changes needed.")
     return 0
