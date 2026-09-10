@@ -5,6 +5,20 @@ import sys
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
+
+# Apply the idempotent P0/SEO patch before every deploy. This closes the gap where
+# patch_build_quality.py existed in the repo but deploy.py never executed it, so
+# sitemap.xml / robots.txt and the public-placeholder fixes could be absent from
+# the actual Cloudflare Pages artifact.
+patcher = ROOT / 'scripts' / 'patch_build_quality.py'
+if patcher.exists():
+    subprocess.run([sys.executable, str(patcher)], check=True)
+
+# Fail the deployment if the source still violates the quality gate.
+quality_gate = ROOT / 'scripts' / 'check_seo_quality.py'
+if quality_gate.exists():
+    subprocess.run([sys.executable, str(quality_gate)], check=True)
+
 subprocess.run([sys.executable, str(ROOT / 'build.py')], check=True)
 
 for filename in ['google02c383ec58048d5e.html', 'sitemap.txt']:
