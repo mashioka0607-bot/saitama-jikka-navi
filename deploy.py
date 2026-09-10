@@ -69,3 +69,35 @@ headers.write_text(
     encoding='utf-8'
 )
 print('Wrote Cloudflare _headers for sitemap and robots files')
+
+# Post-build crawl/index gate. Source checks are not enough: Google only sees the
+# generated artifact. Refuse to publish when the artifact is missing the files or
+# URLs required for discovery and Search Console ownership verification.
+required_files = [
+    DIST / 'index.html',
+    DIST / 'sitemap.xml',
+    DIST / 'robots.txt',
+    DIST / 'google02c383ec58048d5e.html',
+]
+missing = [str(p.relative_to(DIST)) for p in required_files if not p.exists()]
+if missing:
+    raise RuntimeError(f'Deploy blocked: missing generated SEO files: {missing}')
+
+xml = (DIST / 'sitemap.xml').read_text(encoding='utf-8')
+if '<urlset' not in xml or '</urlset>' not in xml:
+    raise RuntimeError('Deploy blocked: sitemap.xml is not a valid URL-set artifact')
+for url in curated_urls:
+    if url not in xml:
+        raise RuntimeError(f'Deploy blocked: curated high-intent URL missing from sitemap.xml: {url}')
+
+robots = (DIST / 'robots.txt').read_text(encoding='utf-8')
+if 'Disallow: /' in robots:
+    raise RuntimeError('Deploy blocked: robots.txt contains a sitewide crawl block')
+if 'sitemap.xml' not in robots.lower():
+    raise RuntimeError('Deploy blocked: robots.txt does not advertise sitemap.xml')
+
+verification = (DIST / 'google02c383ec58048d5e.html').read_text(encoding='utf-8').lower()
+if 'google-site-verification' not in verification:
+    raise RuntimeError('Deploy blocked: Google Search Console verification artifact is invalid')
+
+print('Post-build crawl/index gate passed')
