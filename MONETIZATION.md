@@ -31,6 +31,7 @@ Updated: 2026-09-15
 - `片付けずに売却 / 残置物あり売却 / 実家そのまま売却` → PRIMARY: disposition comparison before full clearance
 - `売れない実家 / 空き家を手放したい / 不動産会社に断られた` → PRIMARY: re-check sale/purchase/other exits before irreversible demolition or disposal; SECONDARY: explain official last-resort routes accurately
 - `相続登記前 / 名義変更前 + 実家売却・査定` → PRIMARY: explain that consultation/valuation can precede completion of every procedure, while legal completion requirements must be confirmed with the relevant professional; do not promise a sale can close before required registration.
+- `2024-04-01以前の相続 + 親名義のまま` → DEADLINE-FIRST: show the official 2027-03-31 inheritance-registration deadline and route unresolved users to legal/official confirmation before irreversible work; if sale intent is already clear, valuation/disposition research may proceed in parallel without implying that closing can bypass required registration.
 - `空き家 維持費 / 実家 持ち続ける 費用 / 固定資産税 + 管理` → PRIMARY: annual carrying-cost check, then disposition comparison
 - `売るか貸すか迷う / しばらく使わない / 将来戻る可能性あり` → PRIMARY: compare sale with Saitama/Kawagoe official rental options before pushing a sale lead.
 - `処分費を下げたい / 粗大ごみに出す前 / 売れる物が分からない` → PRIMARY: official reuse-before-disposal path; SECONDARY: cleanup quote only for remaining scope
@@ -39,6 +40,21 @@ Updated: 2026-09-15
 - 相続した空き家をどうするか → empty-home CTA
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
+
+## 2026-09-15 deadline opportunity: old inheritance still in parent's name
+
+The Ministry of Justice currently highlights a concrete near-term deadline: for real estate inherited before 2024-04-01 where the inheritance was already known, inheritance registration is required by 2027-03-31. The obligation also applies to older inheritances, and unjustified noncompliance can be subject to a fine of up to 100,000 JPY.
+
+SERP implication: competitors are now publishing deadline-led pages specifically around `2027年3月31日`, `親名義のまま`, and `実家 相続登記`. This is no longer just evergreen legal background; it is a time-bounded intent cluster that can bring inherited-home owners into the site's core decision flow.
+
+Implementation rule:
+1. Add a diagnosis question/notice for `親名義のまま / 2024-04-01以前の相続 / 登記未了` rather than creating thin municipality pages.
+2. Use the Ministry of Justice as the primary factual source and state the deadline precisely; do not manufacture countdown urgency.
+3. If ownership/heirs are unresolved, show official/legal confirmation before disposal, demolition or a sale-closing CTA.
+4. If the visitor already intends to sell, allow valuation/disposition comparison to run in parallel with registration preparation, but never claim that required registration can be skipped.
+5. Keep the monetization destination aligned with sale intent (TownLife now; direct inherited-vacant-home referral only if contracted), not a generic legal-lead detour unless a separately vetted legal offer later proves economically and editorially appropriate.
+
+GSC test before a standalone article: `相続登記 2027年3月31日`, `実家 親名義のまま`, `昔の相続 名義変更`, `相続登記してない 実家 売却`, `相続登記 期限 実家`. If these queries start appearing on an existing inheritance/sale page, improve that page first. Create a dedicated deadline page only if GSC shows distinct demand and the existing page cannot satisfy intent cleanly.
 
 ## 2026-09-15 reuse-before-disposal finding
 
@@ -107,6 +123,7 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
+- deadline/registration modifiers: `相続登記 2027年3月31日`, `実家 親名義のまま`, `昔の相続 名義変更`, `相続登記してない 実家 売却`, `相続登記 期限 実家`
 - sale-intent modifiers: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`
 - reuse modifiers: `粗大ごみ 売れるもの`, `実家片付け 買取`, `遺品 買取 処分 どっち`, `川越市 粗大ごみ 買取`, `片付け費用 買取 相殺`
 - existing modifiers: `片付け前`, `残置物`, `家財そのまま`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `空き家 維持費`, `解体前 査定`, `相続登記前 売却`, `売れない実家`, `不動産会社 断られた 空き家`
