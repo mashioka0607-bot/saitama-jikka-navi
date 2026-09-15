@@ -19,6 +19,12 @@ Updated: 2026-09-15
    - Use mainly on cleanup-first intent such as `遠方`, `見積`, `施設入居後`, `立会い不要`.
    - Logged-in ASP dashboard is authoritative for current payout/approval terms.
 
+4. REUSE / BUYBACK — secondary micro-conversion, not the primary revenue path
+   - Kawagoe City officially directs residents to consider reuse before disposing of bulky waste and specifically links to Market Enterprise's `おいくら` bulk appraisal service under its reuse partnership.
+   - This creates a strong trust-first branch for `処分費を下げたい / 売れる物が分からない / 粗大ごみに出す前` visitors: valuables/keepsakes → reuse appraisal → municipal disposal for true waste → paid cleanup only for the remaining necessary scope.
+   - A 2026 third-party ASP survey reports consumer `おいくら` programs at roughly 253 JPY (afb) / 300 JPY (A8.net). Treat these amounts as UNCONFIRMED until the logged-in ASP dashboard is checked; do not publish or implement guessed tracking links.
+   - Even if confirmed, the payout is too small to displace the higher-value empty-home/disposition path. Use it only where it reduces cleanup cost and increases trust/engagement.
+
 ## Conversion architecture
 
 - `片付け費用が高い／払えない + 売却・残置物` → PRIMARY: empty-home/disposition comparison
@@ -26,12 +32,28 @@ Updated: 2026-09-15
 - `売れない実家 / 空き家を手放したい / 不動産会社に断られた` → PRIMARY: re-check sale/purchase/other exits before irreversible demolition or disposal; SECONDARY: explain official last-resort routes accurately
 - `相続登記前 / 名義変更前 + 実家売却・査定` → PRIMARY: explain that consultation/valuation can precede completion of every procedure, while legal completion requirements must be confirmed with the relevant professional; do not promise a sale can close before required registration.
 - `空き家 維持費 / 実家 持ち続ける 費用 / 固定資産税 + 管理` → PRIMARY: annual carrying-cost check, then disposition comparison
-- `売るか貸すか迷う / しばらく使わない / 将来戻る可能性あり` → PRIMARY: compare sale with Saitama/Kawagoe official rental options before pushing a sale lead. Kawagoe promotes JTI's マイホーム借上げ制度; because of the Saitama–JTI agreement, Saitama properties can use the scheme without the ordinary 50+ age requirement. Treat this as a non-ad trust route, not an affiliate offer.
+- `売るか貸すか迷う / しばらく使わない / 将来戻る可能性あり` → PRIMARY: compare sale with Saitama/Kawagoe official rental options before pushing a sale lead.
+- `処分費を下げたい / 粗大ごみに出す前 / 売れる物が分からない` → PRIMARY: official reuse-before-disposal path; SECONDARY: cleanup quote only for remaining scope
 - 退去・売却期限あり → empty-home CTA + cleanup CTA
-- 空き家の家財撤去 → empty-home CTA + cleanup CTA
+- 空き家の家財撤去 → reuse check + empty-home CTA + cleanup CTA
 - 相続した空き家をどうするか → empty-home CTA
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
+
+## 2026-09-15 reuse-before-disposal finding
+
+Kawagoe City's current bulky-waste page explicitly asks residents to consider reuse before disposal and links to `おいくら`, following a city partnership with Market Enterprise. This is more useful than another generic `不用品回収おすすめ` page because it is an official local decision rule and directly reduces the amount that needs paid removal.
+
+Implementation rule:
+1. Preserve documents, valuables, memorial items and family keepsakes first.
+2. For potentially reusable items, show the official reuse option before presenting paid disposal/cleanup.
+3. For actual waste, show lawful municipal disposal/self-delivery where practical.
+4. Only then compare cleanup providers for the remaining volume, with lawful household-waste transport checks.
+5. If an `おいくら` affiliate program is confirmed in the logged-in ASP dashboard, disclose PR and test it as a secondary CTA; never replace the city's neutral route with a disguised ad.
+
+Economic implication: do not chase a ~300 JPY reuse lead at the expense of a 10,000 JPY approved empty-home lead or a potential 90,000–350,000 JPY closed-sale referral. The reuse branch is valuable because it lowers visitor cost, builds trust, and qualifies what actually needs removal.
+
+GSC test before creating any new article: `粗大ごみ 売れるもの`, `実家片付け 買取`, `遺品 買取 処分 どっち`, `川越市 粗大ごみ 買取`, `片付け費用 買取 相殺`. First enrich the existing cleanup-cost / household-goods-removal flow if impressions appear; do not create five location pages.
 
 ## 2026-09-15 monetization implication: qualify sale intent before cleanup intent
 
@@ -43,18 +65,6 @@ Strategic implication:
 - For `まだ未定`, keep municipal consultation, management, and decision support visible; do not force a commercial sale lead.
 - For `相続放棄検討中 / ownership unresolved`, suppress irreversible disposal/sale CTAs until the user has confirmed the legal path.
 - If the direct partnership is signed, measure qualified-lead rate and closed-sale revenue separately from ordinary affiliate clicks; a lower-volume sale-intent page can economically outperform broad cleanup traffic.
-- GSC priority additions: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`. Optimize existing decision/disposition pages first; do not create five new articles.
-
-## Saitama-specific rent-before-sale branch
-
-Kawagoe City's official guidance promotes JTI's `マイホーム借上げ制度` for homes left unused after moving or inheritance. The municipality states that JTI rents the home and provides monthly rent payments regardless of tenant occupancy, subject to the scheme's conditions. Crucially, while the scheme ordinarily has a 50+ age condition, the Saitama Prefecture–JTI cooperation removes that age restriction for properties in Saitama.
-
-Implication:
-- This is a real Saitama-specific differentiator and a reason not to force every undecided owner into a sale CTA.
-- Add/strengthen a diagnosis branch for `将来戻る可能性がある / 売却はまだ決めていない / 貸すことも検討` and show the official rental route beside sale/management choices.
-- Do not monetize this branch unless a legitimate, disclosed commercial program is separately confirmed. Its role is trust, decision quality, and preventing low-quality sale leads.
-- Before recommending rental to an inherited-home visitor, flag that renting can interact with tax/legal conditions (including the inherited-vacant-home special deduction); do not make a categorical tax recommendation.
-- GSC test before creating content: `相続 実家 貸す 売る`, `空き家 売るか貸すか`, `実家 貸す 方法 埼玉`, `マイホーム借上げ制度 埼玉`. Prefer enriching the existing decision page/diagnosis if impressions overlap.
 
 ## Disposition-first rule for expensive cleanup
 
@@ -66,23 +76,17 @@ For `片付け費用が高い/払えない`, full clearance is not the default p
 4. Once the likely disposition is known, separate reusable/buyback items and use municipal disposal where lawful/practical for items that actually need removal.
 5. Use cleanup-company comparison only for the remaining necessary scope; compare identical scope, extra-charge conditions, and lawful household-waste transport arrangements.
 
-Fresh 2026 SERPs increasingly state that valuation can begin before full clearance and some purchase routes accept contents remaining. Kawagoe City's 2026-06-08 consultation framework likewise covers inheritance, management, rental, sale and demolition rather than assuming cleanup first.
-
-CTA principle after an approved tracking URL exists: `片付け費用を決める前に、家財が残った状態で取れる選択肢を確認`. Do not claim the affiliate service guarantees purchase, contents acceptance, or no-clearance sale.
-
 ## Current SERP direction
 
-Competitors increasingly combine `相続した実家`, `残置物`, `売却`, `管理`, `解体`, and `片付け` on one commercial landing page. Local cleanup providers still lead with speed, free estimates, buyback, and one-stop handling. Avoid competing primarily on generic `おすすめ業者` or city-name pages.
+A notable 2026 competitor pattern is the rise of structured Saitama municipality-by-municipality demolition-subsidy databases. Do not answer this by mass-producing similar city pages. Only create a municipal page where official rules materially change the user's decision (application-before-contract deadline, eligibility, tax/rebuild consequence, or a unique official route) and there is measurable search demand or a monetizable downstream action.
+
+Competitors also increasingly combine `相続した実家`, `残置物`, `売却`, `管理`, `解体`, and `片付け` on one commercial landing page. Local cleanup providers still lead with speed, free estimates, buyback, and one-stop handling. Avoid competing primarily on generic `おすすめ業者` or city-name pages.
 
 The useful gap remains a decision framework immediately before spending money: ownership/inheritance check → decide likely exit → compare disposition with contents remaining → reuse/buyback and municipal disposal where practical → cleanup quotes only for necessary scope → demolition only after tax/rebuild/subsidy checks.
 
-Kawagoe City also continues to support inheritance prevention education and empty-home management through official programs, reinforcing the trust-first path for visitors who are not ready to sell.
-
 ## Trust-first comparison
 
-Keep legitimate non-ad routes visible beside future affiliate CTAs: Kawagoe City's professional empty-home consultation, eligible empty-home-bank registration, management options, official rental/JTI option, and official tax/legal guidance. Do not make the page look like a disguised affiliate landing page.
-
-For inherited vacant homes, check the `被相続人の居住用財産（空き家）の3,000万円特別控除` conditions before casually recommending rental.
+Keep legitimate non-ad routes visible beside future affiliate CTAs: Kawagoe City's professional empty-home consultation, eligible empty-home-bank registration, management options, official reuse option, official rental/JTI option, and official tax/legal guidance. Do not make the page look like a disguised affiliate landing page.
 
 ## TownLife approval gate
 
@@ -104,7 +108,7 @@ Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
 - sale-intent modifiers: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`
-- rent-vs-sale modifiers: `相続 実家 貸す 売る`, `空き家 売るか貸すか`, `実家 貸す 方法 埼玉`, `マイホーム借上げ制度 埼玉`
+- reuse modifiers: `粗大ごみ 売れるもの`, `実家片付け 買取`, `遺品 買取 処分 どっち`, `川越市 粗大ごみ 買取`, `片付け費用 買取 相殺`
 - existing modifiers: `片付け前`, `残置物`, `家財そのまま`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `空き家 維持費`, `解体前 査定`, `相続登記前 売却`, `売れない実家`, `不動産会社 断られた 空き家`
 
 If impressions overlap the existing high-intent page, optimize it before creating another page. Do not create standalone pages until GSC shows distinct demand.
