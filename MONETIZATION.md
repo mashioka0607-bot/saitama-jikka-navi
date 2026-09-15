@@ -1,6 +1,6 @@
 # Monetization runbook
 
-Updated: 2026-09-06
+Updated: 2026-09-15
 
 ## Primary monetization path
 
@@ -9,7 +9,13 @@ Updated: 2026-09-06
    - First monetization test: `片付け費用が高い/払えない + 売却/残置物` traffic.
    - Never insert a guessed tracking URL or imply partnership before approval.
 
-2. Estate-clearance offers
+2. DIRECT PARTNERSHIP CANDIDATE — idea株式会社 `相続空き家 多業種パートナー制度`
+   - Publicly announced 2026-08-04: Saitama is in scope; registration/annual fee zero; information fee 90,000–350,000 JPY when idea closes the property sale; amount slides with property size/profit. Entry does not equal contract, and exact partner terms must be confirmed before use.
+   - This is materially higher-value than ordinary cleanup leads, but it is a B2B referral partnership rather than a normal click-based ASP program. Do not place a referral form/link or transmit owner information until a partnership agreement, consent flow, privacy handling, and exact qualification/payment conditions are confirmed.
+   - Best-fit traffic if approved: `相続した実家を売りたい`, `売れない実家`, `残置物あり売却`, `片付け費用が高い`, `遠方の相続空き家` where the visitor has decided or strongly intends to sell.
+   - Keep TownLife as the live-test priority until this direct agreement is actually signed and operational.
+
+3. Estate-clearance offers
    - Use mainly on cleanup-first intent such as `遠方`, `見積`, `施設入居後`, `立会い不要`.
    - Logged-in ASP dashboard is authoritative for current payout/approval terms.
 
@@ -26,16 +32,17 @@ Updated: 2026-09-06
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
 
-## 2026-09-06 SERP convergence: rejected-property + contents-left is one commercial intent
+## 2026-09-15 monetization implication: qualify sale intent before cleanup intent
 
-Current commercial SERPs increasingly combine the same anxieties on one landing page: `他社で断られた`, `残置物・昔の荷物が残ったまま`, `老朽化`, `遠方で管理できない`, and `解体費用をかけられない`. This is stronger evidence that these should not become separate thin articles.
+A newly launched direct referral program publicly advertises 90,000–350,000 JPY per completed inherited-vacant-home sale in Saitama. This does not replace the confirmed TownLife test yet, but it changes the economic value of accurately identifying `売却意思あり` visitors.
 
 Strategic implication:
-- Treat `不動産会社に断られた + 荷物そのまま` as a high-intent modifier of the existing disposition page, not a new location/content silo.
-- Add a compact decision branch to `/kawagoe-shi/katazuke-hiyou-urenai/` only when implementation bandwidth permits: `一社に断られた → すぐ全撤去/解体しない → 現況で別の売却・買取可能性を比較 → 川越市の宅建士相談/空き家バンクも確認`.
-- Do not claim every difficult property can be sold. Competitors explicitly say purchase may be possible, not guaranteed.
-- GSC priority modifiers now include combinations, not just single terms: `不動産会社 断られた 荷物`, `売れない実家 残置物`, `古い実家 片付けずに売却`, `解体費用 払えない 空き家`.
-- If these impressions appear, optimize the existing page title/FAQ/internal CTA before creating any new page.
+- The diagnosis should capture `売る方向 / まだ未定 / 残す` before asking how much cleanup is needed.
+- For `売る方向`, preserve the disposition-first path: do not encourage full clearance or demolition before checking sale options.
+- For `まだ未定`, keep municipal consultation, management, and decision support visible; do not force a commercial sale lead.
+- For `相続放棄検討中 / ownership unresolved`, suppress irreversible disposal/sale CTAs until the user has confirmed the legal path.
+- If the direct partnership is signed, measure qualified-lead rate and closed-sale revenue separately from ordinary affiliate clicks; a lower-volume sale-intent page can economically outperform broad cleanup traffic.
+- GSC priority additions: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`. Optimize existing decision/disposition pages first; do not create five new articles.
 
 ## Disposition-first rule for expensive cleanup
 
@@ -51,52 +58,13 @@ Fresh 2026 SERPs increasingly state that valuation can begin before full clearan
 
 CTA principle after an approved tracking URL exists: `片付け費用を決める前に、家財が残った状態で取れる選択肢を確認`. Do not claim the affiliate service guarantees purchase, contents acceptance, or no-clearance sale.
 
-## Sell-failed / hand-it-back angle (validated 2026-09-06)
-
-Kawagoe City updated its official owner-unknown-land prevention page on 2026-07-21 and explicitly points heirs to the national `相続土地国庫帰属制度` and the Saitama Legal Affairs Bureau consultation desk. This creates a useful high-intent adjacent cluster: `売れない実家`, `空き家 手放したい`, `不動産会社に断られた`, `国に返したい`.
-
-Guardrail and conversion logic:
-- Do NOT present national reversion as an easy way to hand a house to the government. The national scheme is for qualifying inherited land; land with a building is not eligible for approval.
-- Official government guidance states an application fee of JPY 14,000 per parcel and, after approval, a management contribution generally starting at JPY 200,000, with some land calculated by area.
-- Therefore a user with a standing inherited house should compare sale/purchase/other realistic exits before paying for demolition merely to pursue national reversion.
-- This is commercially stronger than a generic explainer because `売れない/手放したい` indicates an owner already seeking an exit. Bridge to the empty-home/disposition comparison, while keeping Kawagoe City / Legal Affairs Bureau as visible non-ad alternatives.
-- Do not create a standalone national-reversion article yet. First test GSC impressions for the modifiers below and add a concise FAQ/decision branch to the existing high-intent page only if demand appears.
-
-## Carrying-cost angle (validated 2026-09-05)
-
-Kawagoe City's 2026 vacant-home guide explicitly lists `空き家を持ち続けることで、どのくらい費用がかかるのか（税金、維持費）` as a typical owner concern. The city's management guidance also requires regular repairs, pruning and weed removal, while current local cleanup SERPs increasingly emphasize recurring garden/management costs after a one-time house clearance.
-
-Strategic implication:
-- Add `持ち続ける年間コスト` as a decision input, not as another thin city page.
-- Best implementation is a calculator/table inside the existing high-intent decision page: fixed-asset tax + insurance + utilities/minimum services + garden/ventilation/inspection + travel + expected repairs, compared with sale/rent/manage/demolish routes.
-- Do not publish generic cost figures without sourced assumptions; let users enter their actual annual amounts where possible.
-- Conversion bridge: `片付け代だけでなく、1年持ち続ける総額を見てから出口を決める` → empty-home/disposition comparison.
-
-## Provider demand data: sale-first intent validated (2026-09-05)
-
-TownLife's June 2026 monthly report says its surveyed empty-home users exceeded 1,000. In that provider dataset, 100% selected `売却したい`, 71% also expressed interest in rental/minpaku, 98% owned detached houses, and 73% reported buildings aged 41+ years. Treat these figures as TownLife user data, not population-level statistics.
-
-Strategic implication:
-- Keep the primary CTA sale/disposition-first rather than generic cleanup comparison. The commercial audience reaching an empty-home solution service is demonstrably sale-oriented.
-- Secondary copy can preserve rental/management as alternatives because users may consider multiple exits, but do not dilute the first CTA with a long equal-weight menu.
-- For older detached homes, decision content should explicitly surface `売れるか`, `残置物を先に捨てる必要があるか`, `解体前に査定すべきか`, and `維持費を払い続けるか` before cleanup-company selection.
-- Search Console test: segment queries/pages that include `売却`, `買取`, `残置物`, `片付け前`, `解体前` and compare CTR/affiliate-click rate against cleanup-only modifiers. If sale-intent impressions exist, optimize the existing decision page before adding pages.
-
 ## Current SERP direction
 
-Competitors increasingly lead with `現状買取`, `残置物あり`, `片付け前に相談/査定`. A newer 2026 SERP pattern also answers `相続登記前でも相談できますか` directly beside `残置物ありで査定できますか`, suggesting these are adjacent pre-sale anxieties rather than separate content silos. Avoid generic `川越市 遺品整理おすすめN選` and broad `実家じまい` content hubs.
+Competitors increasingly combine `相続した実家`, `残置物`, `売却`, `管理`, `解体`, and `片付け` on one commercial landing page. Local cleanup providers still lead with speed, free estimates, buyback, and one-stop handling. Avoid competing primarily on generic `おすすめ業者` or city-name pages.
 
-The useful gap is a decision framework immediately before spending money: compare disposition with contents remaining, reuse/buyback, municipal disposal where practical, cleanup quotes on identical scope, rent/manage, and demolition only after cost/tax checks.
+The useful gap remains a decision framework immediately before spending money: ownership/inheritance check → decide likely exit → compare disposition with contents remaining → reuse/buyback and municipal disposal where practical → cleanup quotes only for necessary scope → demolition only after tax/rebuild/subsidy checks.
 
-### 2026-09-05 market validation: whole-home sale is becoming a product category
-
-`イエウリ × カシコシュ` launched `おうちまるごと買取`, explicitly combining remaining-contents sorting/buyback with a property purchase auction. Its official page currently covers Saitama and states that 1,300+ real-estate companies participate in the purchase auction. This directly validates the site's `do not fully clear first; compare the property's exit and reusable contents together` thesis.
-
-Strategic implication:
-- Do not copy the service or turn the site into a single-provider advert.
-- Strengthen neutral comparison language around `家＋荷物の最終手取り` and the difference between purchase and brokerage.
-- Treat HOUSE REVO / イエウリ as a potential direct partnership or referral lead because the product matches the site's highest-intent traffic unusually well. No public ASP payout was confirmed in the 2026-09-05 search, so do not insert a link as an affiliate or state a reward until direct/ASP terms are verified.
-- Keep TownLife as the confirmed primary monetization candidate until a better verified commercial agreement exists.
+Kawagoe City also continues to support inheritance prevention education and empty-home management through official programs, reinforcing the trust-first path for visitors who are not ready to sell.
 
 ## Trust-first comparison
 
@@ -123,10 +91,11 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
-- modifiers: `片付け前`, `残置物`, `家財そのまま`, `家財ごと`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `遠方 実家 売却`, `空き家 維持費`, `実家 持ち続ける 費用`, `解体前 査定`, `相続登記前 売却`, `名義変更前 査定`, `売れない実家`, `空き家 手放したい`, `不動産会社 断られた 空き家`, `相続土地 国庫帰属 実家`, `不動産会社 断られた 荷物`, `売れない実家 残置物`, `古い実家 片付けずに売却`, `解体費用 払えない 空き家`
+- sale-intent modifiers: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`
+- existing modifiers: `片付け前`, `残置物`, `家財そのまま`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `空き家 維持費`, `解体前 査定`, `相続登記前 売却`, `売れない実家`, `不動産会社 断られた 空き家`
 
-If impressions overlap the existing high-intent page, optimize it before creating another page. In particular, do not create a standalone `相続登記前` or `国庫帰属` page until GSC shows distinct demand; first test an FAQ/section inside the existing disposition page if impressions appear.
+If impressions overlap the existing high-intent page, optimize it before creating another page. Do not create standalone pages until GSC shows distinct demand.
 
 ## Scaling rule
 
-Do not mass-produce thin city pages. A new location or intent page needs distinct official rules/data, distinct SERP intent, and a plausible monetization path. Until the first commercial page gets meaningful impressions/clicks and the affiliate tracking URL is live, improving decision quality and conversion architecture outranks page count.
+Do not mass-produce thin city pages. A new location or intent page needs distinct official rules/data, distinct SERP intent, and a plausible monetization path. Until the first commercial page gets meaningful impressions/clicks and a monetization agreement/tracking URL is live, improving decision quality and conversion architecture outranks page count.
