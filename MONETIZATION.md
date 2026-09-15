@@ -26,6 +26,7 @@ Updated: 2026-09-15
 - `売れない実家 / 空き家を手放したい / 不動産会社に断られた` → PRIMARY: re-check sale/purchase/other exits before irreversible demolition or disposal; SECONDARY: explain official last-resort routes accurately
 - `相続登記前 / 名義変更前 + 実家売却・査定` → PRIMARY: explain that consultation/valuation can precede completion of every procedure, while legal completion requirements must be confirmed with the relevant professional; do not promise a sale can close before required registration.
 - `空き家 維持費 / 実家 持ち続ける 費用 / 固定資産税 + 管理` → PRIMARY: annual carrying-cost check, then disposition comparison
+- `売るか貸すか迷う / しばらく使わない / 将来戻る可能性あり` → PRIMARY: compare sale with Saitama/Kawagoe official rental options before pushing a sale lead. Kawagoe promotes JTI's マイホーム借上げ制度; because of the Saitama–JTI agreement, Saitama properties can use the scheme without the ordinary 50+ age requirement. Treat this as a non-ad trust route, not an affiliate offer.
 - 退去・売却期限あり → empty-home CTA + cleanup CTA
 - 空き家の家財撤去 → empty-home CTA + cleanup CTA
 - 相続した空き家をどうするか → empty-home CTA
@@ -43,6 +44,17 @@ Strategic implication:
 - For `相続放棄検討中 / ownership unresolved`, suppress irreversible disposal/sale CTAs until the user has confirmed the legal path.
 - If the direct partnership is signed, measure qualified-lead rate and closed-sale revenue separately from ordinary affiliate clicks; a lower-volume sale-intent page can economically outperform broad cleanup traffic.
 - GSC priority additions: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`. Optimize existing decision/disposition pages first; do not create five new articles.
+
+## Saitama-specific rent-before-sale branch
+
+Kawagoe City's official guidance promotes JTI's `マイホーム借上げ制度` for homes left unused after moving or inheritance. The municipality states that JTI rents the home and provides monthly rent payments regardless of tenant occupancy, subject to the scheme's conditions. Crucially, while the scheme ordinarily has a 50+ age condition, the Saitama Prefecture–JTI cooperation removes that age restriction for properties in Saitama.
+
+Implication:
+- This is a real Saitama-specific differentiator and a reason not to force every undecided owner into a sale CTA.
+- Add/strengthen a diagnosis branch for `将来戻る可能性がある / 売却はまだ決めていない / 貸すことも検討` and show the official rental route beside sale/management choices.
+- Do not monetize this branch unless a legitimate, disclosed commercial program is separately confirmed. Its role is trust, decision quality, and preventing low-quality sale leads.
+- Before recommending rental to an inherited-home visitor, flag that renting can interact with tax/legal conditions (including the inherited-vacant-home special deduction); do not make a categorical tax recommendation.
+- GSC test before creating content: `相続 実家 貸す 売る`, `空き家 売るか貸すか`, `実家 貸す 方法 埼玉`, `マイホーム借上げ制度 埼玉`. Prefer enriching the existing decision page/diagnosis if impressions overlap.
 
 ## Disposition-first rule for expensive cleanup
 
@@ -68,7 +80,7 @@ Kawagoe City also continues to support inheritance prevention education and empt
 
 ## Trust-first comparison
 
-Keep legitimate non-ad routes visible beside future affiliate CTAs: Kawagoe City's professional empty-home consultation, eligible empty-home-bank registration, management options, and official tax/legal guidance. Do not make the page look like a disguised affiliate landing page.
+Keep legitimate non-ad routes visible beside future affiliate CTAs: Kawagoe City's professional empty-home consultation, eligible empty-home-bank registration, management options, official rental/JTI option, and official tax/legal guidance. Do not make the page look like a disguised affiliate landing page.
 
 For inherited vacant homes, check the `被相続人の居住用財産（空き家）の3,000万円特別控除` conditions before casually recommending rental.
 
@@ -92,6 +104,7 @@ Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
 - query-level impressions and CTR/title performance
 - sale-intent modifiers: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`
+- rent-vs-sale modifiers: `相続 実家 貸す 売る`, `空き家 売るか貸すか`, `実家 貸す 方法 埼玉`, `マイホーム借上げ制度 埼玉`
 - existing modifiers: `片付け前`, `残置物`, `家財そのまま`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `空き家 維持費`, `解体前 査定`, `相続登記前 売却`, `売れない実家`, `不動産会社 断られた 空き家`
 
 If impressions overlap the existing high-intent page, optimize it before creating another page. Do not create standalone pages until GSC shows distinct demand.
