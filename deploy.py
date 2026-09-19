@@ -34,10 +34,11 @@ if static_pages.exists():
     shutil.copytree(static_pages, DIST, dirs_exist_ok=True)
     print('Copied curated static pages')
 
-# Ensure curated pages are discoverable in both sitemap formats.
+# Ensure every curated high-intent page is discoverable in both sitemap formats.
 curated_urls = [
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/katazuke-hiyou-urenai/',
+    'https://saitama-jikka-navi.pages.dev/tedori-hikaku/',
 ]
 xml_path = DIST / 'sitemap.xml'
 if xml_path.exists():
