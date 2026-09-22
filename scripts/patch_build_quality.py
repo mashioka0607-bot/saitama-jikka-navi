@@ -26,6 +26,10 @@ REPLACEMENTS = [
         ".adnote{text-align:center;padding:6px 16px;background:#f4f6f5;color:#6d756f;font-size:11px}",
         "",
     ),
+    (
+        '<p><a href="https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1020433.html" target="_blank" rel="noopener">川越市公式の相談窓口を見る</a></p></section>{offer_cta(\'primary\',\'home\')}',
+        '<p><a href="https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1020433.html" target="_blank" rel="noopener">川越市公式の相談窓口を見る</a></p></section><section class="section warning"><strong>9/27（日）｜予約なしで、解体・不用品回収/買取・相続/不動産をまとめて相談</strong><p>埼玉県・川越市などが案内する「空き家・相続もんだい解決フェスタ」が、ワカバウォークで10:00〜16:00に開催されます。実家の相続、家じまい・解体、不用品回収・買取など、片付け契約の前に整理したい論点を無料で確認できます。</p><p><a class="public-link" href="https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1022509.html" target="_blank" rel="noopener">川越市公式の開催案内を見る</a></p><small>2026年9月27日開催。終了後は最新の公的な相続・空き家情報へ差し替えます。</small></section>{offer_cta(\'primary\',\'home\')}',
+    ),
 ]
 
 # Insert discovery-file generation immediately before the build's final summary print.
@@ -77,7 +81,7 @@ def main() -> int:
 
     if changed:
         PATH.write_text(text, encoding="utf-8")
-        print("Patched build.py: P0 quality fixes plus sitemap.xml and robots.txt generation before build completion.")
+        print("Patched build.py: P0 quality fixes, current official-event CTA, sitemap.xml and robots.txt generation.")
     else:
         print("build.py already passes the P0 + SEO discovery patch checks; no changes needed.")
     return 0
