@@ -1,6 +1,7 @@
 https://saitama-jikka-navi.pages.dev/
 https://saitama-jikka-navi.pages.dev/shindan/
 https://saitama-jikka-navi.pages.dev/tedori-hikaku/
+https://saitama-jikka-navi.pages.dev/kaitai-check/
 https://saitama-jikka-navi.pages.dev/faq/
 https://saitama-jikka-navi.pages.dev/operator/
 https://saitama-jikka-navi.pages.dev/advertising-policy/
