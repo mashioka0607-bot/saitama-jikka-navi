@@ -6,6 +6,10 @@
       "municipality": "白岡市",
       "status": "受付中・残額少",
       "status_as_of": "2026-09-11",
+      "deadline": null,
+      "precheck_required": null,
+      "contract_timing": "最新の市公式条件を申請前に再確認",
+      "urgency": "high",
       "note": "市公式は予算残額60万円、満額支給なら残り2件分と案内。予算到達で終了し得るため申請前に最新状況確認が必要。",
       "official_url": "https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7523.html",
       "conversion_angle": "見積取得より先に残予算と申請順序を確認"
@@ -14,6 +18,10 @@
       "municipality": "川口市",
       "status": "受付中",
       "status_as_of": "2026-07-01",
+      "deadline": "事前診断2026-10-30／交付申請2026-11-13／完了報告2027-01-29",
+      "precheck_required": true,
+      "contract_timing": "事前診断・交付申請の条件を確認してから契約判断",
+      "urgency": "high",
       "note": "事前診断は2026-10-30まで、交付申請は2026-11-13まで。予算到達で早期終了あり。工事完了後の報告期限は2027-01-29。",
       "official_url": "https://www.city.kawaguchi.lg.jp/soshiki/01130/040/akiyatoutaisaku/27633.html",
       "conversion_angle": "解体見積の前に事前診断の要否を確認"
@@ -22,6 +30,10 @@
       "municipality": "ときがわ町",
       "status": "受付中",
       "status_as_of": "2026-05-01",
+      "deadline": "申請2026-12-25／完了報告2027-02-26",
+      "precheck_required": true,
+      "contract_timing": "交付決定前の工事契約NG",
+      "urgency": "high",
       "note": "受付は2026-12-25まで。補助対象工事費の1/2、上限40万円、町内業者なら上限50万円。事前相談票が必要で、工事契約は交付決定後。交付決定前に契約すると補助を受けられない。",
       "official_url": "https://www.town.tokigawa.lg.jp/Info/3493",
       "conversion_angle": "契約前チェックの代表例。交付決定前契約NGを強く表示"
@@ -30,6 +42,10 @@
       "municipality": "坂戸市",
       "status": "受付終了",
       "status_as_of": "2026-05-18",
+      "deadline": null,
+      "precheck_required": null,
+      "contract_timing": "受付再開の有無を市公式で確認するまで補助前提で契約しない",
+      "urgency": "closed",
       "note": "2026-05-18に補助上限到達のため受付終了。年度内に再開可能となった場合は市公式サイトで告知予定。",
       "official_url": "https://www.city.sakado.lg.jp/soshiki/37/28358.html",
       "conversion_angle": "補助金額だけを載せる静的記事の危険性を示す。受付終了を明示"
