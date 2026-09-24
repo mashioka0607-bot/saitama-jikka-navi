@@ -51,6 +51,18 @@
       "conversion_angle": "事前相談→補助対象確認→解体見積の順に案内し、契約先行による取りこぼしを防ぐ"
     },
     {
+      "municipality": "富士見市",
+      "status": "受付中",
+      "status_as_of": "2026-09-25",
+      "deadline": "除却補助申請2027-01-31／実績報告2027-03-31／固定資産税等相当額補助2027-03-15",
+      "precheck_required": true,
+      "contract_timing": "補助金交付決定後に工事。交付決定前の契約・着工を前提に進めない",
+      "urgency": "medium",
+      "note": "除却費の1/3・上限30万円。昭和56年5月31日以前建築、1年以上未使用などが条件。さらに除却補助金を利用した跡地を営利利用しない等の条件を満たす場合、住宅用地特例が外れて増える固定資産税・都市計画税の差額を最大2年間補助する独自制度あり。解体費だけでなく解体後税負担まで比較できる重要ケース。",
+      "official_url": "https://www.city.fujimi.saitama.jp/kurashi_tetsuzuki/sumai/2018-0511-1113-58/akiyahojoseido.html",
+      "conversion_angle": "解体見積だけでなく、補助金＋解体後の固定資産税増額まで含めた実質手残り比較へ誘導"
+    },
+    {
       "municipality": "ときがわ町",
       "status": "受付中",
       "status_as_of": "2026-05-01",
