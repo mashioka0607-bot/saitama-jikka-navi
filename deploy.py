@@ -39,6 +39,7 @@ curated_urls = [
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/katazuke-hiyou-urenai/',
     'https://saitama-jikka-navi.pages.dev/tedori-hikaku/',
+    'https://saitama-jikka-navi.pages.dev/kaitai-check/',
 ]
 xml_path = DIST / 'sitemap.xml'
 if xml_path.exists():
