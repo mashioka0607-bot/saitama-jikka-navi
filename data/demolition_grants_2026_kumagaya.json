@@ -1,0 +1,22 @@
+{
+  "municipality": "熊谷市",
+  "status": "受付中",
+  "status_as_of": "2026-09-25",
+  "deadline": "交付申請2026-11-30（先着順・予算到達で早期終了）",
+  "precheck_required": true,
+  "precheck": "工事着手前に安心安全課へ相談。事前相談は2026-04-20開始。",
+  "contract_timing": "交付決定通知後に着手。補助対象可否と交付決定を確認する前に工事を進めない。",
+  "contractor_requirement": "熊谷市内に事業所があり、建設業許可（土木・建築・解体）または建設リサイクル法に基づく解体工事業登録を持つ事業者。",
+  "subsidy": "対象額の4/5または居住部分床面積×20,000円/㎡の低い方。上限30万円。",
+  "eligibility_summary": "昭和56年5月31日以前に建築された木造居住用家屋、1年以上未居住、市の不良度判定基準を満たす危険な空き家等。",
+  "official_url": "https://www.city.kumagaya.lg.jp/kurashi/kankyo_sumai/akiyataisaku/jyokyakuhojokin.html",
+  "conversion_angle": "事前相談→不良度判定→市内・許可登録業者の見積比較。『安い業者』より先に『補助対象になる業者か』を確認させる。",
+  "gsc_test_queries": [
+    "熊谷市 空き家 解体 補助金",
+    "熊谷市 解体 補助金 2026",
+    "熊谷市 解体業者 補助金",
+    "空き家 解体 補助金 業者 登録 埼玉"
+  ],
+  "source_verified": true,
+  "source_verified_at": "2026-09-25"
+}
