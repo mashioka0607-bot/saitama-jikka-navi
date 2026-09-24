@@ -63,6 +63,18 @@
       "conversion_angle": "解体見積だけでなく、補助金＋解体後の固定資産税増額まで含めた実質手残り比較へ誘導"
     },
     {
+      "municipality": "深谷市",
+      "status": "受付中",
+      "status_as_of": "2026-09-25",
+      "deadline": "事前調査申込2026-11-30／工事完了2027-01-29",
+      "precheck_required": true,
+      "contract_timing": "不良住宅の事前調査を受け、補助金交付決定後に工事を進める",
+      "urgency": "high",
+      "note": "2026年度の危険空家等除却補助金。昭和56年5月31日以前建築などの要件があり、補助対象となるには不良住宅かどうかの事前調査が必要。事前調査申込は2026-11-30まで。市はクラッソーネと連携し、解体費用と解体後土地売却査定価格を比較できる『すまいの終活ナビ』も案内している。",
+      "official_url": "https://www.city.fukaya.saitama.jp/soshiki/kyoudou/jiti/tanto/akiya/akiyahojyo/14716.html",
+      "conversion_angle": "事前調査→補助対象確認→解体費と解体後土地価値を比較→見積という手残り比較導線の一次情報モデル"
+    },
+    {
       "municipality": "ときがわ町",
       "status": "受付中",
       "status_as_of": "2026-05-01",
