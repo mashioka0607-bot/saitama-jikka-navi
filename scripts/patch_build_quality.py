@@ -20,7 +20,7 @@ REPLACEMENTS = [
     ),
     (
         "</script></body></html>'''",
-        "document.querySelectorAll('.public-link').forEach(a=>a.addEventListener('click',()=>{if(typeof gtag==='function'){gtag('event','official_source_click',{context:a.dataset.context||'unknown',destination:a.href})}}));</script></body></html>'''",
+        "document.querySelectorAll('.public-link').forEach(a=>a.addEventListener('click',()=>{{if(typeof gtag==='function'){{gtag('event','official_source_click',{{context:a.dataset.context||'unknown',destination:a.href}})}}}}));</script></body></html>'''",
     ),
     (
         "window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'diagnosis_complete'});",
