@@ -1,5 +1,5 @@
 {
-  "last_verified": "2026-09-24",
+  "last_verified": "2026-09-25",
   "purpose": "契約前チェック用。金額だけでなく、受付状況・事前手続・契約タイミングを一次情報で確認する。公開時は必ず自治体公式ページを再確認する。",
   "municipalities": [
     {
@@ -37,6 +37,18 @@
       "note": "上尾市公式が2026-09-18に更新。交付申請は2026-10-30までだが予算到達で早期終了。本申請前に事前相談が必要。対象は概ね1年以上未使用など複数条件あり。",
       "official_url": "https://www.city.ageo.lg.jp/page/421263.html",
       "conversion_angle": "締切が近い高意図ユーザーを、事前相談確認→条件確認→見積比較の順に案内"
+    },
+    {
+      "municipality": "東松山市",
+      "status": "受付中",
+      "status_as_of": "2026-09-25",
+      "deadline": "申請2026-12-28（予算到達で早期終了）",
+      "precheck_required": true,
+      "contract_timing": "本申請前に市へ事前相談。補助対象可否を確認してから契約・着工判断",
+      "urgency": "medium",
+      "note": "東松山市公式の令和8年度老朽空き家除却補助金。受付は2026-04-01から12-28まで。予算がなくなり次第終了。本申請前に事前相談の申込みが必要。市内の空き家のうち不良住宅と判断されるものが対象。",
+      "official_url": "https://www.city.higashimatsuyama.lg.jp/soshiki/37/52176.html",
+      "conversion_angle": "事前相談→補助対象確認→解体見積の順に案内し、契約先行による取りこぼしを防ぐ"
     },
     {
       "municipality": "ときがわ町",
