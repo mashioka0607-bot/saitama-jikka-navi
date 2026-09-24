@@ -27,6 +27,18 @@
       "conversion_angle": "解体見積の前に事前診断の要否を確認"
     },
     {
+      "municipality": "上尾市",
+      "status": "受付中",
+      "status_as_of": "2026-09-18",
+      "deadline": "交付申請2026-10-30",
+      "precheck_required": true,
+      "contract_timing": "本申請前に市へ事前相談。予算到達で早期終了するため、見積・契約を進める前に受付状況を確認",
+      "urgency": "high",
+      "note": "上尾市公式が2026-09-18に更新。交付申請は2026-10-30までだが予算到達で早期終了。本申請前に事前相談が必要。対象は概ね1年以上未使用など複数条件あり。",
+      "official_url": "https://www.city.ageo.lg.jp/page/421263.html",
+      "conversion_angle": "締切が近い高意図ユーザーを、事前相談確認→条件確認→見積比較の順に案内"
+    },
+    {
       "municipality": "ときがわ町",
       "status": "受付中",
       "status_as_of": "2026-05-01",
