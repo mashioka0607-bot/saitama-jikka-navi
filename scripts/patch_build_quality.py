@@ -7,6 +7,10 @@ PATH = ROOT / "build.py"
 
 REPLACEMENTS = [
     (
+        "def nav(): return '<nav><a href=\"/\">ホーム</a><a href=\"/shindan/\">進め方診断</a><a href=\"/kawagoe-shi/mitsumori-check/\">見積チェック</a><a href=\"/faq/\">FAQ</a></nav>'",
+        "def nav(): return '<nav><a href=\"/\">ホーム</a><a href=\"/shindan/\">進め方診断</a><a href=\"/kaitai-check/\">解体前チェック</a><a href=\"/tedori-hikaku/\">手残り比較</a><a href=\"/faq/\">FAQ</a></nav>'",
+    ),
+    (
         "    return f'''<aside class=\"cta muted\"><span class=\"pr\">準備中</span><h2>{esc(o['name'])}</h2><p>ASP提携承認後にリンクを設定します。現在は情報提供のみです。</p></aside>'''",
         "    return ''",
     ),
@@ -82,7 +86,7 @@ def main() -> int:
 
     if changed:
         PATH.write_text(text, encoding="utf-8")
-        print("Patched build.py: P0 quality fixes, official-source click tracking, current/next official-event CTA, sitemap.xml and robots.txt generation.")
+        print("Patched build.py: P0 quality fixes, high-intent navigation, official-source click tracking, current/next official-event CTA, sitemap.xml and robots.txt generation.")
     else:
         print("build.py already passes the P0 + SEO discovery patch checks; no changes needed.")
     return 0
