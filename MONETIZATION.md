@@ -1,6 +1,16 @@
 # Monetization runbook
 
-Updated: 2026-09-16
+Updated: 2026-09-25
+
+## 2026-09-25 strategic finding: municipality-backed calculators are now a SERP competitor
+
+Fresh primary-source review found that Saitama municipalities are increasingly linking residents to Crassone's municipality-specific `すまいの終活ナビ`. Kazo City says its version provides demolition-cost estimates, post-demolition land-sale price estimates, a fixed-asset-tax simulator, and a nuisance-risk diagnosis. Fukaya City likewise officially promotes a tool that estimates demolition cost and land-sale price after its 2025-09-01 cooperation agreement with Crassone. A 2026-02 announcement says Crassone had agreements with 26 Saitama municipalities, covering 48.9% of the prefecture's population.
+
+Implication: do NOT try to win `解体費用 相場 + 市名` by mass-producing generic city pages. Municipality-backed tools have stronger trust and useful calculators. Our defensible layer is the decision BEFORE demolition: contents-remaining valuation -> net-proceeds comparison -> subsidy/contract timing -> asbestos/permit checks -> only then demolition quote where needed. `/kaitai-check/` and `/tedori-hikaku/` should remain linked as one decision flow.
+
+New high-intent tests: `解体する前 査定`, `解体してから売る どっち`, `空き家 解体費用 売却価格`, `実家 更地 売却 手残り`, `空き家 解体 補助金 契約前`. If GSC impressions emerge, improve the existing two tools first rather than creating municipality pages.
+
+Trust rule: where a visitor's municipality offers an official/municipality-endorsed calculator, it may be shown as a neutral benchmark. Do not disguise an external commercial calculator as a government service, and do not sacrifice the user's net outcome merely to preserve an affiliate click.
 
 ## Primary monetization path
 
@@ -45,101 +55,32 @@ Updated: 2026-09-16
 - 見積書チェック / 追加料金条件 → cleanup CTA
 - 遠方・立ち会い不要 → cleanup CTA
 
-## 2026-09-16 SERP finding: contents-included purchase changes the reuse order
-
-Current Saitama SERPs contain multiple empty-home buyers whose core promise is that furniture, household goods, altars, and other remaining contents can stay in the property. MK-HOME currently leads with `家財ごとそのまま空き家・相続物件を高額買取`; other specialist buyers similarly advertise `残置物・家財はそのまま`.
-
-This changes the site's decision rule. `買取できる家財は先に売る` must NOT be universal advice. For an owner already leaning toward property sale, the economically correct comparison is the owner's NET outcome and time burden across at least two routes:
-
-A. contents remain → property/empty-home buyer prices the home as-is and handles contents;
-B. valuables/reusable goods are sold separately → residual contents are cleared → property is sold afterward.
-
-Do not claim A or B is always better. Capture/compare: property offer, expected separate buyback proceeds, clearance cost, time to complete, travel/attendance burden, and any items the family must retain. This is a stronger editorial gap than another generic `不用品買取おすすめ` page and aligns the site's high-value monetization path with user economics.
-
-GSC test: `家財そのまま 売却`, `残置物そのまま 買取`, `実家 片付けずに売る`, `空き家 家財ごと 買取`, `片付けてから売る どっち`. If impressions appear on the existing sale/cleanup-cost pages, add a net-proceeds comparison module there before creating a standalone article.
-
-## 2026-09-15 deadline opportunity: old inheritance still in parent's name
-
-The Ministry of Justice currently highlights a concrete near-term deadline: for real estate inherited before 2024-04-01 where the inheritance was already known, inheritance registration is required by 2027-03-31. The obligation also applies to older inheritances, and unjustified noncompliance can be subject to a fine of up to 100,000 JPY.
-
-SERP implication: competitors are now publishing deadline-led pages specifically around `2027年3月31日`, `親名義のまま`, and `実家 相続登記`. This is no longer just evergreen legal background; it is a time-bounded intent cluster that can bring inherited-home owners into the site's core decision flow.
-
-Implementation rule:
-1. Add a diagnosis question/notice for `親名義のまま / 2024-04-01以前の相続 / 登記未了` rather than creating thin municipality pages.
-2. Use the Ministry of Justice as the primary factual source and state the deadline precisely; do not manufacture countdown urgency.
-3. If ownership/heirs are unresolved, show official/legal confirmation before disposal, demolition or a sale-closing CTA.
-4. If the visitor already intends to sell, allow valuation/disposition comparison to run in parallel with registration preparation, but never claim that required registration can be skipped.
-5. Keep the monetization destination aligned with sale intent (TownLife now; direct inherited-vacant-home referral only if contracted), not a generic legal-lead detour unless a separately vetted legal offer later proves economically and editorially appropriate.
-
-GSC test before a standalone article: `相続登記 2027年3月31日`, `実家 親名義のまま`, `昔の相続 名義変更`, `相続登記してない 実家 売却`, `相続登記 期限 実家`. If these queries start appearing on an existing inheritance/sale page, improve that page first. Create a dedicated deadline page only if GSC shows distinct demand and the existing page cannot satisfy intent cleanly.
-
-## 2026-09-15 reuse-before-disposal finding
-
-Kawagoe City's current bulky-waste guidance asks residents to consider reuse before disposal and links to `おいくら` following a city partnership with Market Enterprise. Use this as a trustworthy non-ad option, but apply it after the sale-intent gate described above.
-
-Implementation rule:
-1. Preserve documents, valuables, memorial items and family keepsakes first.
-2. Ask whether the property is likely to be sold soon.
-3. If YES: value the property with contents remaining before removing/selling household goods; determine whether an as-is/contents-included route is available and compare net outcomes.
-4. If NO: for potentially reusable items, show the official reuse option before paid disposal/cleanup.
-5. For actual waste, show lawful municipal disposal/self-delivery where practical.
-6. Compare cleanup providers only for the remaining necessary volume, with lawful household-waste transport checks.
-7. If an `おいくら` affiliate program is confirmed in the logged-in ASP dashboard, disclose PR and test it as a secondary CTA; never replace the city's neutral route with a disguised ad.
-
-Economic implication: do not chase a ~300 JPY reuse lead at the expense of a 10,000 JPY approved empty-home lead or a potential 90,000–350,000 JPY closed-sale referral, and do not let the affiliate payout distort the user's net outcome. The reuse branch is valuable when it genuinely lowers cost or recovers value.
-
-## Disposition-first rule for expensive cleanup
-
-For `片付け費用が高い/払えない`, full clearance is not the default prerequisite for valuation or disposition.
-
-1. Secure important documents, valuables, memorial items, and anything the family must retain.
-2. Before paying for full clearance or selling household goods separately, check whether the home can be valued and whether sale, purchase, rental, management, or another route is realistic with contents remaining.
-3. Confirm ownership/inheritance constraints and relevant official/local consultation routes before signing irreversible work.
-4. For a likely sale, compare as-is/contents-included net proceeds and burden against separate buyback + clearance + later sale.
-5. Once the likely disposition is known, use reuse/buyback and municipal disposal where they improve the owner's outcome.
-6. Use cleanup-company comparison only for the remaining necessary scope; compare identical scope, extra-charge conditions, and lawful household-waste transport arrangements.
-
 ## Current SERP direction
 
-A notable 2026 competitor pattern is the rise of structured Saitama municipality-by-municipality demolition-subsidy databases. Do not answer this by mass-producing similar city pages. Only create a municipal page where official rules materially change the user's decision (application-before-contract deadline, eligibility, tax/rebuild consequence, or a unique official route) and there is measurable search demand or a monetizable downstream action.
+A notable 2026 competitor pattern is the rise of structured Saitama municipality-by-municipality demolition-subsidy databases and, now, municipality-backed decision calculators. Do not answer this by mass-producing similar city pages. Only create a municipal page where official rules materially change the user's decision (application-before-contract deadline, eligibility, tax/rebuild consequence, or a unique official route) and there is measurable search demand or a monetizable downstream action.
 
 Competitors increasingly combine `相続した実家`, `残置物`, `売却`, `管理`, `解体`, and `片付け` on one commercial landing page. A more specific current pattern is `残置物・家財そのまま買取`. Local cleanup providers still lead with speed, free estimates, buyback, and one-stop handling. Avoid competing primarily on generic `おすすめ業者` or city-name pages.
 
 The useful gap remains a decision framework immediately before spending money: ownership/inheritance check → decide likely exit → compare disposition with contents remaining → if selling, compare contents-included vs separate buyback/clearance on NET outcome → municipal/reuse options where appropriate → cleanup quotes only for necessary scope → demolition only after tax/rebuild/subsidy checks.
 
-## Trust-first comparison
-
-Keep legitimate non-ad routes visible beside future affiliate CTAs: Kawagoe City's professional empty-home consultation, eligible empty-home-bank registration, management options, official reuse option, official rental/JTI option, and official tax/legal guidance. Do not make the page look like a disguised affiliate landing page.
-
-Kawagoe City's current empty-home-bank rule is especially decision-sensitive: an eligible property must not already have a brokerage agreement with a real-estate broker. Therefore show this public option before telling an undecided owner to sign a brokerage agreement. The city itself does not participate directly in negotiations/contracts; affiliated real-estate professionals mediate them.
-
 ## TownLife approval gate
 
-1. Planned placement page: `/kawagoe-shi/katazuke-hiyou-urenai/`.
+1. Planned placement pages: `/tedori-hikaku/`, `/kaitai-check/`, and high-intent sale/cleanup-cost pages only where the CTA matches intent.
 2. Keep explicit PR disclosure near future commercial CTA.
 3. Keep municipal/non-ad alternatives visible.
 4. After approval, insert only the issued tracking URL.
 5. Track `affiliate_click` by page/context/offer in GA4 before scaling traffic.
-
-## Legal / trust rule for Kawagoe
-
-For cleanup content, verify who transports household waste and under what permit/contract arrangement. Do not imply every cleanup company itself must hold the municipal collection permit if it lawfully coordinates with an authorized carrier.
 
 ## Search / indexing status
 
 Search Console URL Inspection / Pages report is the indexing source of truth; public `site:` checks are only supplementary.
 
 Next GSC checks:
-- indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`
+- indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, `/tedori-hikaku/`, `/kaitai-check/`
 - query-level impressions and CTR/title performance
-- NEW contents-included modifiers: `家財そのまま 売却`, `残置物そのまま 買取`, `実家 片付けずに売る`, `空き家 家財ごと 買取`, `片付けてから売る どっち`
+- NEW demolition-decision modifiers: `解体する前 査定`, `解体してから売る どっち`, `空き家 解体費用 売却価格`, `実家 更地 売却 手残り`, `空き家 解体 補助金 契約前`
+- contents-included modifiers: `家財そのまま 売却`, `残置物そのまま 買取`, `実家 片付けずに売る`, `空き家 家財ごと 買取`, `片付けてから売る どっち`
 - deadline/registration modifiers: `相続登記 2027年3月31日`, `実家 親名義のまま`, `昔の相続 名義変更`, `相続登記してない 実家 売却`, `相続登記 期限 実家`
 - sale-intent modifiers: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`
-- reuse modifiers: `粗大ごみ 売れるもの`, `実家片付け 買取`, `遺品 買取 処分 どっち`, `川越市 粗大ごみ 買取`, `片付け費用 買取 相殺`
-- existing modifiers: `片付け前`, `残置物`, `家財そのまま`, `片付け不要`, `売却`, `買取`, `片付け費用 払えない`, `空き家 維持費`, `解体前 査定`, `相続登記前 売却`, `売れない実家`, `不動産会社 断られた 空き家`
 
-If impressions overlap the existing high-intent page, optimize it before creating another page. Do not create standalone pages until GSC shows distinct demand.
-
-## Scaling rule
-
-Do not mass-produce thin city pages. A new location or intent page needs distinct official rules/data, distinct SERP intent, and a plausible monetization path. Until the first commercial page gets meaningful impressions/clicks and a monetization agreement/tracking URL is live, improving decision quality and conversion architecture outranks page count.
+Do not infer rankings, CTR, or indexing from public search alone. Use actual GSC data before deciding whether a new standalone page is warranted.
