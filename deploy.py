@@ -6,15 +6,12 @@ import sys
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
 
-# Apply the idempotent P0/SEO patch before every deploy. This closes the gap where
-# patch_build_quality.py existed in the repo but deploy.py never executed it, so
-# sitemap.xml / robots.txt and the public-placeholder fixes could be absent from
-# the actual Cloudflare Pages artifact.
-patcher = ROOT / 'scripts' / 'patch_build_quality.py'
-if patcher.exists():
-    subprocess.run([sys.executable, str(patcher)], check=True)
+# Apply idempotent source patches before quality/build so deploy output cannot regress.
+for patch_name in ('patch_build_quality.py', 'patch_high_intent_nav.py'):
+    patcher = ROOT / 'scripts' / patch_name
+    if patcher.exists():
+        subprocess.run([sys.executable, str(patcher)], check=True)
 
-# Fail the deployment if the source still violates the quality gate.
 quality_gate = ROOT / 'scripts' / 'check_seo_quality.py'
 if quality_gate.exists():
     subprocess.run([sys.executable, str(quality_gate)], check=True)
@@ -27,14 +24,11 @@ for filename in ['google02c383ec58048d5e.html', 'sitemap.txt']:
         shutil.copy2(src, DIST / src.name)
         print(f'Copied static file: {src.name}')
 
-# Copy curated static pages after the generated build. High-intent editorial copy
-# lives in static_pages itself so repository source and deployed output stay aligned.
 static_pages = ROOT / 'static_pages'
 if static_pages.exists():
     shutil.copytree(static_pages, DIST, dirs_exist_ok=True)
     print('Copied curated static pages')
 
-# Ensure every curated high-intent page is discoverable in both sitemap formats.
 curated_urls = [
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/katazuke-hiyou-urenai/',
@@ -57,7 +51,6 @@ if txt_path.exists():
             existing.append(u)
     txt_path.write_text('\n'.join(existing) + '\n', encoding='utf-8')
 
-# Cloudflare Pages custom headers.
 headers = DIST / '_headers'
 headers.write_text(
     '/sitemap.xml\n'
@@ -72,9 +65,6 @@ headers.write_text(
 )
 print('Wrote Cloudflare _headers for sitemap and robots files')
 
-# Post-build crawl/index gate. Source checks are not enough: Google only sees the
-# generated artifact. Refuse to publish when the artifact is missing the files or
-# URLs required for discovery and Search Console ownership verification.
 required_files = [
     DIST / 'index.html',
     DIST / 'sitemap.xml',
@@ -102,4 +92,11 @@ verification = (DIST / 'google02c383ec58048d5e.html').read_text(encoding='utf-8'
 if 'google-site-verification' not in verification:
     raise RuntimeError('Deploy blocked: Google Search Console verification artifact is invalid')
 
-print('Post-build crawl/index gate passed')
+# Navigation regression gate: high-intent tools must remain discoverable sitewide.
+for rel in ('index.html', 'tedori-hikaku/index.html', 'kaitai-check/index.html'):
+    page = (DIST / rel).read_text(encoding='utf-8')
+    for href in ('/tedori-hikaku/', '/kaitai-check/'):
+        if f'href="{href}"' not in page:
+            raise RuntimeError(f'Deploy blocked: {href} missing from {rel} navigation/content')
+
+print('Post-build crawl/index/navigation gate passed')
