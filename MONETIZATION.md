@@ -1,6 +1,12 @@
 # Monetization runbook
 
-Updated: 2026-09-25
+Updated: 2026-09-26
+
+## 2026-09-26 correction: idea partner payout scope
+
+Fresh source verification found an important scope distinction. idea株式会社's 2026-08-04 **multi-industry inheritance-vacant-home partner program** (葬儀・遺品整理・家財整理・リフォーム・解体・士業等) publicly states a success-based information fee of **90,000–350,000 JPY** and includes Saitama. A separate 2026-09-04 announcement for an **引越事業者向け** partner program states **220,000 / 330,000 / 550,000 JPY** according to sale price. Do NOT treat 220,000–550,000 JPY as the general website/media referral rate unless idea confirms in writing that this site/business qualifies for that program and those terms.
+
+Implication: keep idea as a high-value direct-partnership candidate, but do not build revenue forecasts around 220k–550k. For this site's current position, the verified multi-industry public range is 90k–350k on completed sales; exact eligibility, media/site participation, consent/privacy flow, attribution, exclusions, and payment terms must be confirmed directly before implementation.
 
 ## 2026-09-25 strategic finding: municipality-backed calculators are now a SERP competitor
 
@@ -20,8 +26,9 @@ Trust rule: where a visitor's municipality offers an official/municipality-endor
    - Never insert a guessed tracking URL or imply partnership before approval.
 
 2. DIRECT PARTNERSHIP CANDIDATE — idea株式会社 `相続空き家 多業種パートナー制度`
-   - Publicly announced 2026-08-04: Saitama is in scope; registration/annual fee zero; information fee 90,000–350,000 JPY when idea closes the property sale; amount slides with property size/profit. Entry does not equal contract, and exact partner terms must be confirmed before use.
-   - This is materially higher-value than ordinary cleanup leads, but it is a B2B referral partnership rather than a normal click-based ASP program. Do not place a referral form/link or transmit owner information until a partnership agreement, consent flow, privacy handling, and exact qualification/payment conditions are confirmed.
+   - VERIFIED 2026-09-26 against the 2026-08-04 public announcement: Saitama is in scope; registration/annual fee zero; information fee 90,000–350,000 JPY when idea closes the property sale; amount slides with property scale/profit; covered industries publicly include funeral, estate/household-goods clearance, renovation, demolition and professional services. Entry does not equal contract.
+   - IMPORTANT: idea's separate 2026-09-04 **moving-company partner** announcement offers 220,000 / 330,000 / 550,000 JPY based on sale price. Those higher amounts are NOT assumed to apply to this website/media business. Treat them as unavailable unless idea explicitly approves this business under equivalent written terms.
+   - This remains materially higher-value than ordinary cleanup leads, but it is a B2B referral partnership rather than a normal click-based ASP program. Do not place a referral form/link or transmit owner information until a partnership agreement, consent flow, privacy handling, and exact qualification/payment conditions are confirmed.
    - Best-fit traffic if approved: `相続した実家を売りたい`, `売れない実家`, `残置物あり売却`, `片付け費用が高い`, `遠方の相続空き家` where the visitor has decided or strongly intends to sell.
    - Keep TownLife as the live-test priority until this direct agreement is actually signed and operational.
 
@@ -57,9 +64,9 @@ Trust rule: where a visitor's municipality offers an official/municipality-endor
 
 ## Current SERP direction
 
-A notable 2026 competitor pattern is the rise of structured Saitama municipality-by-municipality demolition-subsidy databases and, now, municipality-backed decision calculators. Do not answer this by mass-producing similar city pages. Only create a municipal page where official rules materially change the user's decision (application-before-contract deadline, eligibility, tax/rebuild consequence, or a unique official route) and there is measurable search demand or a monetizable downstream action.
+2026-09-26 fresh SERP review still shows commercial winners leading with `相続した空き家、そのまま`, `残置物・家財そのまま`, `片付け・解体前でも査定`, and free valuation CTAs. One competitor explicitly compares brokerage/current-condition sale/purchase before cleanup. This reinforces the existing high-intent thesis; no new generic city pages are justified.
 
-Competitors increasingly combine `相続した実家`, `残置物`, `売却`, `管理`, `解体`, and `片付け` on one commercial landing page. A more specific current pattern is `残置物・家財そのまま買取`. Local cleanup providers still lead with speed, free estimates, buyback, and one-stop handling. Avoid competing primarily on generic `おすすめ業者` or city-name pages.
+A notable 2026 competitor pattern is the rise of structured Saitama municipality-by-municipality demolition-subsidy databases and municipality-backed decision calculators. Do not answer this by mass-producing similar city pages. Only create a municipal page where official rules materially change the user's decision (application-before-contract deadline, eligibility, tax/rebuild consequence, or a unique official route) and there is measurable search demand or a monetizable downstream action.
 
 The useful gap remains a decision framework immediately before spending money: ownership/inheritance check → decide likely exit → compare disposition with contents remaining → if selling, compare contents-included vs separate buyback/clearance on NET outcome → municipal/reuse options where appropriate → cleanup quotes only for necessary scope → demolition only after tax/rebuild/subsidy checks.
 
@@ -78,7 +85,7 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, `/tedori-hikaku/`, `/kaitai-check/`
 - query-level impressions and CTR/title performance
-- NEW demolition-decision modifiers: `解体する前 査定`, `解体してから売る どっち`, `空き家 解体費用 売却価格`, `実家 更地 売却 手残り`, `空き家 解体 補助金 契約前`
+- demolition-decision modifiers: `解体する前 査定`, `解体してから売る どっち`, `空き家 解体費用 売却価格`, `実家 更地 売却 手残り`, `空き家 解体 補助金 契約前`
 - contents-included modifiers: `家財そのまま 売却`, `残置物そのまま 買取`, `実家 片付けずに売る`, `空き家 家財ごと 買取`, `片付けてから売る どっち`
 - deadline/registration modifiers: `相続登記 2027年3月31日`, `実家 親名義のまま`, `昔の相続 名義変更`, `相続登記してない 実家 売却`, `相続登記 期限 実家`
 - sale-intent modifiers: `相続した実家 売りたい`, `相続 空き家 売却 残置物`, `実家 売却 片付け前`, `売れない 相続空き家`, `遠方 相続実家 売却`
