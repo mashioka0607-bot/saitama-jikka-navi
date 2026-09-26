@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
 
 # Apply idempotent source patches before quality/build so deploy output cannot regress.
-for patch_name in ('patch_build_quality.py', 'patch_high_intent_nav.py'):
+for patch_name in ('patch_build_quality.py', 'patch_high_intent_nav.py', 'patch_tedori_precontract_bank.py'):
     patcher = ROOT / 'scripts' / patch_name
     if patcher.exists():
         subprocess.run([sys.executable, str(patcher)], check=True)
@@ -98,5 +98,10 @@ for rel in ('index.html', 'tedori-hikaku/index.html', 'kaitai-check/index.html')
     for href in ('/tedori-hikaku/', '/kaitai-check/'):
         if f'href="{href}"' not in page:
             raise RuntimeError(f'Deploy blocked: {href} missing from {rel} navigation/content')
+
+# Conversion regression gate: Kawagoe users must see the pre-contract public option.
+tedori = (DIST / 'tedori-hikaku/index.html').read_text(encoding='utf-8')
+if 'tedori_kawagoe_airbank_precontract' not in tedori:
+    raise RuntimeError('Deploy blocked: Kawagoe pre-contract airbank gate missing from tedori-hikaku')
 
 print('Post-build crawl/index/navigation gate passed')
