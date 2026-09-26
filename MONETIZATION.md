@@ -2,6 +2,16 @@
 
 Updated: 2026-09-26
 
+## 2026-09-26 strategic update: one-stop property + contents sale is now a direct competitor
+
+Fresh SERP review found a materially stronger competitor pattern: HOUSE REVO's `イエウリ` and Haseko-group `カシコシュ` launched `おうちまるごと買取`, covering Saitama as well as Tokyo/Kanagawa/Chiba. It combines real-estate purchase valuation with furniture/appliance/household-goods/estate-item appraisal, clearance and buyback in one window, explicitly selling the idea of maximizing the TOTAL economic outcome of real property + movable property rather than merely avoiding cleanup before sale.
+
+Implication: `残置物そのまま売却` and even generic `手残り比較` are no longer sufficient moats by themselves. Do not imitate this with a thin “one-stop” landing page. Our defensible role should be the **neutral pre-contract audit before choosing any vendor**: ownership/inheritance readiness → likely exit → property value with contents remaining → movable-property value / clearance cost → brokerage vs purchase vs retain/rent → municipal/official alternatives → demolition/subsidy/asbestos/tax/rebuild checks → final net proceeds and irreversible-action warnings.
+
+Conversion implication: `/tedori-hikaku/` should ultimately compare TOTAL net outcome, not just property sale price minus cleanup cost. The model should explicitly include (a) property proceeds, (b) separately recoverable contents value, (c) clearance/disposal cost, (d) brokerage/transaction cost, (e) carrying cost/time, and (f) demolition/repair only where actually required. This is a better trust position than pretending one commercial vendor is always optimal.
+
+New GSC tests when data is available: `家ごと 家財ごと 売却`, `不動産 家財 一括買取`, `実家 家財 そのまま 売却`, `空き家 家財 買取 手残り`, `片付け費用 売却価格 比較`. If impressions appear, strengthen `/tedori-hikaku/` first; do not create city pages.
+
 ## 2026-09-26 strategic update: official free consultation is a real SERP/conversion competitor
 
 Fresh Saitama primary-source review found two official routes that materially affect positioning:
@@ -80,7 +90,7 @@ Trust rule: where a visitor's municipality offers an official/municipality-endor
 
 ## Current SERP direction
 
-2026-09-26 fresh SERP review still shows commercial winners leading with `相続した空き家、そのまま`, `残置物・家財そのまま`, `片付け・解体前でも査定`, and free valuation CTAs. One competitor explicitly compares brokerage/current-condition sale/purchase before cleanup. This reinforces the existing high-intent thesis; no new generic city pages are justified.
+2026-09-26 fresh SERP review still shows commercial winners leading with `相続した空き家、そのまま`, `残置物・家財そのまま`, `片付け・解体前でも査定`, and free valuation CTAs. A stronger direct competitor now also bundles real-estate valuation with household-goods appraisal/clearance and explicitly markets total economic benefit. Therefore our moat is not “contents can remain”; it is neutral pre-contract decision quality and a more complete total-net-outcome comparison.
 
 A notable 2026 competitor pattern is the rise of structured Saitama municipality-by-municipality demolition-subsidy databases and municipality-backed decision calculators. Do not answer this by mass-producing similar city pages. Only create a municipal page where official rules materially change the user's decision (application-before-contract deadline, eligibility, tax/rebuild consequence, or a unique official route) and there is measurable search demand or a monetizable downstream action.
 
@@ -102,6 +112,7 @@ Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, `/tedori-hikaku/`, `/kaitai-check/`
 - query-level impressions and CTR/title performance
 - intent split: official/general consultation queries vs commercial decision queries; compare revenue per 1,000 organic sessions, not only CTR
+- bundled-house/contents modifiers: `家ごと 家財ごと 売却`, `不動産 家財 一括買取`, `実家 家財 そのまま 売却`, `空き家 家財 買取 手残り`, `片付け費用 売却価格 比較`
 - demolition-decision modifiers: `解体する前 査定`, `解体してから売る どっち`, `空き家 解体費用 売却価格`, `実家 更地 売却 手残り`, `空き家 解体 補助金 契約前`
 - contents-included modifiers: `家財そのまま 売却`, `残置物そのまま 買取`, `実家 片付けずに売る`, `空き家 家財ごと 買取`, `片付けてから売る どっち`
 - deadline/registration modifiers: `相続登記 2027年3月31日`, `実家 親名義のまま`, `昔の相続 名義変更`, `相続登記してない 実家 売却`, `相続登記 期限 実家`
