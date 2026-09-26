@@ -2,6 +2,22 @@
 
 Updated: 2026-09-26
 
+## 2026-09-26 strategic update: official free consultation is a real SERP/conversion competitor
+
+Fresh Saitama primary-source review found two official routes that materially affect positioning:
+
+- Saitama Prefecture's 2026 `空き家コーディネーター` is a **principally free** general consultation desk for Saitama vacant-home owners/prospective owners. It can propose concrete solution methods, introduce specialists, estimate necessary costs, and match owners with prospective users.
+- Saitama Prefecture's `空き家の持ち主応援隊` lets owners search local real-estate businesses for management, sale, rental and demolition. As of 2026-03-31 it reports **359 registered businesses and 393 completed cases**, including 175 sales and 67 demolitions.
+
+Implication: `空き家 どこに相談` / generic consultation intent is a weak place to force an affiliate CTA because a strong free official alternative exists. Do not try to beat government pages with generic “相談先まとめ” content. Our monetizable differentiation should be the **decision immediately before a costly/irreversible action**: should I sell with contents remaining, clear first, rent/retain, or demolish; what produces the best net outcome; and what must be checked before contracting.
+
+Trust/conversion rule: on undecided/general-consultation intent, surface the prefectural coordinator or official local-business route as a neutral option. Reserve commercial valuation/referral CTAs for visitors showing clear sale/disposition intent. This should improve trust and reduce mismatched affiliate clicks rather than maximizing raw outbound clicks.
+
+New GSC intent split to test when data is available:
+- informational/official-intent: `空き家 どこに相談 埼玉`, `実家 空き家 相談 埼玉`, `空き家 コーディネーター 埼玉` → official route / no hard sell
+- commercial-decision intent: `実家 片付けずに売る`, `残置物そのまま 買取`, `解体する前 査定`, `片付けてから売る どっち` → net-proceeds comparison + commercial CTA
+Measure revenue per 1,000 organic sessions separately for these intent classes; do not judge them on CTR alone.
+
 ## 2026-09-26 correction: idea partner payout scope
 
 Fresh source verification found an important scope distinction. idea株式会社's 2026-08-04 **multi-industry inheritance-vacant-home partner program** (葬儀・遺品整理・家財整理・リフォーム・解体・士業等) publicly states a success-based information fee of **90,000–350,000 JPY** and includes Saitama. A separate 2026-09-04 announcement for an **引越事業者向け** partner program states **220,000 / 330,000 / 550,000 JPY** according to sale price. Do NOT treat 220,000–550,000 JPY as the general website/media referral rate unless idea confirms in writing that this site/business qualifies for that program and those terms.
@@ -85,6 +101,7 @@ Search Console URL Inspection / Pages report is the indexing source of truth; pu
 Next GSC checks:
 - indexed status of `/kawagoe-shi/katazuke-hiyou-urenai/`, `/tedori-hikaku/`, `/kaitai-check/`
 - query-level impressions and CTR/title performance
+- intent split: official/general consultation queries vs commercial decision queries; compare revenue per 1,000 organic sessions, not only CTR
 - demolition-decision modifiers: `解体する前 査定`, `解体してから売る どっち`, `空き家 解体費用 売却価格`, `実家 更地 売却 手残り`, `空き家 解体 補助金 契約前`
 - contents-included modifiers: `家財そのまま 売却`, `残置物そのまま 買取`, `実家 片付けずに売る`, `空き家 家財ごと 買取`, `片付けてから売る どっち`
 - deadline/registration modifiers: `相続登記 2027年3月31日`, `実家 親名義のまま`, `昔の相続 名義変更`, `相続登記してない 実家 売却`, `相続登記 期限 実家`
