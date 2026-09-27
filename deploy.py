@@ -65,12 +65,7 @@ headers.write_text(
 )
 print('Wrote Cloudflare _headers for sitemap and robots files')
 
-required_files = [
-    DIST / 'index.html',
-    DIST / 'sitemap.xml',
-    DIST / 'robots.txt',
-    DIST / 'google02c383ec58048d5e.html',
-]
+required_files = [DIST / 'index.html', DIST / 'sitemap.xml', DIST / 'robots.txt', DIST / 'google02c383ec58048d5e.html']
 missing = [str(p.relative_to(DIST)) for p in required_files if not p.exists()]
 if missing:
     raise RuntimeError(f'Deploy blocked: missing generated SEO files: {missing}')
@@ -92,20 +87,21 @@ verification = (DIST / 'google02c383ec58048d5e.html').read_text(encoding='utf-8'
 if 'google-site-verification' not in verification:
     raise RuntimeError('Deploy blocked: Google Search Console verification artifact is invalid')
 
-# Navigation regression gate: high-intent tools must remain discoverable sitewide.
 for rel in ('index.html', 'tedori-hikaku/index.html', 'kaitai-check/index.html'):
     page = (DIST / rel).read_text(encoding='utf-8')
     for href in ('/tedori-hikaku/', '/kaitai-check/'):
         if f'href="{href}"' not in page:
             raise RuntimeError(f'Deploy blocked: {href} missing from {rel} navigation/content')
 
-# Conversion regression gates for pre-contract decisions.
 tedori = (DIST / 'tedori-hikaku/index.html').read_text(encoding='utf-8')
 if 'tedori_kawagoe_airbank_precontract' not in tedori:
     raise RuntimeError('Deploy blocked: Kawagoe pre-contract airbank gate missing from tedori-hikaku')
 if 'tedori_subsidy_bridge' not in tedori:
     raise RuntimeError('Deploy blocked: subsidy-to-take-home bridge missing from tedori-hikaku')
-if 'tedori_real_quotes_v1' not in tedori or 'real_appraisal_compare' not in tedori:
-    raise RuntimeError('Deploy blocked: real appraisal comparison mode missing from tedori-hikaku')
+if 'tedori_real_quotes_v2' not in tedori or 'real_appraisal_compare' not in tedori:
+    raise RuntimeError('Deploy blocked: real appraisal comparison v2 missing from tedori-hikaku')
+for required_label in ('家財・不用品の買取額', '残置物の処分・撤去で自己負担する額'):
+    if required_label not in tedori:
+        raise RuntimeError(f'Deploy blocked: quote comparison field missing: {required_label}')
 
 print('Post-build crawl/index/navigation/conversion gate passed')
