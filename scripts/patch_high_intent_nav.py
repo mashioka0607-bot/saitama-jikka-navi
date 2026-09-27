@@ -8,11 +8,17 @@ NEW = '<nav><a href="/">ホーム</a><a href="/shindan/">進め方診断</a><a h
 # high-intent links in the opposite order. Treat that state as valid/idempotent.
 QUALITY_PATCHED = '<nav><a href="/">ホーム</a><a href="/shindan/">進め方診断</a><a href="/kaitai-check/">解体前チェック</a><a href="/tedori-hikaku/">手残り比較</a><a href="/faq/">FAQ</a></nav>'
 OLD_STATIC = '<nav><a href="/">ホーム</a><a href="/shindan/">進め方診断</a><a href="/tedori-hikaku/">手残り比較</a><a href="/faq/">FAQ</a></nav>'
+# Static pages may intentionally use a more descriptive label while pointing to
+# the same high-intent destination. Validate by hrefs instead of exact nav text.
+
+
+def has_high_intent_nav(text: str) -> bool:
+    return 'href="/tedori-hikaku/"' in text and 'href="/kaitai-check/"' in text
 
 
 def replace_once(path: Path, old: str, new: str, accepted=()) -> None:
     text = path.read_text(encoding='utf-8')
-    if new in text or any(candidate in text for candidate in accepted):
+    if new in text or any(candidate in text for candidate in accepted) or has_high_intent_nav(text):
         return
     if old not in text:
         raise SystemExit(f'expected nav not found: {path}')
