@@ -3,6 +3,7 @@ const grants=[
 ['白岡市','受付中・残額少','締切は公式で最新確認','最新の市公式条件を申請前に再確認','https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7523.html'],
 ['川口市','受付中','事前診断 2026-10-30／交付申請 2026-11-13','事前診断・交付申請の条件を確認してから契約判断','https://www.city.kawaguchi.lg.jp/soshiki/01130/040/akiyatoutaisaku/27633.html'],
 ['上尾市','受付中','交付申請 2026-10-30（予算到達で早期終了）','対象は原則、概ね1年以上未使用かつ昭和56年5月31日以前に建築された住宅等。築年・空き家期間・予算残を市に確認し、対象外なら補助待ちをせず現況売却との手残り比較へ進む','https://www.city.ageo.lg.jp/page/421263.html'],
+['熊谷市','要事前相談','工事着手前に安心安全課へ相談','対象は昭和56年5月31日以前に建築された木造の居住用家屋で、市内にあり1年以上居住されておらず、飛散・落下等で近隣や公道へ影響するおそれがあるなど危険性の要件あり。解体契約を先行せず、市の対象判定と現況売却の手残りを比較してから判断','https://www.city.kumagaya.lg.jp/kurashi/kankyo_sumai/akiyataisaku/jyokyakuhojokin.html'],
 ['東松山市','受付中','申請 2026-12-28（予算到達で早期終了）','本申請前に市へ事前相談。補助対象可否を確認してから契約・着工判断','https://www.city.higashimatsuyama.lg.jp/soshiki/37/52176.html'],
 ['富士見市','受付中','除却補助申請 2027-01-31','補助金交付決定後に工事。交付決定前の契約・着工を前提に進めない','https://www.city.fujimi.saitama.jp/kurashi_tetsuzuki/sumai/2018-0511-1113-58/akiyahojoseido.html'],
 ['深谷市','受付中','事前調査申込 2026-11-30／工事完了 2027-01-29','不良住宅の事前調査を受け、補助金交付決定後に工事を進める','https://www.city.fukaya.saitama.jp/soshiki/kyoudou/jiti/tanto/akiya/akiyahojyo/14716.html'],
