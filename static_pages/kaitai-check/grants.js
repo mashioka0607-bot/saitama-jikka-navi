@@ -7,6 +7,7 @@ const grants=[
 ['富士見市','受付中','除却補助申請 2027-01-31','補助金交付決定後に工事。交付決定前の契約・着工を前提に進めない','https://www.city.fujimi.saitama.jp/kurashi_tetsuzuki/sumai/2018-0511-1113-58/akiyahojoseido.html'],
 ['深谷市','受付中','事前調査申込 2026-11-30／工事完了 2027-01-29','不良住宅の事前調査を受け、補助金交付決定後に工事を進める','https://www.city.fukaya.saitama.jp/soshiki/kyoudou/jiti/tanto/akiya/akiyahojyo/14716.html'],
 ['本庄市','受付中（先着順）','令和8年度受付中・予算到達で終了の可能性','申請書類を整える前に市へ事前相談し、補助対象可否を確認してから解体契約を進める','https://www.city.honjo.lg.jp/soshiki/toshiseibi/eizenjutaku/tantoujouhou/akiyataisaku/akiyakaitai/21195.html'],
+['鳩山町','受付中（先着順）','2026-04-01受付開始・予算到達で終了','老朽空き家除却は区域により上限50万円または30万円、家財処分も上限10万円。片付け・解体を自費で先行せず、対象可否と予算残を町に確認して現況売却との手残りを比較','https://www.town.hatoyama.saitama.jp/kurashi/sumai_hikkosi/rifomujyokyakuhojyo/page001560.html'],
 ['ときがわ町','受付中','申請 2026-12-25／完了報告 2027-02-26','交付決定前の工事契約NG','https://www.town.tokigawa.lg.jp/Info/3493'],
 ['坂戸市','受付終了','2026-05-18 上限到達で終了','受付再開を公式で確認するまで補助前提で契約しない','https://www.city.sakado.lg.jp/soshiki/37/28358.html']];
 const sel=document.getElementById('grant-city'),out=document.getElementById('grant-result');
