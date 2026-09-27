@@ -2,7 +2,7 @@ const grants=[
 ['川越市','解体補助は個別確認','契約前に市の空き家窓口・対象制度を確認','川越市は解体のメリットだけでなく、解体費用、住宅用地の税軽減が外れる可能性、再建築できない場合があることも案内。先に解体を決めず、建物付き現況査定と解体後の手残りを比較してから判断','https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1003041.html'],
 ['白岡市','受付中・残額少','締切は公式で最新確認','最新の市公式条件を申請前に再確認','https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7523.html'],
 ['川口市','受付中','事前診断 2026-10-30／交付申請 2026-11-13','事前診断・交付申請の条件を確認してから契約判断','https://www.city.kawaguchi.lg.jp/soshiki/01130/040/akiyatoutaisaku/27633.html'],
-['上尾市','受付中','交付申請 2026-10-30','本申請前に市へ事前相談。受付状況確認後に契約判断','https://www.city.ageo.lg.jp/page/421263.html'],
+['上尾市','受付中','交付申請 2026-10-30（予算到達で早期終了）','対象は原則、概ね1年以上未使用かつ昭和56年5月31日以前に建築された住宅等。築年・空き家期間・予算残を市に確認し、対象外なら補助待ちをせず現況売却との手残り比較へ進む','https://www.city.ageo.lg.jp/page/421263.html'],
 ['東松山市','受付中','申請 2026-12-28（予算到達で早期終了）','本申請前に市へ事前相談。補助対象可否を確認してから契約・着工判断','https://www.city.higashimatsuyama.lg.jp/soshiki/37/52176.html'],
 ['富士見市','受付中','除却補助申請 2027-01-31','補助金交付決定後に工事。交付決定前の契約・着工を前提に進めない','https://www.city.fujimi.saitama.jp/kurashi_tetsuzuki/sumai/2018-0511-1113-58/akiyahojoseido.html'],
 ['深谷市','受付中','事前調査申込 2026-11-30／工事完了 2027-01-29','不良住宅の事前調査を受け、補助金交付決定後に工事を進める','https://www.city.fukaya.saitama.jp/soshiki/kyoudou/jiti/tanto/akiya/akiyahojyo/14716.html'],
