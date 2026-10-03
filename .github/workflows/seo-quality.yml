@@ -26,3 +26,11 @@ jobs:
           test -f dist/google02c383ec58048d5e.html
           grep -q 'sitemap.xml' dist/robots.txt
           grep -q 'kawagoe-shi/katazuke-hiyou-urenai' dist/sitemap.xml
+      - name: Guard homepage positioning
+        run: |
+          test -f dist/index.html
+          grep -q '埼玉' dist/index.html
+          if grep -q 'Kawagoe / Inherited Home' dist/index.html; then
+            echo 'Homepage is still positioned as Kawagoe-only; migrate it to the Saitama-wide decision hub.'
+            exit 1
+          fi
