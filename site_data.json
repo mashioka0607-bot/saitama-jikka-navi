@@ -1,6 +1,6 @@
 {
   "site_name": "埼玉実家片付けナビ",
-  "tagline": "相続した実家を片付ける前に、売却・活用・管理・解体まで比較して進める埼玉の実家じまいガイド",
+  "tagline": "相続した実家を片付ける前に、通常売却・市町村空き家バンク・公的相談・管理活用を比べる埼玉の実家じまいガイド",
   "base_url": "https://saitama-jikka-navi.pages.dev",
   "affiliate_url": "",
   "operator_name": "埼玉実家片付けナビ編集部",
@@ -12,6 +12,7 @@
     {"title":"埼玉県｜空き家コーディネーター（原則無料・売却／賃貸／管理／解体等の解決方法提案・専門家紹介・費用試算）","url":"https://www.pref.saitama.lg.jp/a1106/akiya/r7_akiyacoodinator.html"},
     {"title":"埼玉県｜空き家の持ち主応援隊（地域の不動産団体から管理・売却・賃貸・解体の相談先を検索）","url":"https://www.pref.saitama.lg.jp/a1106/akiyakanrisyatouroku.html"},
     {"title":"埼玉県｜市町村空き家バンク（売りたい・貸したい所有者向け窓口一覧）","url":"https://www.pref.saitama.lg.jp/a1107/akiyabanku.html"},
+    {"title":"埼玉県｜空き家バンク等活性化支援事業（市町村の改修費等補助への県上乗せ支援・対象要件等は各市町村確認）","url":"https://www.pref.saitama.lg.jp/a1107/jyutaku-shienseido/akiyabank_shien.html"},
     {"title":"川越市｜無許可の不用品回収業者を利用しないでください","url":"https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002380/1019544.html"},
     {"title":"川越市｜引っ越し等で出る多量のごみはどのように出せばよいですか？","url":"https://www.city.kawagoe.saitama.jp/faq/faq-gomi/1012638/1012640.html"},
     {"title":"川越市｜一般廃棄物収集運搬業許可業者","url":"https://www.city.kawagoe.saitama.jp/kurashi/gomi/1002455/1002456/1002466.html"},
