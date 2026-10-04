@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
 
 # Apply idempotent source patches before quality/build so deploy output cannot regress.
-for patch_name in ('patch_build_quality.py', 'patch_high_intent_nav.py', 'patch_tedori_precontract_bank.py', 'patch_tedori_subsidy_bridge.py', 'patch_tedori_real_quotes.py'):
+for patch_name in ('patch_build_quality.py', 'patch_home_saitama_gate.py', 'patch_high_intent_nav.py', 'patch_tedori_precontract_bank.py', 'patch_tedori_subsidy_bridge.py', 'patch_tedori_real_quotes.py'):
     patcher = ROOT / 'scripts' / patch_name
     if patcher.exists():
         subprocess.run([sys.executable, str(patcher)], check=True)
