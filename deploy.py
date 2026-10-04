@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
 
 # Apply idempotent source patches before quality/build so deploy output cannot regress.
-for patch_name in ('patch_build_quality.py', 'patch_home_saitama_gate.py', 'patch_high_intent_nav.py', 'patch_tedori_precontract_bank.py', 'patch_tedori_subsidy_bridge.py', 'patch_tedori_real_quotes.py'):
+for patch_name in ('patch_build_quality.py', 'patch_home_saitama_gate.py', 'patch_high_intent_nav.py', 'patch_tedori_precontract_bank.py', 'patch_tedori_subsidy_bridge.py', 'patch_tedori_real_quotes.py', 'patch_tedori_tax_gate.py'):
     patcher = ROOT / 'scripts' / patch_name
     if patcher.exists():
         subprocess.run([sys.executable, str(patcher)], check=True)
@@ -100,6 +100,8 @@ if 'tedori_subsidy_bridge' not in tedori:
     raise RuntimeError('Deploy blocked: subsidy-to-take-home bridge missing from tedori-hikaku')
 if 'tedori_real_quotes_v2' not in tedori or 'real_appraisal_compare' not in tedori:
     raise RuntimeError('Deploy blocked: real appraisal comparison v2 missing from tedori-hikaku')
+if 'tedori_tax_gate_v1' not in tedori or 'www.nta.go.jp/taxes/shiraberu/taxanswer/joto/3306.htm' not in tedori:
+    raise RuntimeError('Deploy blocked: inherited-home tax eligibility gate missing from tedori-hikaku')
 for required_label in ('家財・不用品の買取額', '残置物の処分・撤去で自己負担する額'):
     if required_label not in tedori:
         raise RuntimeError(f'Deploy blocked: quote comparison field missing: {required_label}')
