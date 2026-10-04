@@ -20,34 +20,20 @@ def main() -> int:
     changed = False
 
     replacements = [
-        (
-            "Kawagoe / Inherited Home",
-            "Saitama / Inherited Home",
-        ),
-        (
-            "相続した実家や空き家は、先に高額な片付けを契約せず、名義・家族の合意・家の出口を確認してから必要な片付けだけ進めます。",
-            "埼玉県の実家や空き家は、片付けや媒介契約を急ぐ前に、名義・家族の合意と市町村ごとの制度条件を確認。通常売却・空き家バンク・公的相談・専門買取を比べてから必要な片付けだけ進めます。",
-        ),
-        (
-            "<strong>2. 現況で出口確認</strong><br>売却・保有・管理・活用を比較",
-            "<strong>2. 自治体制度を先に確認</strong><br>空き家バンク等の登録条件は市町村ごとに異なる",
-        ),
-        (
-            "<strong>3. 必要分だけ片付け</strong><br>価値確認後に処分・買取・業者比較へ",
-            "<strong>3. 出口を比べてから片付け</strong><br>通常売却・空き家バンク・専門買取を比較",
-        ),
-        (
-            "川越市を中心に、相続した実家を片付ける前に名義・家族合意・売却・活用・管理・解体を整理します。",
-            "埼玉県で相続した実家を片付ける前に、名義・家族合意・市町村制度・通常売却・空き家バンク・専門買取の順番を整理します。",
-        ),
+        ("Kawagoe / Inherited Home", "Saitama / Inherited Home"),
+        ("相続した実家や空き家は、先に高額な片付けを契約せず、名義・家族の合意・家の出口を確認してから必要な片付けだけ進めます。", "埼玉県の実家や空き家は、片付けや媒介契約を急ぐ前に、名義・家族の合意と市町村ごとの制度条件を確認。通常売却・空き家バンク・公的相談・専門買取を比べてから必要な片付けだけ進めます。"),
+        ("<strong>2. 現況で出口確認</strong><br>売却・保有・管理・活用を比較", "<strong>2. 自治体制度を先に確認</strong><br>空き家バンク等の登録条件は市町村ごとに異なる"),
+        ("<strong>3. 必要分だけ片付け</strong><br>価値確認後に処分・買取・業者比較へ", "<strong>3. 出口を比べてから片付け</strong><br>通常売却・空き家バンク・専門買取を比較"),
+        ("川越市を中心に、相続した実家を片付ける前に名義・家族合意・売却・活用・管理・解体を整理します。", "埼玉県で相続した実家を片付ける前に、名義・家族合意・市町村制度・通常売却・空き家バンク・専門買取の順番を整理します。"),
+        # The global nav must not send statewide visitors into a Kawagoe-only estimate page.
+        # Route the strongest commercial-intent nav slot to the curated statewide take-home comparison instead.
+        ('<a href="/kawagoe-shi/mitsumori-check/">見積チェック</a>', '<a href="/tedori-hikaku/">売却手取り比較</a>'),
     ]
 
     for old, new in replacements:
         text, did = replace_once(text, old, new)
         changed = changed or did
 
-    # patch_build_quality.py used to inject a dated 9/27 event. Remove the entire stale event section
-    # while preserving the following affiliate placeholder (which renders only after a verified offer is configured).
     stale_start = '<section class="section warning"><strong>9/27（日）｜予約なしで、解体・不用品回収/買取・相続/不動産をまとめて相談</strong>'
     if stale_start in text:
         start = text.index(stale_start)
@@ -60,24 +46,19 @@ def main() -> int:
         text = text[:start] + replacement + text[end:]
         changed = True
 
-    # If the old Kawagoe-only notice still exists without the stale-event injection, replace it directly.
     old_notice = '''<section class="section notice"><strong>川越市にも原則無料の空き家相談窓口があります</strong><p>「何から手をつければいいか」から相続、管理、賃貸、売却、解体まで相談できます。</p><p><a class="public-link" data-context="home_consultation" href="https://www.city.kawagoe.saitama.jp/kurashi/jyutaku/1003031/1020433.html" target="_blank" rel="noopener">川越市公式の相談窓口を見る</a></p></section>'''
     new_notice = '''<section class="section notice"><strong>まず実家の市町村制度を確認</strong><p>埼玉県の空き家バンクは市町村主体で、登録条件や媒介の扱いが自治体ごとに異なります。片付けや媒介契約の前に、対象市町村の一次情報を確認してください。</p><p><a class="public-link" data-context="home_saitama_airbank" href="https://www.pref.saitama.lg.jp/a1107/akiyabanku.html" target="_blank" rel="noopener">埼玉県公式の市町村空き家バンク一覧を見る</a></p></section>'''
     text, did = replace_once(text, old_notice, new_notice)
     changed = changed or did
 
-    forbidden = [
-        "Kawagoe / Inherited Home",
-        "川越市を中心に、相続した実家を片付ける前に",
-        "9/27（日）｜予約なしで",
-    ]
+    forbidden = ["Kawagoe / Inherited Home", "川越市を中心に、相続した実家を片付ける前に", "9/27（日）｜予約なしで", '<a href="/kawagoe-shi/mitsumori-check/">見積チェック</a>']
     leftovers = [x for x in forbidden if x in text]
     if leftovers:
         raise SystemExit(f"Homepage statewide gate failed; stale strings remain: {leftovers}")
 
     if changed:
         PATH.write_text(text, encoding="utf-8")
-        print("Patched homepage: Saitama-wide positioning, municipality-first airbank gate, stale event removed.")
+        print("Patched homepage: Saitama-wide positioning, municipality-first airbank gate, statewide commercial nav, stale event removed.")
     else:
         print("Homepage statewide patch already applied; no changes needed.")
     return 0
