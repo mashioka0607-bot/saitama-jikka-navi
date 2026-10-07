@@ -1,5 +1,5 @@
 {
-  "last_verified": "2026-09-25",
+  "last_verified": "2026-10-07",
   "purpose": "契約前チェック用。金額だけでなく、受付状況・事前手続・契約タイミングを一次情報で確認する。公開時は必ず自治体公式ページを再確認する。",
   "municipalities": [
     {
@@ -88,15 +88,27 @@
     },
     {
       "municipality": "坂戸市",
-      "status": "受付終了",
-      "status_as_of": "2026-05-18",
-      "deadline": null,
+      "status": "受付再開",
+      "status_as_of": "2026-09-28",
+      "deadline": "市公式の最新受付状況・予算残額を申請前に確認",
       "precheck_required": null,
-      "contract_timing": "受付再開の有無を市公式で確認するまで補助前提で契約しない",
-      "urgency": "closed",
-      "note": "2026-05-18に補助上限到達のため受付終了。年度内に再開可能となった場合は市公式サイトで告知予定。",
+      "contract_timing": "再開後も予算状況が変動し得るため、補助前提の契約前に市公式の最新条件を確認",
+      "urgency": "high",
+      "note": "いったん受付終了していたが、坂戸市が2026-09-28に令和8年度空き家等除却費補助金の受付再開を告知。静的な『受付終了』表示は誤誘導になるため、確認日と現在状態を必須項目として扱う。",
       "official_url": "https://www.city.sakado.lg.jp/soshiki/37/28358.html",
-      "conversion_angle": "補助金額だけを載せる静的記事の危険性を示す。受付終了を明示"
+      "conversion_angle": "受付終了→再開の実例。補助金ページは金額DBではなく『現在申請できるか』を契約前に確認する導線にする"
+    },
+    {
+      "municipality": "鳩山町",
+      "status": "受付中（予算到達で終了）",
+      "status_as_of": "2026-10-07",
+      "deadline": "予算額到達時に終了",
+      "precheck_required": true,
+      "contract_timing": "家財処分を伴う場合も見積書・許可書等を揃え、交付条件を確認してから実施判断",
+      "urgency": "medium",
+      "note": "老朽空き家除却は居住誘導区域内上限50万円、区域外上限30万円。家財処分は上限10万円。家財処分を伴う場合、家財処分見積書に加えて一般廃棄物処理業者等の許可書写しと家財写真が必要。片付け費と解体費を別建てで比較し、処分主体の適法性も確認できる埼玉県内の重要例。",
+      "official_url": "https://www.town.hatoyama.saitama.jp/kurashi/sumai_hikkosi/rifomujyokyakuhojyo/page001560.html",
+      "conversion_angle": "『家財処分にも補助があるか』→許可・見積条件確認→必要な片付けだけ見積→解体/売却の最終手取り比較"
     }
   ]
 }
