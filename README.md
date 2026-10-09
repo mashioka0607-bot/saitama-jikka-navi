@@ -4,7 +4,7 @@
 
 ## Cloudflare Pages
 - Framework preset: None
-- Build command: `python build.py`
+- Build command: `python deploy.py`
 - Build output directory: `dist`
 - Root directory: `/`
 
@@ -24,5 +24,7 @@
 
 ## ローカルビルド
 ```bash
-python build.py
+python deploy.py
 ```
+
+`build.py` は基本ページの生成のみです。`deploy.py` は SEO 品質チェック、手取り比較・解体チェックなどの静的ページの統合、サイトマップ・robots・Search Console 検証ファイルの検査まで実施します。本番の Cloudflare Pages でも必ず `python deploy.py` を使用してください。
