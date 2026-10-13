@@ -106,4 +106,8 @@ for required_label in ('家財・不用品の買取額', '残置物の処分・�
     if required_label not in tedori:
         raise RuntimeError(f'Deploy blocked: quote comparison field missing: {required_label}')
 
-print('Post-build crawl/index/navigation/conversion gate passed')
+# Validate the final published HTML, including curated static pages copied after build.py.
+# This must run after copytree; source-only SEO checks cannot catch public placeholders.
+subprocess.run([sys.executable, str(ROOT / 'scripts' / 'check_public_quality.py')], check=True)
+
+print('Post-build crawl/index/navigation/conversion and public-quality gates passed')
