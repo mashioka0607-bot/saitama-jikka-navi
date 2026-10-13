@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import pathlib
 import sys
 
@@ -29,6 +30,14 @@ def main() -> int:
         return 2
 
     violations: list[str] = []
+
+    # An approved offer must not go live without a configured conversion meter.
+    # No offers configured => informational MVP is still allowed to deploy.
+    config = json.loads((ROOT / "site_data.json").read_text(encoding="utf-8"))
+    active_offers = [o for o in config.get("offers", []) if (o.get("url") or "").strip()]
+    if active_offers and not (config.get("ga4_id") or "").strip():
+        violations.append("site_data.json: active affiliate offers require a GA4 measurement ID")
+
     for path in html_files:
         text = path.read_text(encoding="utf-8")
 
@@ -38,10 +47,14 @@ def main() -> int:
 
         has_affiliate = 'class="button invert affiliate"' in text
         has_ga4 = "googletagmanager.com/gtag/js" in text
-        if has_affiliate and has_ga4 and RAW_AFFILIATE_EVENT in text:
+        if has_affiliate and not has_ga4:
+            violations.append(f"{path.relative_to(ROOT)}: affiliate CTA is missing a GA4 tag")
+        if has_affiliate and RAW_AFFILIATE_EVENT in text:
             violations.append(
                 f"{path.relative_to(ROOT)}: affiliate_click uses raw dataLayer push; use gtag('event', ...)"
             )
+        if has_affiliate and "gtag('event','affiliate_click'" not in text:
+            violations.append(f"{path.relative_to(ROOT)}: affiliate CTA has no gtag affiliate_click handler")
 
     if violations:
         print("Public quality gate failed:", file=sys.stderr)
