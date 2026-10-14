@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -35,7 +36,10 @@ def main() -> int:
     # No offers configured => informational MVP is still allowed to deploy.
     config = json.loads((ROOT / "site_data.json").read_text(encoding="utf-8"))
     active_offers = [o for o in config.get("offers", []) if (o.get("url") or "").strip()]
-    if active_offers and not (config.get("ga4_id") or "").strip():
+    ga4_id = (config.get("ga4_id") or "").strip()
+    if ga4_id and not re.fullmatch(r"G-[A-Z0-9]+", ga4_id):
+        violations.append("site_data.json: invalid GA4 measurement ID")
+    if active_offers and not ga4_id:
         violations.append("site_data.json: active affiliate offers require a GA4 measurement ID")
 
     for path in html_files:
@@ -44,6 +48,17 @@ def main() -> int:
         for phrase in FORBIDDEN_PUBLIC_PHRASES:
             if phrase in text:
                 violations.append(f"{path.relative_to(ROOT)}: public placeholder: {phrase}")
+
+        # All full HTML pages must be measurable, even before an ASP link is approved.
+        # The verification HTML is deliberately excluded because it has no <head>.
+        if ga4_id and "</head>" in text.lower():
+            expected_src = f"googletagmanager.com/gtag/js?id={ga4_id}"
+            if expected_src not in text:
+                violations.append(f"{path.relative_to(ROOT)}: configured GA4 tag is missing or uses a different ID")
+            if text.count("googletagmanager.com/gtag/js") != 1:
+                violations.append(f"{path.relative_to(ROOT)}: GA4 script tag must appear exactly once")
+            if f"gtag(\'config\',\'{ga4_id}\')" not in text:
+                violations.append(f"{path.relative_to(ROOT)}: GA4 config call is missing or mismatched")
 
         has_affiliate = 'class="button invert affiliate"' in text
         has_ga4 = "googletagmanager.com/gtag/js" in text
