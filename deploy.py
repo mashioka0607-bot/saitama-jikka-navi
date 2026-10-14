@@ -1,4 +1,6 @@
 from pathlib import Path
+import json
+import re
 import shutil
 import subprocess
 import sys
@@ -28,6 +30,30 @@ static_pages = ROOT / 'static_pages'
 if static_pages.exists():
     shutil.copytree(static_pages, DIST, dirs_exist_ok=True)
     print('Copied curated static pages')
+
+# The curated static HTML is copied *after* build.py generates GA4-tagged pages.
+# Inject the same GA4 config into copied pages, but only when GA4 is enabled.
+site_config = json.loads((ROOT / 'site_data.json').read_text(encoding='utf-8'))
+ga4_id = (site_config.get('ga4_id') or '').strip()
+if ga4_id:
+    if not re.fullmatch(r'G-[A-Z0-9]+', ga4_id):
+        raise RuntimeError('Invalid GA4 measurement ID in site_data.json')
+    ga4_snippet = (
+        f'<script async src="https://www.googletagmanager.com/gtag/js?id={ga4_id}"></script>'
+        '<script>window.dataLayer=window.dataLayer||[];'
+        'function gtag(){dataLayer.push(arguments)}'
+        "gtag('js',new Date());"
+        f"gtag('config','{ga4_id}');</script>"
+    )
+    for html_path in DIST.rglob('*.html'):
+        markup = html_path.read_text(encoding='utf-8')
+        if '</head>' not in markup.lower():
+            continue  # Google verification file is not a full HTML document.
+        if 'googletagmanager.com/gtag/js' in markup:
+            continue  # build.py already configured GA4 for generated pages.
+        markup = re.sub(r'</head>', lambda m: ga4_snippet + m.group(0), markup, count=1, flags=re.IGNORECASE)
+        html_path.write_text(markup, encoding='utf-8')
+        print(f'Injected GA4 into static HTML: {html_path.relative_to(DIST)}')
 
 curated_urls = [
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
