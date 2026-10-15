@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
+from html.parser import HTMLParser
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -17,6 +20,19 @@ FORBIDDEN_PUBLIC_PHRASES = (
 # rather than relying only on a raw dataLayer push.
 RAW_AFFILIATE_EVENT = "window.dataLayer.push({event:'affiliate_click'"
 
+class AffiliateLinkParser(HTMLParser):
+    """Read published affiliate anchors, not just configured offers."""
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.links: list[tuple[str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "a":
+            return
+        values = dict(attrs)
+        if "affiliate" in (values.get("class") or "").split():
+            self.links.append((values.get("data-offer") or "", values.get("href") or ""))
+
 
 def main() -> int:
     if not DIST.exists():
@@ -29,6 +45,21 @@ def main() -> int:
         return 2
 
     violations: list[str] = []
+
+    # An approved offer must not go live without a configured conversion meter.
+    # No offers configured => informational MVP is still allowed to deploy.
+    config = json.loads((ROOT / "site_data.json").read_text(encoding="utf-8"))
+    active_offers = [o for o in config.get("offers", []) if (o.get("url") or "").strip()]
+    active_by_id = {o.get("id"): o["url"].strip() for o in active_offers if o.get("id")}
+    if len(active_by_id) != len(active_offers):
+        violations.append("site_data.json: affiliate offers need unique, nonempty IDs")
+    rendered_offer_ids: set[str] = set()
+    ga4_id = (config.get("ga4_id") or "").strip()
+    if ga4_id and not re.fullmatch(r"G-[A-Z0-9]+", ga4_id):
+        violations.append("site_data.json: invalid GA4 measurement ID")
+    if active_offers and not ga4_id:
+        violations.append("site_data.json: active affiliate offers require a GA4 measurement ID")
+
     for path in html_files:
         text = path.read_text(encoding="utf-8")
 
@@ -36,12 +67,46 @@ def main() -> int:
             if phrase in text:
                 violations.append(f"{path.relative_to(ROOT)}: public placeholder: {phrase}")
 
-        has_affiliate = 'class="button invert affiliate"' in text
+        # All full HTML pages must be measurable, even before an ASP link is approved.
+        # The verification HTML is deliberately excluded because it has no <head>.
+        if ga4_id and "</head>" in text.lower():
+            expected_src = f"googletagmanager.com/gtag/js?id={ga4_id}"
+            if expected_src not in text:
+                violations.append(f"{path.relative_to(ROOT)}: configured GA4 tag is missing or uses a different ID")
+            if text.count("googletagmanager.com/gtag/js") != 1:
+                violations.append(f"{path.relative_to(ROOT)}: GA4 script tag must appear exactly once")
+            if f"gtag(\'config\',\'{ga4_id}\')" not in text:
+                violations.append(f"{path.relative_to(ROOT)}: GA4 config call is missing or mismatched")
+
+        # Compare published affiliate hrefs with configured approved URLs.
+        # HTMLParser decodes &amp; in query parameters before comparison.
+        parser = AffiliateLinkParser()
+        parser.feed(text)
+        for offer_id, href in parser.links:
+            expected_url = active_by_id.get(offer_id)
+            if not expected_url:
+                violations.append(f"{path.relative_to(ROOT)}: affiliate CTA uses unconfigured offer ID {offer_id!r}")
+            elif href != expected_url:
+                violations.append(f"{path.relative_to(ROOT)}: affiliate CTA URL differs from configured offer {offer_id!r}")
+            else:
+                rendered_offer_ids.add(offer_id)
+
+        # Detect affiliate CTAs by parsed class tokens, independent of class order,
+        # whitespace, or whether the HTML uses single/double quoted attributes.
+        has_affiliate = bool(parser.links)
         has_ga4 = "googletagmanager.com/gtag/js" in text
-        if has_affiliate and has_ga4 and RAW_AFFILIATE_EVENT in text:
+        if has_affiliate and not has_ga4:
+            violations.append(f"{path.relative_to(ROOT)}: affiliate CTA is missing a GA4 tag")
+        if has_affiliate and RAW_AFFILIATE_EVENT in text:
             violations.append(
                 f"{path.relative_to(ROOT)}: affiliate_click uses raw dataLayer push; use gtag('event', ...)"
             )
+        if has_affiliate and "gtag('event','affiliate_click'" not in text:
+            violations.append(f"{path.relative_to(ROOT)}: affiliate CTA has no gtag affiliate_click handler")
+
+    for offer_id in active_by_id:
+        if offer_id not in rendered_offer_ids:
+            violations.append(f"site_data.json: active offer {offer_id!r} has no matching published affiliate CTA")
 
     if violations:
         print("Public quality gate failed:", file=sys.stderr)
