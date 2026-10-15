@@ -8,6 +8,9 @@ import contextlib
 import importlib.util
 import io
 import json
+import shutil
+import subprocess
+import sys
 from pathlib import Path
 import tempfile
 import unittest
@@ -104,6 +107,54 @@ class PublicQualityGateTests(unittest.TestCase):
         code, log = self.run_gate("<html><head></head><body>情報</body></html>",
                                   offers=[], ga4_id="")
         self.assertEqual(code, 0, log)
+
+
+class AffiliateDeployIntegrationTests(unittest.TestCase):
+    """Exercise the actual deploy pipeline with a synthetic approved offer.
+
+    Work in a temporary copy: no real affiliate URL or GA4 ID is committed,
+    and deploy.py's source patchers cannot modify the checkout.
+    """
+
+    def test_synthetic_offer_survives_full_deploy_and_quality_gate(self):
+        source = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp) / "site"
+            shutil.copytree(
+                source, project,
+                ignore=shutil.ignore_patterns(".git", "dist", "__pycache__", "*.pyc"),
+            )
+            config_path = project / "site_data.json"
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            config["ga4_id"] = GA4
+            config["offers"] = [{
+                "id": "primary",
+                "name": "架空の査定サービス（CI専用）",
+                "url": URL,
+                "label": "無料査定",
+            }]
+            config_path.write_text(json.dumps(config, ensure_ascii=False), encoding="utf-8")
+
+            completed = subprocess.run(
+                [sys.executable, "deploy.py"], cwd=project,
+                capture_output=True, text=True, timeout=90,
+            )
+            self.assertEqual(
+                completed.returncode, 0,
+                completed.stdout + "\n" + completed.stderr,
+            )
+            homepage = (project / "dist" / "index.html").read_text(encoding="utf-8")
+            parser = quality.AffiliateLinkParser()
+            parser.feed(homepage)
+            self.assertIn(("primary", URL), parser.links)
+            self.assertIn('gtag(\'event\',\'affiliate_click\'', homepage)
+            self.assertIn('<span class="pr">PR</span>', homepage)
+            self.assertNotIn(quality.RAW_AFFILIATE_EVENT, homepage)
+
+            # Curated static pages are copied after build.py; they still need GA4.
+            static_page = (project / "dist" / "tedori-hikaku" / "index.html").read_text(encoding="utf-8")
+            self.assertEqual(static_page.count("googletagmanager.com/gtag/js?id=" + GA4), 1)
+            self.assertIn("Public quality gate passed:", completed.stdout)
 
 
 if __name__ == "__main__":
