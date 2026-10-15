@@ -91,7 +91,9 @@ def main() -> int:
             else:
                 rendered_offer_ids.add(offer_id)
 
-        has_affiliate = 'class="button invert affiliate"' in text
+        # Detect affiliate CTAs by parsed class tokens, independent of class order,
+        # whitespace, or whether the HTML uses single/double quoted attributes.
+        has_affiliate = bool(parser.links)
         has_ga4 = "googletagmanager.com/gtag/js" in text
         if has_affiliate and not has_ga4:
             violations.append(f"{path.relative_to(ROOT)}: affiliate CTA is missing a GA4 tag")
