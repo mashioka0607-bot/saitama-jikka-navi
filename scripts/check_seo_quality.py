@@ -21,6 +21,17 @@ def main() -> int:
         failures.append("build does not generate sitemap.xml")
     if "robots.txt" not in text:
         failures.append("build does not generate robots.txt")
+    # deploy.py applies the quote-comparison patch before this gate.
+    # Verify the published source offers both official next steps, not just a calculation.
+    tedori = (ROOT / "static_pages/tedori-hikaku/index.html").read_text(encoding="utf-8")
+    if "tedori_real_quotes_v2" not in tedori:
+        failures.append("real appraisal comparison v2 missing from curated page")
+    for url in (
+        "https://www.pref.saitama.lg.jp/a1106/akiya/r7_akiyacoodinator.html",
+        "https://www.pref.saitama.lg.jp/a1107/akiyabanku.html",
+    ):
+        if url not in tedori:
+            failures.append(f"official next-step link missing from quote comparison: {url}")
     if failures:
         print("SEO/quality gate failed:")
         for item in failures:
