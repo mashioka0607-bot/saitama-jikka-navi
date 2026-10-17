@@ -1,7 +1,10 @@
 from pathlib import Path
+import json
 import shutil
 import subprocess
 import sys
+from urllib.parse import urljoin, urlsplit
+from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
@@ -29,27 +32,40 @@ if static_pages.exists():
     shutil.copytree(static_pages, DIST, dirs_exist_ok=True)
     print('Copied curated static pages')
 
-curated_urls = [
-    'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
-    'https://saitama-jikka-navi.pages.dev/kawagoe-shi/katazuke-hiyou-urenai/',
-    'https://saitama-jikka-navi.pages.dev/tedori-hikaku/',
-    'https://saitama-jikka-navi.pages.dev/kaitai-check/',
-]
-xml_path = DIST / 'sitemap.xml'
-if xml_path.exists():
-    xml = xml_path.read_text(encoding='utf-8')
-    additions = ''.join(f'<url><loc>{u}</loc></url>' for u in curated_urls if u not in xml)
-    if additions:
-        xml = xml.replace('</urlset>', additions + '</urlset>')
-        xml_path.write_text(xml, encoding='utf-8')
+# Derive both sitemaps from the canonical site URL and actual built pages.
+# Never retain the historical, manually copied sitemap.txt list.
+site = json.loads((ROOT / 'site_data.json').read_text(encoding='utf-8'))
+base_url = site['base_url'].rstrip('/')
+parsed_base = urlsplit(base_url)
+if parsed_base.scheme != 'https' or not parsed_base.netloc or parsed_base.path not in ('', '/'):
+    raise RuntimeError('Deploy blocked: base_url must be an HTTPS origin')
 
+curated_paths = [
+    '/kawagoe-shi/gyosha-erabi/',
+    '/kawagoe-shi/katazuke-hiyou-urenai/',
+    '/tedori-hikaku/',
+    '/kaitai-check/',
+]
+curated_urls = [urljoin(base_url + '/', path.lstrip('/')) for path in curated_paths]
+xml_path = DIST / 'sitemap.xml'
+if not xml_path.exists():
+    raise RuntimeError('Deploy blocked: sitemap.xml not generated')
+ns = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+ET.register_namespace('', ns)
+tree = ET.parse(xml_path)
+root = tree.getroot()
+if root.tag != f'{{{ns}}}urlset':
+    raise RuntimeError('Deploy blocked: unexpected sitemap namespace')
+existing = {node.text for node in root.findall(f'{{{ns}}}url/{{{ns}}}loc')}
+for path, url in zip(curated_paths, curated_urls):
+    if not (DIST / path.lstrip('/') / 'index.html').is_file():
+        raise RuntimeError(f'Deploy blocked: curated page missing: {path}')
+    if url not in existing:
+        ET.SubElement(ET.SubElement(root, f'{{{ns}}}url'), f'{{{ns}}}loc').text = url
+        existing.add(url)
+tree.write(xml_path, encoding='utf-8', xml_declaration=True)
 txt_path = DIST / 'sitemap.txt'
-if txt_path.exists():
-    existing = txt_path.read_text(encoding='utf-8').splitlines()
-    for u in curated_urls:
-        if u not in existing:
-            existing.append(u)
-    txt_path.write_text('\n'.join(existing) + '\n', encoding='utf-8')
+txt_path.write_text('\n'.join(node.text for node in root.findall(f'{{{ns}}}url/{{{ns}}}loc') if node.text) + '\n', encoding='utf-8')
 
 headers = DIST / '_headers'
 headers.write_text(
@@ -76,6 +92,11 @@ if '<urlset' not in xml or '</urlset>' not in xml:
 for url in curated_urls:
     if url not in xml:
         raise RuntimeError(f'Deploy blocked: curated high-intent URL missing from sitemap.xml: {url}')
+
+xml_urls = [node.text for node in ET.parse(xml_path).getroot().findall(f'{{{ns}}}url/{{{ns}}}loc')]
+txt_urls = txt_path.read_text(encoding='utf-8').splitlines()
+if xml_urls != txt_urls or len(xml_urls) != len(set(xml_urls)):
+    raise RuntimeError('Deploy blocked: XML/TXT sitemap mismatch or duplicate URL')
 
 robots = (DIST / 'robots.txt').read_text(encoding='utf-8')
 if 'Disallow: /' in robots:
