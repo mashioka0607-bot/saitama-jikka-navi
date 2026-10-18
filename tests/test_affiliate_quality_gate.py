@@ -154,6 +154,11 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             # Curated static pages are copied after build.py; they still need GA4.
             static_page = (project / "dist" / "tedori-hikaku" / "index.html").read_text(encoding="utf-8")
             self.assertEqual(static_page.count("googletagmanager.com/gtag/js?id=" + GA4), 1)
+            diagnosis = (project / "dist" / "shindan" / "index.html").read_text(encoding="utf-8")
+            self.assertEqual(diagnosis.count("googletagmanager.com/gtag/js?id=" + GA4), 1)
+            self.assertIn("gtag('event','diagnosis_complete'", diagnosis)
+            self.assertIn("gtag('event','diagnosis_to_tedori'", diagnosis)
+            self.assertNotIn("window.dataLayer.push({event:'diagnosis_", diagnosis)
             self.assertIn("Public quality gate passed:", completed.stdout)
 
 
