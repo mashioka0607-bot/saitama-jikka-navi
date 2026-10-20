@@ -1,7 +1,7 @@
 """Add a sale-price-linked brokerage fee reference to the static take-home calculator.
 
-The reference is advisory: the user must choose whether to copy it into the
-existing editable brokerage/other selling cost field.
+The reference populates the initial standard-fee estimate and follows sale
+price changes until the user edits the brokerage/other selling cost field.
 """
 from pathlib import Path
 
@@ -22,7 +22,7 @@ reference = """<div id="broker_fee_reference_v1" class="notice" style="margin:1e
 <p id="broker-fee-summary">売却価格に応じて表示します。</p>
 <p><button id="apply-standard-fee" type="button">通常上限を費用欄へ反映</button>
 <button id="apply-special-fee" type="button" hidden>800万円以下の特例上限を反映</button></p>
-<p><small>2024年7月1日施行の国土交通省の報酬規制に基づく概算。通常上限は売買価格の消費税等相当額を除いた額で計算します。800万円以下の宅地・建物は、媒介に要する費用等を勘案し、事前合意のうえ税込33万円まで受領できる特例があります。33万円が必ず請求されるわけではありません。実際の報酬額は媒介契約前に確認してください。ボタンで反映するのは仲介手数料のみです。登記・測量等の他費用があれば費用欄に加算してください。<a href="https://www.mlit.go.jp/totikensangyo/const/1_6_bf_000013.html" target="_blank" rel="noopener">国土交通省の公式説明</a></small></p>
+<p><small>通常上限の参考額を自動入力します。費用欄を手動変更した後は上書きしません。<br>2024年7月1日施行の国土交通省の報酬規制に基づく概算。通常上限は売買価格の消費税等相当額を除いた額で計算します。800万円以下の宅地・建物は、媒介に要する費用等を勘案し、事前合意のうえ税込33万円まで受領できる特例があります。33万円が必ず請求されるわけではありません。実際の報酬額は媒介契約前に確認してください。ボタンで反映するのは仲介手数料のみです。登記・測量等の他費用があれば費用欄に加算してください。<a href="https://www.mlit.go.jp/totikensangyo/const/1_6_bf_000013.html" target="_blank" rel="noopener">国土交通省の公式説明</a></small></p>
 </div>"""
 html = html.replace(anchor, reference + anchor, 1)
 script = """<script id="broker-fee-reference-script">
@@ -39,17 +39,20 @@ script = """<script id="broker-fee-reference-script">
     const base = Math.min(price,200)*.05 + Math.min(Math.max(price-200,0),200)*.04 + Math.max(price-400,0)*.03;
     return {price, usual:round1(base*1.1), exceptional:price<=800?33:null};
   }
+  let manuallyEdited = false;
+  broker.addEventListener('input', () => { manuallyEdited = true; });
   function render(){
     const v=values();
+    if (!manuallyEdited) broker.value = v.usual;
     summary.textContent='通常の上限目安：'+v.usual.toLocaleString('ja-JP')+'万円'
       +(v.exceptional===null?'。800万円超のため低廉な空家等の特例対象外です。':
       ' ／ 低廉な空家等の特例上限：33万円（適用・請求額は媒介契約前に確認）。');
     special.hidden=v.exceptional===null;
   }
-  standard.addEventListener('click',()=>{broker.value=values().usual;broker.focus();});
+  standard.addEventListener('click',()=>{manuallyEdited=true;broker.value=values().usual;broker.focus();});
   special.addEventListener('click',()=>{
     const v=values();
-    if(v.exceptional!==null){broker.value=v.exceptional;broker.focus();}
+    if(v.exceptional!==null){manuallyEdited=true;broker.value=v.exceptional;broker.focus();}
   });
   sale.addEventListener('input',render);
   render();
