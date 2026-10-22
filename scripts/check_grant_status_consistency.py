@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 from pathlib import Path
 import sys
 
@@ -60,6 +61,20 @@ def check() -> list[str]:
             problems.append(f"{city}: public CLOSED status contradicts reviewed source")
         if "受付再開" in status and "再開" not in public_status:
             problems.append(f"{city}: reviewed REOPENED status is not reflected publicly")
+        # For dated budget snapshots, check amount, as-of date and remaining
+        # full-grant count; status and URL checks alone miss stale figures.
+        note = item.get("note", "")
+        budget = re.search(r"予算残額\s*([0-9,]+)万円", note)
+        if budget:
+            public_text = " ".join(row[1:4])
+            amount = budget.group(1)
+            if not re.search(r"予算残(?:額)?\s*" + re.escape(amount) + r"万円", public_text):
+                problems.append(f"{city}: reviewed budget {amount}万円 missing from public text")
+            if item["status_as_of"] not in public_text:
+                problems.append(f"{city}: budget snapshot date {item['status_as_of']} missing publicly")
+            remaining = re.search(r"残り\s*(\d+)件分", note)
+            if remaining and not re.search(r"残り\s*" + remaining.group(1) + r"件分", public_text):
+                problems.append(f"{city}: remaining full-grant count differs from source")
         # A reopening or closing date must be shown, so users can distinguish
         # a dated municipality announcement from today's unverified budget status.
         if "受付終了" in status or "受付再開" in status:

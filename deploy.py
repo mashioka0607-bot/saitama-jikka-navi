@@ -12,6 +12,9 @@ for patch_name in ('patch_build_quality.py', 'patch_home_saitama_gate.py', 'patc
     if patcher.exists():
         subprocess.run([sys.executable, str(patcher)], check=True)
 
+# Prevent public subsidy numbers and reviewed source data drifting apart.
+subprocess.run([sys.executable, str(ROOT / 'scripts' / 'check_grant_status_consistency.py')], check=True)
+
 quality_gate = ROOT / 'scripts' / 'check_seo_quality.py'
 if quality_gate.exists():
     subprocess.run([sys.executable, str(quality_gate)], check=True)

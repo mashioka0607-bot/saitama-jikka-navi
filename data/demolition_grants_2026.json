@@ -4,13 +4,13 @@
   "municipalities": [
     {
       "municipality": "白岡市",
-      "status": "受付中・残額少",
-      "status_as_of": "2026-09-11",
+      "status": "残予算公表・現在の受付要確認",
+      "status_as_of": "2026-10-13",
       "deadline": null,
       "precheck_required": null,
-      "contract_timing": "最新の市公式条件を申請前に再確認",
+      "contract_timing": "工事着手前に申請。契約時期は市に事前確認",
       "urgency": "high",
-      "note": "市公式は予算残額60万円、満額支給なら残り2件分と案内。予算到達で終了し得るため申請前に最新状況確認が必要。",
+      "note": "市公式2026-10-16更新：2026-10-13時点の予算残額30万円、満額支給なら残り1件分。申請時の受付可否・残予算は変動し得る。家財処分費用は対象外。工事着手前に申請。",
       "official_url": "https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7523.html",
       "conversion_angle": "見積取得より先に残予算と申請順序を確認"
     },
