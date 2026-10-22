@@ -1,23 +1,35 @@
 {
-  "updated_at": "2026-10-02",
+  "updated_at": "2026-10-22",
   "purpose": "薄い地名ページを量産せず、実家片付け前の高意図検索から売却・現況買取・公的相談への収益導線を検証するためのSearch Console観測計画",
-  "primary_hypothesis": "『片付ける前に現況で売却可能性を確認する』意図は、一般的な片付け業者比較より不動産売却CVに近い",
+  "primary_hypothesis": "『片付ける前に現況で売却可能性を確認する』意図は、一般的な片付け業者比較より不動産売却CVに近い。Googleから検索表示が始まっているため、記事量産でなく既存2ページのクエリとCTRを先に確かめる。",
   "query_clusters": [
     {
       "cluster": "片付け前×売却",
-      "queries": ["実家 片付け前 売却", "空き家 片付け前 売却", "実家 片付けないで 売却"],
+      "queries": [
+        "実家 片付け前 売却",
+        "空き家 片付け前 売却",
+        "実家 片付けないで 売却"
+      ],
       "intent": "売却前の片付け要否を判断したい",
-      "target": "/shindan/"
+      "target": "/tedori-hikaku/"
     },
     {
       "cluster": "残置物×現況売却",
-      "queries": ["空き家 残置物 そのまま 売却 埼玉", "家財そのまま 買取 埼玉", "残置物 そのまま 買取 埼玉"],
+      "queries": [
+        "空き家 残置物 そのまま 売却 埼玉",
+        "家財そのまま 買取 埼玉",
+        "残置物 そのまま 買取 埼玉"
+      ],
       "intent": "家財を残した状態で売れるか確認したい",
-      "target": "/shindan/"
+      "target": "/tedori-hikaku/"
     },
     {
       "cluster": "相続実家×出口",
-      "queries": ["相続 実家 売却 埼玉", "相続した実家 どうする 埼玉", "実家じまい 埼玉"],
+      "queries": [
+        "相続 実家 売却 埼玉",
+        "相続した実家 どうする 埼玉",
+        "実家じまい 埼玉"
+      ],
       "intent": "相続後の売却・保有・管理の順番を決めたい",
       "target": "/"
     }
@@ -31,7 +43,14 @@
   "current_blockers": [
     "GA4 ID未設定",
     "正式ASP案件・報酬・成果地点・承認条件が未登録",
-    "Search Console実測データがリポジトリ内にない",
+    "GSC登録・表示実績開始は確認済み。Search Console API/CSVの直近28日・90日実測値が未取得",
     "トップ/共通ナビに川越固定表現が残る"
-  ]
+  ],
+  "gsc_confirmed": {
+    "property": "https://saitama-jikka-navi.pages.dev/",
+    "verified": "2026-08-25",
+    "impressions_started": "2026-09-07",
+    "evidence": "Google Search Console ownership confirmation (2026-08-25 JST) and first-impressions email (2026-09-10 JST)",
+    "numbers_accessible": false
+  }
 }
