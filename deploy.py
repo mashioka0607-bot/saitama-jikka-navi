@@ -104,12 +104,17 @@ form.addEventListener('submit',function(){next.hidden=false;});
 const quoteForm=document.getElementById('quote-compare');
 if(quoteForm){
   quoteForm.addEventListener('submit',function(){
-    const ready=[1,2,3].some(function(i){
+    const priced=[1,2,3].filter(function(i){
       const price=document.getElementById('q'+i+'p');
-      const fee=document.getElementById('q'+i+'f');
-      return price&&fee&&Number(price.value)>0&&fee.value.trim()!=='';
+      return price&&Number(price.value)>0;
     });
-    if(ready)next.hidden=false;
+    const ready=priced.length>0&&priced.every(function(i){
+      const fee=document.getElementById('q'+i+'f');
+      return fee&&fee.value.trim()!=='';
+    });
+    // The real-quote comparison rejects any priced row without a fee.
+    // Do not expose the paid CTA after that validation error.
+    next.hidden=!ready;
   });
 }
 const link=next.querySelector('.affiliate');
