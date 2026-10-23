@@ -58,6 +58,38 @@ if ga4_id:
         html_path.write_text(markup, encoding='utf-8')
         print(f'Injected GA4 into static HTML: {html_path.relative_to(DIST)}')
 
+# Curated high-intent pages are copied after build.py, so they do not receive
+# build.py's public-link event listener. Measure exits to official sites on
+# these pages alongside ASP clicks, without sending any user-entered values.
+# Use delegated handling: quote-result links are rendered after form submit.
+if ga4_id:
+    for relative in ('tedori-hikaku/index.html', 'kaitai-check/index.html'):
+        page_path = DIST / relative
+        markup = page_path.read_text(encoding='utf-8')
+        marker = 'id="official-exit-tracking-v1"'
+        if marker in markup:
+            continue
+        if markup.count('</body>') != 1:
+            raise RuntimeError(f'Official-exit tracking insertion failed: {relative}')
+        script = """<script id="official-exit-tracking-v1">(function(){
+document.addEventListener('click', function(event) {
+  const link = event.target && event.target.closest && event.target.closest('a[href]');
+  if (!link || typeof window.gtag !== 'function') return;
+  let url;
+  try { url = new URL(link.href, window.location.href); } catch (_) { return; }
+  const host = url.hostname.toLowerCase();
+  if (!host.endsWith('.lg.jp') && !host.endsWith('.go.jp')) return;
+  window.gtag('event','official_source_click',{
+    context: link.dataset.context || 'curated_static',
+    destination_host: host,
+    source_page: window.location.pathname
+  });
+});
+})();</script>"""
+        markup = markup.replace('</body>', script + '</body>', 1)
+        page_path.write_text(markup, encoding='utf-8')
+        print(f'Enabled GA4 official-source exit tracking: {relative}')
+
 # Put the approved offer at the point of highest intent, after the user
 # finishes the take-home comparison. A configured offer is never invented.
 # The static tedori page is copied after build.py, so generated-page CTAs
