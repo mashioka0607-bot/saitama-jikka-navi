@@ -21,6 +21,8 @@ jobs:
         run: python deploy.py
       - name: Validate grant selector JavaScript syntax
         run: node --check static_pages/kaitai-check/grants.js
+      - name: Validate diagnosis decisions by user intent
+        run: node tests/test_diagnosis_routing.js
       - name: Run affiliate and GA4 regression tests
         run: python -m unittest discover -s tests -p 'test_affiliate_quality_gate.py' -v
       - name: Show generated discovery files
