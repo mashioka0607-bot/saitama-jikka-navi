@@ -180,6 +180,16 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn("gtag('event','diagnosis_complete'", diagnosis)
             # Approved ASP URL must also appear at the strongest commercial
             # decision point, not only on generated home/area pages.
+            # Delayed closings can reverse the apparent highest-quote winner.
+            # Compare each quote after its own carry period and monthly cost.
+            self.assertIn('id="quote-monthly"', static_page)
+            self.assertIn('id="q1m"', static_page)
+            self.assertIn('id="q2m"', static_page)
+            self.assertIn('id="q3m"', static_page)
+            self.assertIn('holding:months*monthly', static_page)
+            self.assertIn('net:price+reuse-disposal-fee-other-months*monthly', static_page)
+            self.assertIn("x.holding.toLocaleString()", static_page)
+            self.assertIn("comparison_version:'v3'", static_page)
             self.assertIn('id="tedori-affiliate-next"', static_page)
             self.assertIn('data-context="tedori_compare_complete"', static_page)
             self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static_page)
