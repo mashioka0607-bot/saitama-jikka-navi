@@ -160,6 +160,16 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn('id="official-exit-tracking-v1"', static_page)
             self.assertIn("gtag('event','official_source_click'", static_page)
             self.assertIn("destination_host: host", static_page)
+            # Verified municipalities can use .saitama.jp instead of .lg.jp.
+            # The host is matched exactly, not via a broad .saitama.jp suffix.
+            for official_host in (
+                "www.city.kawagoe.saitama.jp",
+                "www.city.fujimi.saitama.jp",
+                "www.town.hatoyama.saitama.jp",
+            ):
+                self.assertIn(official_host, static_page)
+            self.assertIn("knownMunicipalHosts.has(host)", static_page)
+            self.assertNotIn("host.endsWith('.saitama.jp')", static_page)
             self.assertIn("source_page: window.location.pathname", static_page)
             self.assertNotIn("destination: link.href", static_page)
             kaitai = (project / "dist" / "kaitai-check" / "index.html").read_text(encoding="utf-8")

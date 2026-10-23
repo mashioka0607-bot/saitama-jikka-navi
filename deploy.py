@@ -78,7 +78,15 @@ document.addEventListener('click', function(event) {
   let url;
   try { url = new URL(link.href, window.location.href); } catch (_) { return; }
   const host = url.hostname.toLowerCase();
-  if (!host.endsWith('.lg.jp') && !host.endsWith('.go.jp')) return;
+  // Some verified Saitama municipal sites use .saitama.jp, not .lg.jp.
+  // Match only exact audited hosts; never allow every .saitama.jp domain.
+  const knownMunicipalHosts = new Set([
+    'www.city.kawagoe.saitama.jp',
+    'www.city.fujimi.saitama.jp',
+    'www.town.hatoyama.saitama.jp'
+  ]);
+  if (!host.endsWith('.lg.jp') && !host.endsWith('.go.jp') &&
+      !knownMunicipalHosts.has(host)) return;
   window.gtag('event','official_source_click',{
     context: link.dataset.context || 'curated_static',
     destination_host: host,
