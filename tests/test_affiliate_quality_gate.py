@@ -98,10 +98,12 @@ class PublicQualityGateTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("raw dataLayer push", log)
 
-    def test_active_offer_requires_ga4_id(self):
-        code, log = self.run_gate(html(with_ga4=False), ga4_id="")
-        self.assertEqual(code, 1)
-        self.assertIn("require a GA4 measurement ID", log)
+    def test_active_offer_can_publish_without_ga4_id(self):
+        # Approved ASP network links can produce revenue before GA4 is configured.
+        code, log = self.run_gate(
+            html(with_ga4=False, with_event=False), ga4_id=""
+        )
+        self.assertEqual(code, 0, log)
 
     def test_informational_mvp_without_offers_or_ga4_passes(self):
         code, log = self.run_gate("<html><head></head><body>情報</body></html>",
@@ -207,6 +209,42 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertNotIn("const ready=[1,2,3].some", static_page)
             self.assertIn("gtag('event','diagnosis_to_tedori'", diagnosis)
             self.assertNotIn("window.dataLayer.push({event:'diagnosis_", diagnosis)
+            self.assertIn("Public quality gate passed:", completed.stdout)
+
+
+    def test_approved_offer_can_deploy_without_ga4(self):
+        # Synthetic approved offer only; no real tracking URL is committed.
+        source = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp) / "site"
+            shutil.copytree(
+                source, project,
+                ignore=shutil.ignore_patterns(".git", "dist", "__pycache__", "*.pyc"),
+            )
+            config_path = project / "site_data.json"
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            config["ga4_id"] = ""
+            config["offers"] = [{
+                "id": "primary",
+                "name": "架空の査定サービス（CI専用）",
+                "url": URL,
+                "label": "無料査定",
+            }]
+            config_path.write_text(json.dumps(config, ensure_ascii=False), encoding="utf-8")
+            completed = subprocess.run(
+                [sys.executable, "deploy.py"], cwd=project,
+                capture_output=True, text=True, timeout=90,
+            )
+            self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+            homepage = (project / "dist" / "index.html").read_text(encoding="utf-8")
+            static = (project / "dist" / "tedori-hikaku" / "index.html").read_text(encoding="utf-8")
+            parser = quality.AffiliateLinkParser()
+            parser.feed(homepage)
+            self.assertIn(("primary", URL), parser.links)
+            self.assertIn('id="tedori-affiliate-next"', static)
+            self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static)
+            self.assertIn('<span class="pr">PR</span>', static)
+            self.assertNotIn("googletagmanager.com/gtag/js", static)
             self.assertIn("Public quality gate passed:", completed.stdout)
 
 
