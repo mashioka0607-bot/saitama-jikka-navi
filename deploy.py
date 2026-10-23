@@ -110,8 +110,8 @@ primary_offer = next(
     None,
 )
 if primary_offer:
-    if not ga4_id:
-        raise RuntimeError('Cannot publish a primary offer on tedori-hikaku without GA4')
+    # The ASP's approved tracking URL can record applications before GA4 is set.
+    # GA4 is optional for event analytics; never block a legitimate paid CTA.
     offer_url = primary_offer['url'].strip()
     parts = urlsplit(offer_url)
     if parts.scheme != 'https' or not parts.netloc:

@@ -46,8 +46,9 @@ def main() -> int:
 
     violations: list[str] = []
 
-    # An approved offer must not go live without a configured conversion meter.
-    # No offers configured => informational MVP is still allowed to deploy.
+    # Approved ASP links may go live before GA4: the ASP's own tracking records
+    # applications/approved commissions. Validate GA4 only if configured.
+    # Never invent an offer URL or relax the offer-ID/destination checks.
     config = json.loads((ROOT / "site_data.json").read_text(encoding="utf-8"))
     active_offers = [o for o in config.get("offers", []) if (o.get("url") or "").strip()]
     active_by_id = {o.get("id"): o["url"].strip() for o in active_offers if o.get("id")}
@@ -57,8 +58,6 @@ def main() -> int:
     ga4_id = (config.get("ga4_id") or "").strip()
     if ga4_id and not re.fullmatch(r"G-[A-Z0-9]+", ga4_id):
         violations.append("site_data.json: invalid GA4 measurement ID")
-    if active_offers and not ga4_id:
-        violations.append("site_data.json: active affiliate offers require a GA4 measurement ID")
 
     for path in html_files:
         text = path.read_text(encoding="utf-8")
@@ -95,13 +94,13 @@ def main() -> int:
         # whitespace, or whether the HTML uses single/double quoted attributes.
         has_affiliate = bool(parser.links)
         has_ga4 = "googletagmanager.com/gtag/js" in text
-        if has_affiliate and not has_ga4:
+        if has_affiliate and ga4_id and not has_ga4:
             violations.append(f"{path.relative_to(ROOT)}: affiliate CTA is missing a GA4 tag")
         if has_affiliate and RAW_AFFILIATE_EVENT in text:
             violations.append(
                 f"{path.relative_to(ROOT)}: affiliate_click uses raw dataLayer push; use gtag('event', ...)"
             )
-        if has_affiliate and "gtag('event','affiliate_click'" not in text:
+        if has_affiliate and ga4_id and "gtag('event','affiliate_click'" not in text:
             violations.append(f"{path.relative_to(ROOT)}: affiliate CTA has no gtag affiliate_click handler")
 
     for offer_id in active_by_id:
