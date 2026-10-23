@@ -164,6 +164,7 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static_page)
             self.assertIn("gtag('event','affiliate_click'", static_page)
             self.assertIn('form.addEventListener(\'submit\',function(){next.hidden=false;});', static_page)
+            self.assertIn("quoteForm.addEventListener('submit'", static_page)
             self.assertIn("gtag('event','diagnosis_to_tedori'", diagnosis)
             self.assertNotIn("window.dataLayer.push({event:'diagnosis_", diagnosis)
             self.assertIn("Public quality gate passed:", completed.stdout)
