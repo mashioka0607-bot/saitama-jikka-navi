@@ -157,6 +157,13 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             diagnosis = (project / "dist" / "shindan" / "index.html").read_text(encoding="utf-8")
             self.assertEqual(diagnosis.count("googletagmanager.com/gtag/js?id=" + GA4), 1)
             self.assertIn("gtag('event','diagnosis_complete'", diagnosis)
+            # Approved ASP URL must also appear at the strongest commercial
+            # decision point, not only on generated home/area pages.
+            self.assertIn('id="tedori-affiliate-next"', static_page)
+            self.assertIn('data-context="tedori_compare_complete"', static_page)
+            self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static_page)
+            self.assertIn("gtag('event','affiliate_click'", static_page)
+            self.assertIn('form.addEventListener(\'submit\',function(){next.hidden=false;});', static_page)
             self.assertIn("gtag('event','diagnosis_to_tedori'", diagnosis)
             self.assertNotIn("window.dataLayer.push({event:'diagnosis_", diagnosis)
             self.assertIn("Public quality gate passed:", completed.stdout)
