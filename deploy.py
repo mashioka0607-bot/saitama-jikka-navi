@@ -58,6 +58,62 @@ if ga4_id:
         html_path.write_text(markup, encoding='utf-8')
         print(f'Injected GA4 into static HTML: {html_path.relative_to(DIST)}')
 
+# Put the approved offer at the point of highest intent, after the user
+# finishes the take-home comparison. A configured offer is never invented.
+# The static tedori page is copied after build.py, so generated-page CTAs
+# alone cannot monetize it.
+from html import escape as html_escape
+from urllib.parse import urlsplit
+primary_offer = next(
+    (offer for offer in site_config.get('offers', [])
+     if offer.get('id') == 'primary' and (offer.get('url') or '').strip()),
+    None,
+)
+if primary_offer:
+    if not ga4_id:
+        raise RuntimeError('Cannot publish a primary offer on tedori-hikaku without GA4')
+    offer_url = primary_offer['url'].strip()
+    parts = urlsplit(offer_url)
+    if parts.scheme != 'https' or not parts.netloc:
+        raise RuntimeError('Primary offer requires an approved HTTPS URL')
+    tedori_path = DIST / 'tedori-hikaku' / 'index.html'
+    markup = tedori_path.read_text(encoding='utf-8')
+    result_anchor = '<div id="r" class="result" aria-live="polite"></div>'
+    if markup.count(result_anchor) != 1 or 'id="tedori-affiliate-next"' in markup:
+        raise RuntimeError('Tedori conversion insertion point missing or duplicated')
+    callout = (
+        '<aside id="tedori-affiliate-next" class="cta" hidden>'
+        '<span class="pr">PR</span>'
+        '<h2>手取りを比較したら、実際の見積条件を確認</h2>'
+        '<p>査定額だけでなく、家財・残置物の扱い、追加費用、引渡し条件も確認してから比較してください。</p>'
+        f'<p><strong>{html_escape(primary_offer.get("name") or "提携サービス")}</strong></p>'
+        '<a class="button invert affiliate" data-offer="primary" '
+        'data-context="tedori_compare_complete" '
+        'rel="sponsored noopener" target="_blank" '
+        f'href="{html_escape(offer_url, quote=True)}">'
+        f'{html_escape(primary_offer.get("label") or "無料相談・見積もりを確認")}</a>'
+        '<small>PR・アフィリエイト広告です。成約条件等は遷移先で確認してください。</small>'
+        '</aside>'
+    )
+    markup = markup.replace(result_anchor, result_anchor + callout, 1)
+    event_script = """<script>(function(){
+const form=document.getElementById('calc');
+const next=document.getElementById('tedori-affiliate-next');
+if(!form||!next)return;
+form.addEventListener('submit',function(){next.hidden=false;});
+const link=next.querySelector('.affiliate');
+link.addEventListener('click',function(){
+  if(typeof window.gtag==='function'){
+    window.gtag('event','affiliate_click',{offer:'primary',context:'tedori_compare_complete'});
+  }
+});
+})();</script>"""
+    if markup.count('</body>') != 1:
+        raise RuntimeError('Tedori body insertion point missing or duplicated')
+    markup = markup.replace('</body>', event_script + '</body>', 1)
+    tedori_path.write_text(markup, encoding='utf-8')
+    print('Injected approved primary offer after tedori comparison with GA4 event')
+ 
 curated_urls = [
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/katazuke-hiyou-urenai/',
