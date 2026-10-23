@@ -57,7 +57,52 @@ write('shindan',layout('実家片付けの進め方診断','6つの状況から�
 
 faq='''<section class="hero"><h1>よくある質問</h1></section><section class="section"><h2>片付けてから査定すべき？</h2><p>必ずしも先に全処分する必要はありません。現況で相談できるか確認し、重要書類・形見・価値ある物を確認してから処分範囲を決めます。</p><h2>遠方で管理できません</h2><p>川越市は空き家管理についてシルバー人材センターとの連携を案内しています。売却未定でも管理空白を作らないことが重要です。</p></section>'''
 write('faq',layout('よくある質問','実家片付け・相続空き家のよくある質問。',faq,'/faq/'))
-for slug,title,text in [('operator','運営者情報',f"運営者：{SITE.get('operator_name','')}"),('advertising-policy','広告ポリシー','当サイトはアフィリエイト広告を掲載する場合があります。広告リンク付近にPR・広告表示を行います。'),('privacy','プライバシーポリシー','アクセス解析を導入する場合があります。個人情報は目的外利用しません。')]:write(slug,layout(title,title,f'<section class="hero"><h1>{esc(title)}</h1></section><section class="section"><p>{esc(text)}</p></section>','/'+slug+'/'))
+# Editorial transparency and data-use disclosure: render from the actual deployment config.
+# Do not publish fictitious contact information or claim GA4/ASP activation before configured.
+contact_email = (SITE.get('contact_email') or '').strip()
+analytics_enabled = bool((SITE.get('ga4_id') or '').strip())
+advertising_enabled = any((o.get('url') or '').strip() for o in SITE.get('offers', []))
+
+operator_html = f'''<section class="hero"><h1>運営者情報</h1></section>
+<section class="section"><h2>サイトについて</h2>
+<p>サイト名：{esc(SITE['site_name'])}</p>
+<p>運営・編集：{esc(SITE.get('operator_name') or '埼玉実家片付けナビ編集部')}</p>
+<p>埼玉県内の実家じまい・空き家の売却、片付け、管理、解体を検討する方向けに、公的な一次情報と意思決定のチェックポイントを整理しています。自治体・公的機関が運営するサイトではありません。</p>
+<p>内容の更新時には自治体などの公式情報を確認しますが、補助金の受付状況・契約条件等は変わります。申請・契約前に必ず関係機関や専門家へご確認ください。</p>'''
+if contact_email:
+    operator_html += f'<p>連絡先：<a href="mailto:{esc(contact_email)}">{esc(contact_email)}</a></p>'
+else:
+    operator_html += '<p>現在、当サイト専用の問い合わせ窓口は設けていません。物件・制度の個別相談は、掲載している自治体等の公式窓口へ直接ご確認ください。</p>'
+operator_html += '</section>'
+write('operator', layout('運営者情報', '埼玉実家片付けナビの運営方針と情報の確認方法。', operator_html, '/operator/'))
+
+ad_status = ('現在、提携済み広告URLは設定されていません。' if not advertising_enabled
+             else '広告リンクには「PR」表示を付け、外部のサービスに移動することを明示します。')
+ad_html = f'''<section class="hero"><h1>広告ポリシー</h1></section>
+<section class="section"><h2>広告・アフィリエイトについて</h2>
+<p>当サイトは、今後の運営費用を賄うために広告・アフィリエイトプログラムを利用する場合があります。広告経由の申し込みによってサイト側に報酬が発生する場合があります。</p>
+<p>{esc(ad_status)}</p>
+<p>広告の有無と無関係に、自治体の公式窓口・空き家バンク等の選択肢も紹介します。掲載順やおすすめが必ずしも利用者ごとの最適解となるわけではありません。</p>
+<p>費用、サービス提供範囲、個人情報の取扱い、契約・キャンセル条件は、申込先の事業者に確認してください。広告先の契約は本サイトとの契約ではありません。</p>
+<p>広告クリックなどのアクセス解析の取扱いは<a href="/privacy/">プライバシーポリシー</a>をご確認ください。</p></section>'''
+write('advertising-policy', layout('広告ポリシー', '広告の有無、アフィリエイト報酬、記事の独立性について。', ad_html, '/advertising-policy/'))
+
+analytics_status = ('現在、当サイトのGoogle Analytics 4（GA4）計測タグは有効化していません。' if not analytics_enabled
+                    else '当サイトではGoogle Analytics 4（GA4）を使用し、閲覧ページ・操作イベント・外部リンクのクリック等を集計してサイト改善に利用しています。')
+privacy_html = f'''<section class="hero"><h1>プライバシーポリシー</h1><p class="lead">最終更新：2026年10月23日</p></section>
+<section class="section"><h2>本サイトと収集する情報</h2>
+<p>本サイトは公的な相談窓口ではありません。サイトの閲覧時には、サイト配信・セキュリティ維持のため、配信事業者がIPアドレスやアクセス日時等の技術的なログを取り扱う場合があります。</p>
+<p>ブラウザ上で金額を入力する比較ツールがあります。氏名・住所・電話番号などをサイト内で直接入力させる会員登録・問い合わせフォームは、現在設置していません。</p>
+<h2>Google Analytics 4（GA4）とCookie</h2>
+<p>{esc(analytics_status)}</p>
+<p>GA4を有効にした場合、Cookieや類似の識別子、閲覧ページ・参照元・端末やブラウザに関する情報・操作イベント等がGoogleに送信されることがあります。取得情報は、サイトの利用状況の分析、使いやすさの改善、広告導線の効果測定に利用します。</p>
+<p>Googleによる情報の取扱いは<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener">Googleのサービスを使用するサイトやアプリから収集した情報の使用</a>を参照してください。Cookieの設定はブラウザから変更でき、<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener">Google Analyticsオプトアウトアドオン</a>も利用できます。</p>
+<h2>外部サイト・広告について</h2>
+<p>自治体の公式情報や民間事業者の外部サイトに移動した後は、移動先の利用規約・プライバシーポリシーが適用されます。当サイトは外部事業者の申し込みフォームで送信される情報を直接管理しません。</p>
+<p>当サイトの広告掲載状況は<a href="/advertising-policy/">広告ポリシー</a>で確認できます。</p>
+<h2>改定と問い合わせ</h2>
+<p>利用する解析サービスや広告サービスを変更した場合は、本ページの説明を見直します。運営者情報は<a href="/operator/">運営者情報</a>をご確認ください。</p></section>'''
+write('privacy', layout('プライバシーポリシー', 'アクセスログ・GA4・Cookie・外部広告サイトに関する情報の取扱い。', privacy_html, '/privacy/'))
 urls=['/','/shindan/','/faq/','/operator/','/advertising-policy/','/privacy/']+[f'/{p["slug"]}/' for p in PAGES]
 (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{esc(canonical(u))}</loc></url>' for u in urls)+'</urlset>',encoding='utf-8')
 (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+canonical('/sitemap.xml')+'\n',encoding='utf-8')
