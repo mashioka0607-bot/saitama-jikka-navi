@@ -13,3 +13,58 @@ const grants=[
 ['坂戸市','2026-09-28受付再開（現況要確認）','2026-09-28に市が受付再開を公表。現在の予算残額・申請可否は市に要確認','2026-09-28の受付再開発表を確認。予算状況は変わり得るため、補助前提の契約・着工をせず、市に最新受付状況と交付条件を確認。交付決定前に着工した工事は補助対象外。','https://www.city.sakado.lg.jp/soshiki/37/28358.html']];
 const sel=document.getElementById('grant-city'),out=document.getElementById('grant-result');
 if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value=g[0];o.textContent=g[0];sel.appendChild(o)});sel.addEventListener('change',()=>{const g=grants.find(x=>x[0]===sel.value);if(!g){out.innerHTML='';return}const closed=g[1].includes('終了');out.innerHTML=`<h3>${g[0]}：${g[1]}</h3><p><strong>期限：</strong>${g[2]}</p><p><strong>契約判断：</strong>${g[3]}</p><p><strong>${closed?'今やること':'契約前にやること'}：</strong>${closed?'補助前提で進めず、再開有無と別の出口を確認':'自治体へ対象可否・受付状況を確認 → 現況査定 → 見積取得 → 申請/交付決定 → 契約'}</p><p><a class="button" target="_blank" rel="noopener" href="${g[4]}">${g[0]}公式情報を確認</a></p><small>制度は予算・年度で変わります。表示内容は確認時点の情報です。契約・申請前に自治体公式ページで最新の受付状況と要件を再確認してください。</small>`})}
+
+/* Dynamic guard for 2026 municipal grant deadlines. The dated grant list remains a historical snapshot:
+   never keep claiming '受付中' after a published deadline has passed.
+   Only official municipality sites can confirm whether new applications are possible. */
+(function () {
+  const citySelect = document.getElementById('grant-city');
+  const result = document.getElementById('grant-result');
+  if (!citySelect || !result) return;
+  const deadlines = {
+    '川口市': [['2026-10-30', '事前診断の依頼'], ['2026-11-13', '交付申請']],
+    '東松山市': [['2026-12-28', '交付申請']],
+    '富士見市': [['2027-01-31', '除却補助の交付申請']],
+    '深谷市': [['2026-11-30', '不良住宅の事前調査申込み']],
+    'ときがわ町': [['2026-12-25', '交付申請']]
+  };
+
+  citySelect.addEventListener('change', function () {
+    if (!citySelect.value || !result.firstChild) return;
+    // A visitor in another time zone should still see the municipality's Japan date.
+    const today = new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(new Date());
+    const title = result.querySelector('h3');
+    let warning = '';
+
+    if (today > '2027-03-31') {
+      warning = '2026年度の掲載内容は過年度情報です。現在の受付有無・要件は自治体公式ページで再確認してください。';
+      if (title) title.textContent = citySelect.value + '：過年度情報・現在の受付は未確認';
+    } else {
+      const milestones = deadlines[citySelect.value] || [];
+      const elapsed = milestones.filter(function (entry) { return today > entry[0]; });
+      if (elapsed.length) {
+        const latest = elapsed[elapsed.length - 1];
+        const pending = milestones.filter(function (entry) { return today <= entry[0]; });
+        warning = latest[1] + 'の公表期限（' + latest[0] +
+          '）は経過しました。' +
+          (pending.length
+            ? '残る別手続の期限は' + pending.map(function (entry) {
+                return entry[1] + ' ' + entry[0];
+              }).join('、') + 'ですが、既に必要な事前手続を済ませたか等で扱いが異なります。'
+            : '') +
+          '新規受付・例外・予算残額は公式窓口へ確認し、補助を見込んで契約しないでください。';
+        if (title) title.textContent = citySelect.value + '：公表期限経過・受付は要確認';
+      }
+    }
+
+    if (warning) {
+      const note = document.createElement('p');
+      note.className = 'notice';
+      note.setAttribute('role', 'status');
+      note.textContent = warning;
+      result.insertBefore(note, result.firstChild);
+    }
+  });
+})();
