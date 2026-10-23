@@ -165,6 +165,11 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn("gtag('event','affiliate_click'", static_page)
             self.assertIn('form.addEventListener(\'submit\',function(){next.hidden=false;});', static_page)
             self.assertIn("quoteForm.addEventListener('submit'", static_page)
+            # A quote without a fee invalidates the comparison: the paid CTA
+            # must not appear just because a different quote is complete.
+            self.assertIn("const ready=priced.length>0&&priced.every", static_page)
+            self.assertIn("next.hidden=!ready;", static_page)
+            self.assertNotIn("const ready=[1,2,3].some", static_page)
             self.assertIn("gtag('event','diagnosis_to_tedori'", diagnosis)
             self.assertNotIn("window.dataLayer.push({event:'diagnosis_", diagnosis)
             self.assertIn("Public quality gate passed:", completed.stdout)
