@@ -101,6 +101,17 @@ const form=document.getElementById('calc');
 const next=document.getElementById('tedori-affiliate-next');
 if(!form||!next)return;
 form.addEventListener('submit',function(){next.hidden=false;});
+const quoteForm=document.getElementById('quote-compare');
+if(quoteForm){
+  quoteForm.addEventListener('submit',function(){
+    const ready=[1,2,3].some(function(i){
+      const price=document.getElementById('q'+i+'p');
+      const fee=document.getElementById('q'+i+'f');
+      return price&&fee&&Number(price.value)>0&&fee.value.trim()!=='';
+    });
+    if(ready)next.hidden=false;
+  });
+}
 const link=next.querySelector('.affiliate');
 link.addEventListener('click',function(){
   if(typeof window.gtag==='function'){
