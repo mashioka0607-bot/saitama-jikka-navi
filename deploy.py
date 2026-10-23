@@ -100,7 +100,7 @@ if primary_offer:
 const form=document.getElementById('calc');
 const next=document.getElementById('tedori-affiliate-next');
 if(!form||!next)return;
-form.addEventListener('submit',function(){next.hidden=false;});
+form.addEventListener('submit',function(){next.hidden=false;next.dataset.comparisonStep='estimate';});
 const quoteForm=document.getElementById('quote-compare');
 if(quoteForm){
   quoteForm.addEventListener('submit',function(){
@@ -115,12 +115,13 @@ if(quoteForm){
     // The real-quote comparison rejects any priced row without a fee.
     // Do not expose the paid CTA after that validation error.
     next.hidden=!ready;
+    if(ready)next.dataset.comparisonStep=priced.length>=2?'real_quotes_compare':'single_quote';
   });
 }
 const link=next.querySelector('.affiliate');
 link.addEventListener('click',function(){
   if(typeof window.gtag==='function'){
-    window.gtag('event','affiliate_click',{offer:'primary',context:'tedori_compare_complete'});
+    window.gtag('event','affiliate_click',{offer:'primary',context:next.dataset.comparisonStep||'estimate'});
   }
 });
 })();</script>"""

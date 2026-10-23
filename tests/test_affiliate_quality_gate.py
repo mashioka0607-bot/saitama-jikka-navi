@@ -163,7 +163,11 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn('data-context="tedori_compare_complete"', static_page)
             self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static_page)
             self.assertIn("gtag('event','affiliate_click'", static_page)
-            self.assertIn('form.addEventListener(\'submit\',function(){next.hidden=false;});', static_page)
+            self.assertIn("next.dataset.comparisonStep='estimate'", static_page)
+            self.assertIn("next.dataset.comparisonStep=priced.length>=2?'real_quotes_compare':'single_quote'", static_page)
+            self.assertIn("context:next.dataset.comparisonStep||'estimate'", static_page)
+            self.assertIn('1社の実質受取額（まだ比較前）', static_page)
+            self.assertIn("rows.length>=2?'real_appraisal_compare':'real_appraisal_single_quote'", static_page)
             self.assertIn("quoteForm.addEventListener('submit'", static_page)
             # A quote without a fee invalidates the comparison: the paid CTA
             # must not appear just because a different quote is complete.

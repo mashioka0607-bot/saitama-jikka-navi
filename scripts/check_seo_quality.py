@@ -26,8 +26,8 @@ def main() -> int:
     tedori = (ROOT / "static_pages/tedori-hikaku/index.html").read_text(encoding="utf-8")
     if "tedori_real_quotes_v2" not in tedori:
         failures.append("real appraisal comparison v2 missing from curated page")
-    if "gtag('event','real_appraisal_compare'" not in tedori:
-        failures.append("GA4 real_appraisal_compare event missing from curated page")
+    if "window.gtag('event',rows.length>=2?'real_appraisal_compare':'real_appraisal_single_quote'" not in tedori:
+        failures.append("GA4 must distinguish single quote from real multi-quote comparison")
     if "window.dataLayer.push({event:'real_appraisal_compare'" in tedori:
         failures.append("real_appraisal_compare uses raw dataLayer instead of gtag event")
     for url in (
