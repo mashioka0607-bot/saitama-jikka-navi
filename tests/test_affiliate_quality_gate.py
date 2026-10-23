@@ -154,6 +154,17 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             # Curated static pages are copied after build.py; they still need GA4.
             static_page = (project / "dist" / "tedori-hikaku" / "index.html").read_text(encoding="utf-8")
             self.assertEqual(static_page.count("googletagmanager.com/gtag/js?id=" + GA4), 1)
+            # Official exits on curated pages are measurable, too; the
+            # tracking listener uses delegation for quote-result links and
+            # never sends user-entered pricing, names, or addresses.
+            self.assertIn('id="official-exit-tracking-v1"', static_page)
+            self.assertIn("gtag('event','official_source_click'", static_page)
+            self.assertIn("destination_host: host", static_page)
+            self.assertIn("source_page: window.location.pathname", static_page)
+            self.assertNotIn("destination: link.href", static_page)
+            kaitai = (project / "dist" / "kaitai-check" / "index.html").read_text(encoding="utf-8")
+            self.assertIn('id="official-exit-tracking-v1"', kaitai)
+            self.assertNotIn('id="official-exit-tracking-v1"', homepage)
             diagnosis = (project / "dist" / "shindan" / "index.html").read_text(encoding="utf-8")
             self.assertEqual(diagnosis.count("googletagmanager.com/gtag/js?id=" + GA4), 1)
             self.assertIn("gtag('event','diagnosis_complete'", diagnosis)
