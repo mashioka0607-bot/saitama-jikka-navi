@@ -146,6 +146,20 @@ const viewedSteps=new Set();
 function revealOffer(step){
   next.hidden=false;
   next.dataset.comparisonStep=step;
+  // Show an approved offer beside the actual result, before the neutral
+  // public-service fallback. A visitor should not have to scroll past
+  // an unrelated diagnosis loop to reach the quote next step.
+  const result=document.getElementById(step==='estimate'?'r':'quote-result');
+  if(result){
+    const publicLink=result.querySelector('#result-next');
+    const publicParagraph=publicLink&&publicLink.closest('p');
+    if(publicParagraph&&publicParagraph.parentNode===result){
+      result.insertBefore(next,publicParagraph);
+      publicLink.classList.remove('button');
+    }else if(next.parentNode!==result){
+      result.appendChild(next);
+    }
+  }
   if(!viewedSteps.has(step)){
     viewedSteps.add(step);
     if(typeof window.gtag==='function'){
