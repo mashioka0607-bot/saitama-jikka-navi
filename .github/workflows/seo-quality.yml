@@ -38,6 +38,8 @@ jobs:
         run: |
           test -f dist/index.html
           grep -q '埼玉' dist/index.html
+          grep -q 'すでに売却を検討中の方は' dist/index.html
+          grep -q 'href="/tedori-hikaku/"' dist/index.html
           if grep -q 'Kawagoe / Inherited Home' dist/index.html; then
             echo 'Homepage is still positioned as Kawagoe-only; migrate it to the Saitama-wide decision hub.'
             exit 1
