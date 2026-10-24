@@ -27,7 +27,9 @@ jobs:
         run: node tests/test_diagnosis_routing.js
       - name: Run affiliate and GA4 regression tests
         run: python -m unittest discover -s tests -p 'test_affiliate_quality_gate.py' -v
-      - name: Verify Search Console CSV audit (offline fixtures)\n        run: python -m unittest discover -s tests -p 'test_gsc_audit.py' -v\n      - name: Guard disclosure of illustrative prices on the take-home calculator
+      - name: Verify Search Console CSV audit (offline fixtures)
+        run: python -m unittest discover -s tests -p 'test_gsc_audit.py' -v
+      - name: Guard disclosure of illustrative prices on the take-home calculator
         run: |
           grep -q 'id="sample-value-disclosure"' dist/tedori-hikaku/index.html
           grep -q '仮の数値' dist/tedori-hikaku/index.html
