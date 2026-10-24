@@ -148,13 +148,14 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             homepage = (project / "dist" / "index.html").read_text(encoding="utf-8")
             parser = quality.AffiliateLinkParser()
             parser.feed(homepage)
-            self.assertIn(("primary", URL), parser.links)
+            self.assertNotIn(("primary", URL), parser.links)
+            self.assertIn('href="/tedori-hikaku/"', homepage)
             self.assertIn('gtag(\'event\',\'affiliate_click\'', homepage)
-            self.assertIn('<span class="pr">PR</span>', homepage)
+            self.assertNotIn('<span class="pr">PR</span>', homepage)
             self.assertNotIn(quality.RAW_AFFILIATE_EVENT, homepage)
 
             # An approved empty-home valuation offer must not automatically
-            # become an ad on cleanup-only editorial pages. Those pages first
+            # become an ad on the undecided-intent homepage or cleanup-only editorial pages. Those pages first
             # offer an opt-in comparison route; only actual comparison intent
             # gets the monetized next step.
             cleanup_only = (
@@ -259,7 +260,8 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             static = (project / "dist" / "tedori-hikaku" / "index.html").read_text(encoding="utf-8")
             parser = quality.AffiliateLinkParser()
             parser.feed(homepage)
-            self.assertIn(("primary", URL), parser.links)
+            self.assertNotIn(("primary", URL), parser.links)
+            self.assertIn('href="/tedori-hikaku/"', homepage)
             self.assertIn('id="tedori-affiliate-next"', static)
             self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static)
             self.assertIn('<span class="pr">PR</span>', static)
