@@ -38,7 +38,16 @@ write('index.html',layout('相続した実家を片付ける前に｜売却・�
 
 for p in PAGES:
     secs=''.join(f'<section class="section"><h2>{esc(h)}</h2><ul>'+''.join(f'<li>{esc(x)}</li>' for x in items)+'</ul></section>' for h,items in p['sections'])
-    mid=offer_cta('primary',p['slug']) if p['slug'] in priority[:5] else ''
+    # Cleanup-intent readers have not decided to sell. Do not show a vacant-home
+    # appraisal affiliate CTA on their editorial page just because an offer exists.
+    # Let them opt into the paid path via the comparison tool after clarifying intent.
+    mid = (
+        '<section class="section notice"><strong>この実家を売る可能性もある場合</strong>'
+        '<p>片付け費用を契約する前に、家財が残った状態で売却できるか、'
+        '仲介と現況買取の税前手取りを比較してください。'
+        '売却予定がなければ、片付け条件と一般廃棄物の処理方法の確認を優先してください。</p>'
+        '<p><a href="/tedori-hikaku/">片付け前に税前手取りを比較する</a></p></section>'
+    ) if p['slug'] in priority[:5] else ''
     body=f'''<section class="hero"><div class="eyebrow">{esc(p['eyebrow'])}</div><h1>{esc(p['h1'])}</h1><p class="lead">{esc(p['lead'])}</p></section>{secs}{mid}<section class="section notice"><strong>自治体情報も確認</strong><p>制度・処分方法は川越市の最新公式情報も確認してください。</p></section>'''
     write(p['slug'],layout(p['title'],p['description'],body,'/'+p['slug']+'/'))
 
