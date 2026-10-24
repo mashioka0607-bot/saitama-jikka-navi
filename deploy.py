@@ -140,7 +140,22 @@ if primary_offer:
 const form=document.getElementById('calc');
 const next=document.getElementById('tedori-affiliate-next');
 if(!form||!next)return;
-form.addEventListener('submit',function(){next.hidden=false;next.dataset.comparisonStep='estimate';});
+// Count eligible ad impressions, not just outbound clicks. Repeated submits
+// of the same comparison stage must not inflate the view denominator.
+const viewedSteps=new Set();
+function revealOffer(step){
+  next.hidden=false;
+  next.dataset.comparisonStep=step;
+  if(!viewedSteps.has(step)){
+    viewedSteps.add(step);
+    if(typeof window.gtag==='function'){
+      window.gtag('event','cta_view',{
+        offer:'primary',context:step,source_page:window.location.pathname
+      });
+    }
+  }
+}
+form.addEventListener('submit',function(){revealOffer('estimate');});
 const quoteForm=document.getElementById('quote-compare');
 if(quoteForm){
   quoteForm.addEventListener('submit',function(){
@@ -155,7 +170,7 @@ if(quoteForm){
     // The real-quote comparison rejects any priced row without a fee.
     // Do not expose the paid CTA after that validation error.
     next.hidden=!ready;
-    if(ready)next.dataset.comparisonStep=priced.length>=2?'real_quotes_compare':'single_quote';
+    if(ready)revealOffer(priced.length>=2?'real_quotes_compare':'single_quote');
   });
 }
 const link=next.querySelector('.affiliate');
