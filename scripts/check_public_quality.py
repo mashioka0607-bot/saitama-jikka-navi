@@ -129,7 +129,7 @@ def main() -> int:
             violations.append(f"{relative}: missing statewide page")
             continue
         page_text = page_path.read_text(encoding='utf-8')
-        nav_match = re.search(r'<nav\\b[^>]*>(.*?)</nav>', page_text, flags=re.DOTALL)
+        nav_match = re.search(r'<nav\b[^>]*>(.*?)</nav>', page_text, flags=re.DOTALL)
         if not nav_match:
             violations.append(f"{relative}: missing common navigation")
         else:
