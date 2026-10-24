@@ -1,6 +1,32 @@
 # Monetization runbook
 
-Updated: 2026-09-26
+Updated: 2026-10-25
+
+## 2026-10-25 P0: idea株式会社の現行公式パートナー報酬を確認（旧試算を更新）
+
+**公式一次情報**: https://i-dea.co.jp/akiya-partner/ （2026-10-25確認、ページ上「2026年8月に改定」）。同社の現行ページは、古い広報資料で扱った「9万〜35万円」「引越業者向け22万〜55万円」という分け方と一致しない。**現行の公式契約条件が優先**で、以下はあくまで公開案内であり当サイトでの適用報酬ではない。
+
+| 売買代金（消費税相当額除く） | 仲介成立時（税込） | idea社による買取（税込） |
+|---|---:|---:|
+| 1,000万円以下 | 220,000円 | 330,000円 |
+| 1,000万円超〜3,000万円以下 | 330,000円 | 330,000円 |
+| 3,000万円超 | 440,000円 | 330,000円 |
+
+**成果地点は問い合わせや査定申込みではない。** ideaが媒介報酬全額を実際に受領、または同社買取の決済完了が必要。翌月末までの支払予定。本人による**書面同意**がない案件、事前接点・他経路が先の案件、紹介から12か月超の売買契約は対象外。解除・取消し・無効や媒介報酬返還時には既払報酬の返還可能性がある。提携には情報調査・提供業務の委託契約が必要。サイト上の紹介文は同社指定の文言を同じ画面の見やすい位置に載せ、**事前承認**が必要と案内されている。個人情報を取得・送付するフォームや紹介リンクを、契約・同意フローの確認なしに実装しない。
+
+**重要な未確認点:** 現行のパートナー案内は遺品整理・リフォーム・介護・葬祭など現場の事業者向けであり、当サイトのような**純粋なSEOメディア/ウェブ送客の参加可否は未確認**。参加できない可能性がある。資格のない媒体が不動産売買を請け負うと誤解される広告も不可。現行報酬を「本サイトが必ず受け取れる」と説明しない。
+
+**収益化の優先順位**:
+1. 短期: タウンライフなど成果地点が査定申込のASPについて、管理画面で提携承認・成果条件・正式URLを確認。公表単価と当サイトの単価は分ける。
+2. 並行: ideaへメディア運営者の参加可否、紹介手段・ウェブ文面事前承認、対象地域・物件条件、書面同意、重複案件、12か月制限、返還・税務処理、成果確定/支払を確認。**回答が取れるまで不動産ASPからの切替はしない。**
+3. 検証: 問い合わせ→有効リード→査定→売買成立の月次コホートと承認報酬EPCを比較。単価だけで優劣を判断しない。例：ASP1万円/承認とidea33万円/成約なら、仮に同一有効リードでASP承認率85%、idea成約率2%なら期待報酬はそれぞれ8,500円と6,600円（説明用、実績ではない）。
+4. SEO: 「相続した実家 売却 残置物」「片付け前査定」「残置物付き 現況買取」で「売る」意思がある検索から /tedori-hikaku/ に絞り、自治体の無料相談先と比較条件を併記。地名差替え量産をしない。
+
+自治体一次情報の直近期限：川口市公式（2026-07-01更新）https://www.city.kawaguchi.lg.jp/soshiki/01130/040/akiyatoutaisaku/27633.html による2026年度の事前診断依頼期限は**10月30日**、交付申請期限は**11月13日**。予算到達で早期終了あり。受付中を保証せず、期限情報は年度をまたいで再確認する。
+
+GSC/計測：直近28日・90日の query×page・表示回数・CTR・順位、特に /tedori-hikaku/ → 実査定比較の遷移、CTA表示→クリック→承認成果の欠損を確認する。現時点でGSCの実測値は確認できていないため検索需要は推定に留める。
+
+---
 
 ## 2026-09-26 strategic update: one-stop property + contents sale is now a direct competitor
 
@@ -28,9 +54,9 @@ New GSC intent split to test when data is available:
 - commercial-decision intent: `実家 片付けずに売る`, `残置物そのまま 買取`, `解体する前 査定`, `片付けてから売る どっち` → net-proceeds comparison + commercial CTA
 Measure revenue per 1,000 organic sessions separately for these intent classes; do not judge them on CTR alone.
 
-## 2026-09-26 correction: idea partner payout scope
+## ARCHIVE — 2026-09-26 idea partner payout scope (superseded by official 2026-10-25 check)
 
-Fresh source verification found an important scope distinction. idea株式会社's 2026-08-04 **multi-industry inheritance-vacant-home partner program** (葬儀・遺品整理・家財整理・リフォーム・解体・士業等) publicly states a success-based information fee of **90,000–350,000 JPY** and includes Saitama. A separate 2026-09-04 announcement for an **引越事業者向け** partner program states **220,000 / 330,000 / 550,000 JPY** according to sale price. Do NOT treat 220,000–550,000 JPY as the general website/media referral rate unless idea confirms in writing that this site/business qualifies for that program and those terms.
+Historical September note; **do not use these older amounts for current forecasting**. Fresh source verification found an important scope distinction. idea株式会社's 2026-08-04 **multi-industry inheritance-vacant-home partner program** (葬儀・遺品整理・家財整理・リフォーム・解体・士業等) publicly states a success-based information fee of **90,000–350,000 JPY** and includes Saitama. A separate 2026-09-04 announcement for an **引越事業者向け** partner program states **220,000 / 330,000 / 550,000 JPY** according to sale price. Do NOT treat 220,000–550,000 JPY as the general website/media referral rate unless idea confirms in writing that this site/business qualifies for that program and those terms.
 
 Implication: keep idea as a high-value direct-partnership candidate, but do not build revenue forecasts around 220k–550k. For this site's current position, the verified multi-industry public range is 90k–350k on completed sales; exact eligibility, media/site participation, consent/privacy flow, attribution, exclusions, and payment terms must be confirmed directly before implementation.
 
@@ -52,8 +78,8 @@ Trust rule: where a visitor's municipality offers an official/municipality-endor
    - Never insert a guessed tracking URL or imply partnership before approval.
 
 2. DIRECT PARTNERSHIP CANDIDATE — idea株式会社 `相続空き家 多業種パートナー制度`
-   - VERIFIED 2026-09-26 against the 2026-08-04 public announcement: Saitama is in scope; registration/annual fee zero; information fee 90,000–350,000 JPY when idea closes the property sale; amount slides with property scale/profit; covered industries publicly include funeral, estate/household-goods clearance, renovation, demolition and professional services. Entry does not equal contract.
-   - IMPORTANT: idea's separate 2026-09-04 **moving-company partner** announcement offers 220,000 / 330,000 / 550,000 JPY based on sale price. Those higher amounts are NOT assumed to apply to this website/media business. Treat them as unavailable unless idea explicitly approves this business under equivalent written terms.
+   - UPDATED 2026-10-25 against the **current official partner page** (https://i-dea.co.jp/akiya-partner/): Saitama is in scope; public schedule for intermediated sales is 220k / 330k / 440k JPY (incl. tax, by transaction value); if idea purchases directly, 330k JPY (incl. tax) regardless of value. It says amended in August 2026. These replace older publicity amounts for research purposes, NOT as an approved payout for this media site.
+   - CONVERSION POINT IS CLOSED SALE, not a lead. Eligibility is limited by written subject consent, previous contact / duplicate channels, and 12-month deadline. Written agency agreement, approved site copy and consent workflow are mandatory. Whether a pure SEO publisher is eligible is **not verified**. No production lead form or referral link is authorized.
    - This remains materially higher-value than ordinary cleanup leads, but it is a B2B referral partnership rather than a normal click-based ASP program. Do not place a referral form/link or transmit owner information until a partnership agreement, consent flow, privacy handling, and exact qualification/payment conditions are confirmed.
    - Best-fit traffic if approved: `相続した実家を売りたい`, `売れない実家`, `残置物あり売却`, `片付け費用が高い`, `遠方の相続空き家` where the visitor has decided or strongly intends to sell.
    - Keep TownLife as the live-test priority until this direct agreement is actually signed and operational.
