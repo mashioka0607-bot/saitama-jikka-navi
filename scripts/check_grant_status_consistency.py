@@ -69,6 +69,12 @@ def check() -> list[str]:
             displayed = f"{contractor}上限{yen // 10000}万円"
             if yen <= 0 or yen % 10000 or displayed not in public_text:
                 problems.append(f"{city}: contractor cap {displayed} missing publicly")
+        # Municipality-specific zone caps can change the economic decision by 20万円.
+        # Guard amounts in user-facing copy against silent drift from official source notes.
+        for zone, yen in (item.get("zone_caps_jpy") or {}).items():
+            displayed = f"{zone}上限{yen // 10000}万円"
+            if yen <= 0 or yen % 10000 or displayed not in public_text:
+                problems.append(f"{city}: zone cap {displayed} missing publicly")
         for excluded in item.get("excluded_costs") or []:
             if excluded not in public_text:
                 problems.append(f"{city}: excluded cost {excluded} missing publicly")
