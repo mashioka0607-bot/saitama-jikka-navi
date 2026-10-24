@@ -34,6 +34,15 @@ jobs:
           test -f dist/google02c383ec58048d5e.html
           grep -q 'sitemap.xml' dist/robots.txt
           grep -q 'kawagoe-shi/katazuke-hiyou-urenai' dist/sitemap.xml
+      - name: Guard statewide FAQ and high-intent next steps
+        run: |
+          test -f dist/faq/index.html
+          grep -q 'href="/tedori-hikaku/"' dist/faq/index.html
+          grep -q 'https://www.pref.saitama.lg.jp/a1106/akiyakanrisyatouroku.html' dist/faq/index.html
+          if grep -q '川越市は空き家管理について' dist/faq/index.html; then
+            echo 'Statewide FAQ must not present Kawagoe-only services as a default.'
+            exit 1
+          fi
       - name: Guard homepage positioning
         run: |
           test -f dist/index.html
