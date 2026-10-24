@@ -90,6 +90,15 @@ def check() -> list[str]:
             remaining = re.search(r"残り\s*(\d+)件分", note)
             if remaining and not re.search(r"残り\s*" + remaining.group(1) + r"件分", public_text):
                 problems.append(f"{city}: remaining full-grant count differs from source")
+        # Separate post-demolition tax relief must not be mistaken for instant sale proceeds.
+        # Keep its source and holding conditions visible beside the demolition grant.
+        tax_relief = item.get("post_demolition_tax_subsidy")
+        if tax_relief:
+            if tax_relief.get("official_url") not in PUBLIC_JS.read_text(encoding="utf-8"):
+                problems.append(f"{city}: post-demolition tax relief primary link missing publicly")
+            for phrase in ("固定資産税", "最大2年度", "更地", "売却予定"):
+                if phrase not in public_text:
+                    problems.append(f"{city}: tax relief condition {phrase!r} missing publicly")
         # A reopening or closing date must be shown, so users can distinguish
         # a dated municipality announcement from today's unverified budget status.
         if "受付終了" in status or "受付再開" in status:

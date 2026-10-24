@@ -12,7 +12,14 @@
       "urgency": "high",
       "note": "市公式2026-10-16更新：2026-10-13時点の予算残額30万円、満額支給なら残り1件分。申請時の受付可否・残予算は変動し得る。家財処分費用は対象外。工事着手前に申請。",
       "official_url": "https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7523.html",
-      "conversion_angle": "見積取得より先に残予算と申請順序を確認"
+      "conversion_angle": "見積取得より先に残予算と申請順序を確認",
+      "post_demolition_tax_subsidy": {
+        "official_url": "https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7524.html",
+        "source_updated": "2026-04-02",
+        "coverage": "除却年の翌年度から最大2年度、住宅用地特例があった場合と実際の固定資産税・都市計画税の差額",
+        "eligibility": "白岡市空家等除却補助金の交付を受けた土地を更地のまま保有・管理し、相続以外の所有者変更や他用途使用をしていないことなど",
+        "revenue_note": "即時売却シナリオでは受給を見込んで手残りに加算しない。受給要件・申請時期・予算を市の公式情報で確認"
+      }
     },
     {
       "municipality": "川口市",
