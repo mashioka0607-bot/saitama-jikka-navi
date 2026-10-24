@@ -55,7 +55,7 @@ $('result-title').textContent=title;$('do').textContent=todo;$('dont').textConte
 </script>'''
 write('shindan',layout('実家片付けの進め方診断','6つの状況から、相続した実家で今やること・まだやらないこと・川越市の相談先を整理します。',shindan,'/shindan/'))
 
-faq='''<section class="hero"><h1>よくある質問</h1></section><section class="section"><h2>片付けてから査定すべき？</h2><p>必ずしも先に全処分する必要はありません。現況で相談できるか確認し、重要書類・形見・価値ある物を確認してから処分範囲を決めます。</p><h2>遠方で管理できません</h2><p>川越市は空き家管理についてシルバー人材センターとの連携を案内しています。売却未定でも管理空白を作らないことが重要です。</p></section>'''
+faq='''<section class="hero"><h1>よくある質問</h1></section><section class="section"><h2>片付けてから査定すべき？</h2><p>必ずしも先に全処分する必要はありません。重要書類・形見・価値ある物を確認し、家財が残る状態での査定可否や処分費負担を確認してから処分範囲を決めてください。</p><p><a href="/tedori-hikaku/">片付け後の仲介と現況買取の手取りを比較する</a></p><h2>遠方で管理できません</h2><p>郵便物の確認・換気・通水・庭木の手入れなど必要な管理を整理し、鍵預かり、作業写真の報告、追加料金を同じ条件で比較してください。市町村ごとに事業者・サービス範囲が異なるため、県の公的案内から実家の所在地に対応する相談先を確認できます。</p><p><a href="https://www.pref.saitama.lg.jp/a1106/akiyakanrisyatouroku.html" target="_blank" rel="noopener">埼玉県公式：空き家の持ち主応援隊（管理・売却等の相談先）</a></p></section>'''
 write('faq',layout('よくある質問','実家片付け・相続空き家のよくある質問。',faq,'/faq/'))
 # Editorial transparency and data-use disclosure: render from the actual deployment config.
 # Do not publish fictitious contact information or claim GA4/ASP activation before configured.
