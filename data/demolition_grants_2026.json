@@ -1,5 +1,5 @@
 {
-  "last_verified": "2026-10-24（東松山市ほか公開制度の存在を再確認。受付可否・予算残は未確認）",
+  "last_verified": "2026-10-21",
   "purpose": "契約前チェック用。金額だけでなく、受付状況・事前手続・契約タイミングを一次情報で確認する。公開時は必ず自治体公式ページを再確認する。",
   "municipalities": [
     {
@@ -110,5 +110,6 @@
       "official_url": "https://www.town.hatoyama.saitama.jp/kurashi/sumai_hikkosi/rifomujyokyakuhojyo/page001560.html",
       "conversion_angle": "『家財処分にも補助があるか』→許可・見積条件確認→必要な片付けだけ見積→解体/売却の最終手取り比較"
     }
-  ]
+  ],
+  "partial_recheck_20261024": "東松山市：公式ページの公表制度・市内業者上限加算を確認。ほか自治体について公表制度の存在を確認したが、現在の予算残・申請可否は確認できていない。"
 }
