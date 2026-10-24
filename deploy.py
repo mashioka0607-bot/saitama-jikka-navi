@@ -34,6 +34,18 @@ if static_pages.exists():
     shutil.copytree(static_pages, DIST, dirs_exist_ok=True)
     print('Copied curated static pages')
 
+# Curated pages are copied after the generated layout, so keep the editorial
+# disclosure reachable from their footer as well (without editing page content).
+editorial_link = '<a href="/editorial-policy/">編集方針</a>'
+operator_link = '<a href="/operator/">運営者情報</a>'
+for html_path in DIST.rglob('*.html'):
+    markup = html_path.read_text(encoding='utf-8')
+    if '<footer' not in markup.lower() or editorial_link in markup:
+        continue
+    if markup.count(operator_link) == 1:
+        markup = markup.replace(operator_link, operator_link + ' · ' + editorial_link, 1)
+        html_path.write_text(markup, encoding='utf-8')
+
 # The curated static HTML is copied *after* build.py generates GA4-tagged pages.
 # Inject the same GA4 config into copied pages, but only when GA4 is enabled.
 site_config = json.loads((ROOT / 'site_data.json').read_text(encoding='utf-8'))
