@@ -21,6 +21,8 @@ jobs:
         run: python deploy.py
       - name: Validate grant selector JavaScript syntax
         run: node --check static_pages/kaitai-check/grants.js
+      - name: Test Japan-time grant deadline warnings
+        run: node tests/test_grant_deadline_guard.js
       - name: Validate diagnosis decisions by user intent
         run: node tests/test_diagnosis_routing.js
       - name: Run affiliate and GA4 regression tests
