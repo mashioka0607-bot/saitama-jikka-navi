@@ -19,7 +19,7 @@ def offer_cta(offer_id='primary',context='content'):
     return f'''<aside class="cta"><span class="pr">PR</span><h2>{esc(o['name'])}</h2><p>依頼条件・対応範囲・料金を確認し、必要に応じて複数社を比較してください。</p><a class="button invert affiliate" data-offer="{esc(offer_id)}" data-context="{esc(context)}" rel="sponsored noopener" target="_blank" href="{esc(o['url'])}">{esc(o.get('label','無料見積もりを確認'))}</a><small>広告・アフィリエイトリンクです。利用者の追加負担はありません。</small></aside>'''
 def layout(title,desc,body,path='/',schema=None):
     st=''.join(f'<script type="application/ld+json">{json.dumps(s,ensure_ascii=False)}</script>' for s in ([schema] if isinstance(schema,dict) else (schema or [])))
-    return f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} | {esc(SITE['site_name'])}</title><meta name="description" content="{esc(desc)}"><link rel="canonical" href="{esc(canonical(path))}"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="{esc(title)} | {esc(SITE['site_name'])}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{esc(canonical(path))}"><link rel="stylesheet" href="/assets/style.css">{ga()}{st}</head><body><header><div class="wrap header"><a class="brand" href="/">{esc(SITE['site_name'])}</a>{nav()}</div></header><main class="wrap">{body}</main><footer><div class="wrap footer"><div><strong>{esc(SITE['site_name'])}</strong><p>{esc(SITE['tagline'])}</p></div><div><a href="/operator/">運営者情報</a> · <a href="/advertising-policy/">広告ポリシー</a> · <a href="/privacy/">プライバシー</a></div></div></footer><script>document.querySelectorAll('.affiliate').forEach(a=>a.addEventListener('click',()=>{{if(typeof window.gtag==='function'){{window.gtag('event','affiliate_click',{{offer:a.dataset.offer,context:a.dataset.context,source_page:window.location.pathname}})}}}}));</script></body></html>'''
+    return f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} | {esc(SITE['site_name'])}</title><meta name="description" content="{esc(desc)}"><link rel="canonical" href="{esc(canonical(path))}"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="{esc(title)} | {esc(SITE['site_name'])}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{esc(canonical(path))}"><link rel="stylesheet" href="/assets/style.css">{ga()}{st}</head><body><header><div class="wrap header"><a class="brand" href="/">{esc(SITE['site_name'])}</a>{nav()}</div></header><main class="wrap">{body}</main><footer><div class="wrap footer"><div><strong>{esc(SITE['site_name'])}</strong><p>{esc(SITE['tagline'])}</p></div><div><a href="/operator/">運営者情報</a> · <a href="/editorial-policy/">編集方針</a> · <a href="/advertising-policy/">広告ポリシー</a> · <a href="/privacy/">プライバシー</a></div></div></footer><script>document.querySelectorAll('.affiliate').forEach(a=>a.addEventListener('click',()=>{{if(typeof window.gtag==='function'){{window.gtag('event','affiliate_click',{{offer:a.dataset.offer,context:a.dataset.context,source_page:window.location.pathname}})}}}}));</script></body></html>'''
 def write(path,content):
     out=DIST/path
     if out.suffix!='.html':out=out/'index.html'
@@ -96,6 +96,24 @@ ad_html = f'''<section class="hero"><h1>広告ポリシー</h1></section>
 <p>広告クリックなどのアクセス解析の取扱いは<a href="/privacy/">プライバシーポリシー</a>をご確認ください。</p></section>'''
 write('advertising-policy', layout('広告ポリシー', '広告の有無、アフィリエイト報酬、記事の独立性について。', ad_html, '/advertising-policy/'))
 
+# Published editorial policy: no fictional author, reviewer, approval or contact.
+editorial_html = '''<section class="hero"><h1>編集方針・情報の検証方法</h1><p class="lead">最終更新：2026年10月25日。契約・売却・解体前の判断を助けるため、確認できた事実と試算上の仮定を分けて示します。</p></section>
+<section class="section"><h2>一次情報を優先</h2>
+<p>補助金、自治体の相談窓口、登記、税制、廃棄物処理の説明では、自治体・国の公式ページや法令を優先します。民間事業者の説明は、利用条件や料金の比較対象として扱い、行政の決定と区別します。</p>
+<p>制度の更新日・確認日と受付状況は同じ意味ではありません。年度・予算残額・交付決定前の契約や着工の可否は変わり得るため、公式ページに期限が書かれていても「今、申請できる」とは保証しません。必ず申請先に確認してください。</p>
+<h2>比較・計算の扱い</h2>
+<p>手取り比較の売却価格・買取価格・家財処分費などの初期入力は説明用です。地域の実際の相場・個別の査定額ではありません。税前概算には譲渡所得税、登記費用、ローン残債など含まれない項目があるため、結果だけで契約や解体を判断しないでください。</p>
+<p>自治体補助や家財の買取価格は、未確認の段階では受給・売却できるものとして加算しないよう案内します。物件の条件、追加費用、期間をそろえて比較することを推奨します。</p>
+<h2>広告・評価の独立性</h2>
+<p>広告やアフィリエイトがある場合はPR表示を行い、報酬の有無と関係なく公的相談先も案内します。報酬単価の高低だけで事業者を推奨しません。現時点の広告設定は<a href="/advertising-policy/">広告ポリシー</a>に記載しています。</p>
+<h2>執筆・確認と訂正</h2>
+<p>記事は「埼玉実家片付けナビ編集部」が作成し、公的情報の確認内容に応じて更新します。資格保有者や専門家による監修は、実際に確認した場合を除き表示しません。情報に齟齬が見つかったときは原典を照合し、本文と確認日の修正を行います。</p>
+<p>現在、専用の問い合わせ窓口は設けていません。確認済みでない連絡先や監修者を記載しません。運営主体の表示は<a href="/operator/">運営者情報</a>をご覧ください。</p>
+<h2>ご自身で確認できる公式相談先</h2>
+<p><a href="https://www.pref.saitama.lg.jp/a1106/akiya/r7_akiyacoodinator.html" rel="noopener" target="_blank">埼玉県「空き家コーディネーター」</a>は、県内の空き家所有者などが原則無料で相談できる公的案内です。個別の税・法律・不動産売買については、自治体や適切な専門家に確認してください。</p>
+</section>'''
+write('editorial-policy', layout('編集方針・情報の検証方法', '公的な一次情報の確認、試算の前提、広告の区別、訂正方針を公開しています。', editorial_html, '/editorial-policy/'))
+
 analytics_status = ('現在、当サイトのGoogle Analytics 4（GA4）計測タグは有効化していません。' if not analytics_enabled
                     else '当サイトではGoogle Analytics 4（GA4）を使用し、閲覧ページ・操作イベント・外部リンクのクリック等を集計してサイト改善に利用しています。')
 privacy_html = f'''<section class="hero"><h1>プライバシーポリシー</h1><p class="lead">最終更新：2026年10月23日</p></section>
@@ -112,7 +130,7 @@ privacy_html = f'''<section class="hero"><h1>プライバシーポリシー</h1>
 <h2>改定と問い合わせ</h2>
 <p>利用する解析サービスや広告サービスを変更した場合は、本ページの説明を見直します。運営者情報は<a href="/operator/">運営者情報</a>をご確認ください。</p></section>'''
 write('privacy', layout('プライバシーポリシー', 'アクセスログ・GA4・Cookie・外部広告サイトに関する情報の取扱い。', privacy_html, '/privacy/'))
-urls=['/','/shindan/','/faq/','/operator/','/advertising-policy/','/privacy/']+[f'/{p["slug"]}/' for p in PAGES]
+urls=['/','/shindan/','/faq/','/operator/','/editorial-policy/','/advertising-policy/','/privacy/']+[f'/{p["slug"]}/' for p in PAGES]
 (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{esc(canonical(u))}</loc></url>' for u in urls)+'</urlset>',encoding='utf-8')
 (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+canonical('/sitemap.xml')+'\n',encoding='utf-8')
 print(f'Built {len(urls)} indexable URLs -> {DIST}')
