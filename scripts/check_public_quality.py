@@ -107,6 +107,44 @@ def main() -> int:
         if offer_id not in rendered_offer_ids:
             violations.append(f"site_data.json: active offer {offer_id!r} has no matching published affiliate CTA")
 
+    # A prefecture-wide landing page must not send undecided visitors to
+    # Kawagoe-only consultation or use Kawagoe-only metadata. Regional
+    # article cards are allowed when explicitly labelled as Kawagoe examples.
+    statewide_checks = {
+        'index.html': (
+            ('Kawagoe / Inherited Home', '川越市を中心に', '川越市にも原則無料の空き家相談窓口'),
+            ('https://www.pref.saitama.lg.jp/a1106/akiya/r7_akiyacoodinator.html',
+             'https://www.pref.saitama.lg.jp/a1107/akiyabanku.html',
+             '川越市の詳細ガイド（県内制度の具体例）'),
+        ),
+        'shindan/index.html': (
+            ('川越市の相談先を整理', 'www.city.kawagoe.saitama.jp', '川越市の空き家管理連携先'),
+            ('https://www.pref.saitama.lg.jp/a1106/akiya/r7_akiyacoodinator.html',
+             'https://www.pref.saitama.lg.jp/a1106/akiyakanrisyatouroku.html'),
+        ),
+    }
+    for relative, (forbidden, required) in statewide_checks.items():
+        page_path = DIST / relative
+        if not page_path.exists():
+            violations.append(f"{relative}: missing statewide page")
+            continue
+        page_text = page_path.read_text(encoding='utf-8')
+        nav_match = re.search(r'<nav\\b[^>]*>(.*?)</nav>', page_text, flags=re.DOTALL)
+        if not nav_match:
+            violations.append(f"{relative}: missing common navigation")
+        else:
+            for href in ('/tedori-hikaku/', '/kaitai-check/'):
+                if f'href="{href}"' not in nav_match.group(1):
+                    violations.append(f"{relative}: nav does not link to {href}")
+            if '/kawagoe-shi/mitsumori-check/' in nav_match.group(1):
+                violations.append(f"{relative}: statewide nav routes to Kawagoe-only estimate")
+        for item in forbidden:
+            if item in page_text:
+                violations.append(f"{relative}: old Kawagoe-only scope: {item}")
+        for item in required:
+            if item not in page_text:
+                violations.append(f"{relative}: statewide official route or regional scope missing: {item}")
+
     if violations:
         print("Public quality gate failed:", file=sys.stderr)
         for violation in violations:
