@@ -61,6 +61,10 @@ def check() -> list[str]:
             problems.append(f"{city}: public CLOSED status contradicts reviewed source")
         if "受付再開" in status and "再開" not in public_status:
             problems.append(f"{city}: reviewed REOPENED status is not reflected publicly")
+        # Specific contractor eligibility must travel with the public CTA;
+        # a user choosing a noneligible vendor could lose the grant.
+        if "市内に本社" in (item.get("contract_timing") or "") and "市内に本社" not in " ".join(row[1:4]):
+            problems.append(f"{city}: eligible local-headquarters contractor rule missing publicly")
         # For dated budget snapshots, check amount, as-of date and remaining
         # full-grant count; status and URL checks alone miss stale figures.
         note = item.get("note", "")
