@@ -1,0 +1,66 @@
+"""Offline tests: never send Search Console exports to third parties."""
+import importlib.util
+from pathlib import Path
+import tempfile
+import unittest
+
+MODULE = Path(__file__).resolve().parents[1] / "scripts" / "audit_gsc_csv.py"
+spec = importlib.util.spec_from_file_location("audit_gsc_csv", MODULE)
+audit = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(audit)
+
+
+class GSCExportTests(unittest.TestCase):
+    def parse(self, csv_text):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "gsc.csv"
+            path.write_text(csv_text, encoding="utf-8-sig")
+            return audit.read_export(path)
+
+    def test_japanese_export_and_weighted_ctr(self):
+        rows, has_page = self.parse(
+            "上位のクエリ,上位のページ,クリック数,表示回数,CTR,掲載順位\n"
+            "実家 片付け前 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,1.43%,10\n"
+            "残置物 そのまま 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,0,30,0%,18\n"
+            "解体してから売る,https://saitama-jikka-navi.pages.dev/kaitai-check/,4,40,10%,4\n"
+        )
+        self.assertTrue(has_page)
+        report = audit.analyze(rows, has_page, 28)
+        cluster = next(x for x in report["clusters"] if x["cluster"] == "片付け前・残置物あり売却")
+        self.assertEqual(cluster["impressions"], 100)
+        self.assertEqual(cluster["clicks"], 1)
+        self.assertEqual(cluster["ctr"], .01)
+        self.assertEqual(cluster["average_position"], 12.4)
+        self.assertEqual(cluster["priority"], "rewrite")
+        self.assertEqual(cluster["observed_pages"], ["/tedori-hikaku/"])
+        self.assertTrue(any(x["priority"] == "observe" for x in report["clusters"]))
+
+    def test_query_only_does_not_invent_landing_page(self):
+        rows, has_page = self.parse(
+            "Query,Clicks,Impressions,CTR,Position\n"
+            "相続 実家 売却,1,60,1.7%,13\n"
+        )
+        self.assertFalse(has_page)
+        report = audit.analyze(rows, has_page, 90)
+        cluster = report["clusters"][0]
+        self.assertEqual(cluster["target"], "/shindan/")
+        self.assertEqual(cluster["observed_pages"], [])
+        self.assertIn("結び付けた", " ".join(report["warnings"]))
+        self.assertIn("同時データ", report["next_step"])
+
+    def test_invalid_and_page_only_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "Missing Search Console columns"):
+            self.parse("ページ,クリック数,表示回数,掲載順位\n/test/,1,30,10\n")
+        with self.assertRaisesRegex(ValueError, "Impossible"):
+            self.parse("Query,Clicks,Impressions,Position\nfoo,101,100,10\n")
+
+    def test_csv_totals_are_not_double_counted(self):
+        rows, _ = self.parse("Query,Clicks,Impressions,Position\n"
+                             "合計,11,120,10\n"
+                             "残置物 売却,1,20,12\n")
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(audit.analyze(rows, False, 28)["clusters"][0]["impressions"], 20)
+
+
+if __name__ == "__main__":
+    unittest.main()
