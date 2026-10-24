@@ -205,6 +205,10 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             # Delayed closings can reverse the apparent highest-quote winner.
             # Compare each quote after its own carry period and monthly cost.
             self.assertIn('id="quote-monthly"', static_page)
+            # Separate furniture proceeds from appraisal to prevent double-counting.
+            self.assertIn('家財買取額は不動産査定額とは別に受け取れる金額だけ入力', static_page)
+            self.assertIn('id="quote-handover-check"', static_page)
+            self.assertIn('見積書・契約書で確認する', static_page)
             self.assertIn('id="q1m"', static_page)
             self.assertIn('id="q2m"', static_page)
             self.assertIn('id="q3m"', static_page)
