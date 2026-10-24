@@ -61,6 +61,17 @@ def check() -> list[str]:
             problems.append(f"{city}: public CLOSED status contradicts reviewed source")
         if "受付再開" in status and "再開" not in public_status:
             problems.append(f"{city}: reviewed REOPENED status is not reflected publicly")
+        # Ensure city-vs-noncity contractor caps and excluded costs stay visible.
+        # Exact caps are only recorded for municipalities independently reviewed
+        # against their official primary sources. Never infer live availability.
+        public_text = " ".join(row[1:4])
+        for contractor, yen in (item.get("contractor_caps_jpy") or {}).items():
+            displayed = f"{contractor}上限{yen // 10000}万円"
+            if yen <= 0 or yen % 10000 or displayed not in public_text:
+                problems.append(f"{city}: contractor cap {displayed} missing publicly")
+        for excluded in item.get("excluded_costs") or []:
+            if excluded not in public_text:
+                problems.append(f"{city}: excluded cost {excluded} missing publicly")
         # Specific contractor eligibility must travel with the public CTA;
         # a user choosing a noneligible vendor could lose the grant.
         if "市内に本社" in (item.get("contract_timing") or "") and "市内に本社" not in " ".join(row[1:4]):
