@@ -153,6 +153,25 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn('<span class="pr">PR</span>', homepage)
             self.assertNotIn(quality.RAW_AFFILIATE_EVENT, homepage)
 
+            # An approved empty-home valuation offer must not automatically
+            # become an ad on cleanup-only editorial pages. Those pages first
+            # offer an opt-in comparison route; only actual comparison intent
+            # gets the monetized next step.
+            cleanup_only = (
+                "kawagoe-shi/jikka-katazuke-enkaku",
+                "kawagoe-shi/tachiai-fuyo",
+                "kawagoe-shi/mitsumori-check",
+                "kawagoe-shi/taikyo-kigen",
+                "kawagoe-shi/ikkenya-katazuke",
+            )
+            for slug in cleanup_only:
+                rendered = (project / "dist" / slug / "index.html").read_text(
+                    encoding="utf-8"
+                )
+                self.assertNotIn('data-offer="primary"', rendered, slug)
+                self.assertNotIn(URL.replace("&", "&amp;"), rendered, slug)
+                self.assertIn('href="/tedori-hikaku/"', rendered, slug)
+
             # Curated static pages are copied after build.py; they still need GA4.
             static_page = (project / "dist" / "tedori-hikaku" / "index.html").read_text(encoding="utf-8")
             self.assertEqual(static_page.count("googletagmanager.com/gtag/js?id=" + GA4), 1)
