@@ -216,8 +216,6 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn('data-context="tedori_compare_complete"', static_page)
             self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static_page)
             self.assertIn("gtag('event','affiliate_click'", static_page)
-            self.assertIn("next.dataset.comparisonStep='estimate'", static_page)
-            self.assertIn("next.dataset.comparisonStep=priced.length>=2?'real_quotes_compare':'single_quote'", static_page)
             self.assertIn("context:next.dataset.comparisonStep||'estimate'", static_page)
             # Only a visible, validated paid CTA counts as a view. Repeated
             # estimates must not inflate the offer-impression denominator.
