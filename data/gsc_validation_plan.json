@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-10-22",
+  "updated_at": "2026-10-24",
   "purpose": "薄い地名ページを量産せず、実家片付け前の高意図検索から売却・現況買取・公的相談への収益導線を検証するためのSearch Console観測計画",
-  "primary_hypothesis": "『片付ける前に現況で売却可能性を確認する』意図は、一般的な片付け業者比較より不動産売却CVに近い。Googleから検索表示が始まっているため、記事量産でなく既存2ページのクエリとCTRを先に確かめる。",
+  "primary_hypothesis": "『実家を全部片付ける前に売却・現況買取を比較』する意図は成果につながる可能性がある。ただし、流入・CTR・CVR・承認成果の実測がない現状では優位性は仮説に留まる。まず既存の /tedori-hikaku/ と /shindan/ のGSC実測を取得し、記事量産を避ける。",
   "query_clusters": [
     {
       "cluster": "片付け前×売却",
@@ -37,14 +37,14 @@
   "decision_rules": {
     "promote": "28日で同一クラスタ合計50 impressions以上、または非指名queryで平均掲載順位20位以内なら専用の深掘りページ候補。既存ページで意図を満たせる場合は新規ページを作らず改稿を優先。",
     "rewrite": "impressionsが増えて平均掲載順位8〜20位なのにCTRが2%未満ならtitle/description/冒頭訴求を改稿。",
-    "conversion": "ASP接続後はaffiliate_clickをquery clusterとlanding page単位で比較し、クリック率ではなく承認成果に近い導線を残す。",
+    "conversion": "ASP接続後は、GSCの検索語・ランディングページ別の流入傾向と、GA4のページ/文脈別affiliate_click及びASPの承認成果を別々に照合する。GSC検索クエリを個人単位でGA4成果へ直接紐付けられるとは扱わない。承認成果・EPC・収益/検索流入で導線を判断。",
     "do_not_scale": "地名差分だけのページは作らない。自治体独自制度・処分ルール・相談窓口・実需が十分に異なる場合だけ地域ページを追加する。"
   },
   "current_blockers": [
-    "GA4 ID未設定",
-    "正式ASP案件・報酬・成果地点・承認条件が未登録",
-    "GSC登録・表示実績開始は確認済み。Search Console API/CSVの直近28日・90日実測値が未取得",
-    "トップ/共通ナビに川越固定表現が残る"
+    "正式ASP提携承認・当アカウントの個別報酬/否認条件・発行済み成果URLが未確認（site_data.json の offers は空）",
+    "GA4 ID未設定（site_data.json の ga4_id は空）。ASP成果URLの先行設置を技術的には妨げないが、導線分析は不可",
+    "GSC所有権確認・初回表示メールは過去に確認済み。ただし直近28日・90日の検索パフォーマンス数値は取得できない",
+    "運営者情報ページに問い合わせ窓口がない。虚偽の連絡先は記載せず、ASP審査・信頼性の観点から実在の問い合わせ先整備を検討"
   ],
   "gsc_confirmed": {
     "property": "https://saitama-jikka-navi.pages.dev/",
@@ -52,5 +52,35 @@
     "impressions_started": "2026-09-07",
     "evidence": "Google Search Console ownership confirmation (2026-08-25 JST) and first-impressions email (2026-09-10 JST)",
     "numbers_accessible": false
+  },
+  "measurement_spec": {
+    "gsc_windows": [
+      "直近28日（短期変化）",
+      "直近90日（低ボリューム補完）"
+    ],
+    "pages": [
+      "/",
+      "/shindan/",
+      "/tedori-hikaku/",
+      "/kaitai-check/"
+    ],
+    "dimensions": [
+      "page",
+      "query",
+      "date"
+    ],
+    "metrics": [
+      "impressions",
+      "clicks",
+      "ctr",
+      "position"
+    ],
+    "interpretation": "低表示回数のCTRは不安定。表示回数・掲載順位と合わせて確認し、Search Consoleで確かめられない順位や需要を捏造しない。",
+    "next_decision": "高意図クエリの検索表示が出ている既存ページのタイトル・導入・内部リンクを優先改善。正式成果URLが未取得なら問い合わせ/ASP提携を優先し、量産は見送る。"
+  },
+  "quality_audit": {
+    "as_of": "2026-10-24",
+    "verified_repo": "main（PR #92統合後）",
+    "homepage_kawagoe_only_blocker": "PR #91のトップ県全域導線追加、.github/workflows/seo-quality.yml のKawagoe固定禁止ゲートを確認。以前の『トップ/共通ナビに川越固定表現が残る』は未確認のままP0に残さず、公開画面確認を別途実施する。"
   }
 }
