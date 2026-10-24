@@ -148,6 +148,24 @@ def main() -> int:
                 if item not in page_text:
                     violations.append(f"{relative}: statewide official route or regional scope missing: {item}")
 
+    # Auditability must be public on the highest-intent pages, not only
+    # in source files, because curated pages bypass the generated layout.
+    editorial_page = DIST / "editorial-policy/index.html"
+    if not editorial_page.is_file():
+        violations.append("editorial-policy: missing published methodology")
+    else:
+        policy = editorial_page.read_text(encoding="utf-8")
+        for required in ("一次情報を優先", "比較・計算の扱い", "広告・評価の独立性", "執筆・確認と訂正"):
+            if required not in policy:
+                violations.append(f"editorial-policy: missing disclosure: {required}")
+    sitemap_file = DIST / "sitemap.xml"
+    if sitemap_file.is_file() and "/editorial-policy/" not in sitemap_file.read_text(encoding="utf-8"):
+        violations.append("editorial-policy: missing from sitemap")
+    for rel in ("index.html", "shindan/index.html", "tedori-hikaku/index.html", "kaitai-check/index.html"):
+        public_page = DIST / rel
+        if public_page.is_file() and 'href="/editorial-policy/"' not in public_page.read_text(encoding="utf-8"):
+            violations.append(f"{rel}: editorial policy footer link missing")
+
     if violations:
         print("Public quality gate failed:", file=sys.stderr)
         for violation in violations:
