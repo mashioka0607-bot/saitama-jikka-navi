@@ -36,6 +36,9 @@ jobs:
           grep -q 'id="sample-value-disclosure"' dist/tedori-hikaku/index.html
           grep -q '仮の数値' dist/tedori-hikaku/index.html
           grep -q 'https://www.pref.saitama.lg.jp/a1106/akiyakanrisyatouroku.html' dist/tedori-hikaku/index.html
+          grep -q 'id="saitama-official-estimate"' dist/tedori-hikaku/index.html
+          grep -q 'https://www.city.saitama.lg.jp/001/154/007/001/p112598.html' dist/tedori-hikaku/index.html
+          grep -q '実際の不動産査定額ではありません' dist/tedori-hikaku/index.html
       - name: Show generated discovery files
         run: |
           test -f dist/sitemap.xml
