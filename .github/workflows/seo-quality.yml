@@ -62,3 +62,10 @@ jobs:
             echo 'Homepage is still positioned as Kawagoe-only; migrate it to the Saitama-wide decision hub.'
             exit 1
           fi
+
+      - name: Check production smoke script syntax
+        run: python -m py_compile scripts/check_live_site.py
+      - name: Check public Cloudflare URL after main push (informational)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        continue-on-error: true
+        run: python scripts/check_live_site.py
