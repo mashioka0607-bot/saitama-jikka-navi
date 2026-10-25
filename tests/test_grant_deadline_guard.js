@@ -1,8 +1,12 @@
 // Regression for published Japan-time grant deadlines. No live budget claims.
+// Eligibility and amount in the Kawaguchi selector must not become a generic grant promise.
+
 const fs = require('fs');
 const vm = require('vm');
 const assert = require('assert');
 const all = fs.readFileSync('static_pages/kaitai-check/grants.js', 'utf8');
+const kawaguchi = all.split('\n').find(line => line.startsWith("['川口市'"));
+assert.ok(kawaguchi && kawaguchi.includes('地方税完納') && kawaguchi.includes('事例紹介') && kawaguchi.includes('上限100万円') && kawaguchi.includes('満額支給とは限らない'), 'Kawaguchi official eligibility and payout caveat missing');
 const guard = all.slice(all.indexOf('/* Dynamic guard for 2026 municipal grant deadlines.'));
 assert.ok(guard.startsWith('/* Dynamic guard'), 'Guard marker missing');
 
