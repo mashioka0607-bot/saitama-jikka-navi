@@ -9,6 +9,12 @@ Accepts Japanese or English column headers. A query-only export can rank
 queries/clusters, but CANNOT determine which landing page received the query:
 page-specific suggestions require query+page rows in the same file.
 Only local CSV data are processed; no credentials, network calls, or PII.
+
+The standard GSC UI exports Queries and Pages as separate tables. To audit a
+specific landing page without API credentials, apply the GSC *exact page* filter
+BEFORE exporting the Queries table, then supply the exact URL with --page-filter.
+The CSV does not prove which filter was used; this is an explicitly labeled
+manual assertion, never an inferred sitewide query/page join.
 """
 from __future__ import annotations
 
@@ -58,6 +64,23 @@ def _path(value: str) -> str:
     return "/" + path.strip("/") + ("/" if path.strip("/") else "")
 
 
+def attach_page_filter(rows: list[dict], has_page: bool, filter_url: str) -> tuple[list[dict], bool]:
+    """Bind a query-only CSV to an explicitly asserted GSC exact-page filter.
+
+    This is ONLY valid if the operator set the same exact page filter in GSC
+    before exporting Queries.csv. The CSV cannot prove the filter was set.
+    """
+    if has_page:
+        raise ValueError("--page-filter cannot be used with an export containing a Page column")
+    parsed = urlparse(filter_url.strip())
+    if parsed.scheme != "https" or not parsed.hostname or not parsed.path.startswith("/"):
+        raise ValueError("--page-filter requires the full HTTPS page URL used in GSC")
+    if parsed.query or parsed.fragment or parsed.username or parsed.password:
+        raise ValueError("--page-filter must be a clean exact page URL without credentials, query or fragment")
+    page = _path(filter_url)
+    return ([dict(row, page=page) for row in rows], True)
+
+
 def read_export(path: Path) -> tuple[list[dict], bool]:
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream)
@@ -98,7 +121,7 @@ def classify(query: str) -> tuple[str, str]:
     return "その他・未分類", ""
 
 
-def analyze(rows: list[dict], has_page: bool, window: int) -> dict:
+def analyze(rows: list[dict], has_page: bool, window: int, source_kind: str = "csv") -> dict:
     groups: dict[str, dict] = defaultdict(lambda: {
         "clicks": 0, "impressions": 0, "position_weighted": 0.0, "queries": set(),
         "pages": set(), "target": "",
@@ -180,11 +203,14 @@ def analyze(rows: list[dict], has_page: bool, window: int) -> dict:
         "掲載順位は表示回数重みの参考平均、CTRはクリック数÷表示回数で再計算しています。",
         f"{window}日間は引数で指定された集計期間でありCSVファイルから検証していません。",
     ]
+    if source_kind == "manual_page_filter":
+        warnings.append("ページとの対応はGSC画面でページ完全一致フィルタを設定したという--page-filterの申告によります。CSV単体ではその設定を検証できません。")
     if not has_page:
         warnings.append("クエリのみのCSVです。検索語と個別ページを結び付けた改善提案はできません。")
     else:
         warnings.append("実流入ページはquery×page行からのみ集計しています。推奨ページは仮説であり実流入先と同一とは限りません。")
     return {"window_days_label": window, "query_page_rows": has_page,
+            "source_kind": source_kind,
             "row_count": len(rows), "clusters": clusters, "page_intents": page_intents,
             "warnings": warnings,
             "next_step": ("page_intentsの実流入先を優先して検索意図と既存ページを照合"
@@ -221,12 +247,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--window", type=int, choices=(28, 90), required=True,
                         help="Chosen 28- or 90-day period (cannot be verified from CSV)")
     parser.add_argument("--json", type=Path, help="Write structured result as UTF-8 JSON")
+    parser.add_argument("--page-filter", metavar="EXACT_HTTPS_URL",
+                        help="Use ONLY when GSC Queries.csv was exported with this exact page URL filter active; never for a sitewide export")
     args = parser.parse_args(argv)
     try:
         rows, has_page = read_export(args.csv_file)
+        source_kind = "csv"
+        if args.page_filter:
+            rows, has_page = attach_page_filter(rows, has_page, args.page_filter)
+            source_kind = "manual_page_filter"
         if not rows:
             raise ValueError("No nonempty query rows found")
-        report = analyze(rows, has_page, args.window)
+        report = analyze(rows, has_page, args.window, source_kind=source_kind)
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     print(markdown(report))
