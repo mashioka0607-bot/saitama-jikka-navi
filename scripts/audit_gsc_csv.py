@@ -103,6 +103,13 @@ def analyze(rows: list[dict], has_page: bool, window: int) -> dict:
         "clicks": 0, "impressions": 0, "position_weighted": 0.0, "queries": set(),
         "pages": set(), "target": "",
     })
+    # Query intent may land on multiple different URLs. Keep the observed
+    # query×page pairs separate: aggregate cluster averages cannot identify
+    # which *actual* page should be rewritten.
+    page_groups: dict[tuple[str, str], dict] = defaultdict(lambda: {
+        "clicks": 0, "impressions": 0, "position_weighted": 0.0,
+        "queries": set(), "suggested_target": "",
+    })
     for row in rows:
         name, target = classify(row["query"])
         group = groups[name]
@@ -113,6 +120,13 @@ def analyze(rows: list[dict], has_page: bool, window: int) -> dict:
         if has_page and row["page"]:
             group["pages"].add(row["page"])
         group["target"] = target
+        if has_page and row["page"]:
+            page_group = page_groups[(name, row["page"])]
+            page_group["clicks"] += row["clicks"]
+            page_group["impressions"] += row["impressions"]
+            page_group["position_weighted"] += row["impressions"] * row["position"]
+            page_group["queries"].add(row["query"])
+            page_group["suggested_target"] = target
 
     clusters = []
     for name, g in groups.items():
@@ -132,6 +146,34 @@ def analyze(rows: list[dict], has_page: bool, window: int) -> dict:
             "priority": "rewrite" if rewrite else "observe",
         })
     clusters.sort(key=lambda c: (c["priority"] != "rewrite", -c["impressions"]))
+    page_intents = []
+    for (name, page), g in page_groups.items():
+        impressions = g["impressions"]
+        ctr = round(g["clicks"] / impressions, 5)
+        position = round(g["position_weighted"] / impressions, 2)
+        suggested = g["suggested_target"]
+        # "target" is only an editorial hypothesis. The page in this record
+        # is the landing URL actually reported in a GSC query×page row.
+        differs = bool(suggested and suggested != page)
+        rewrite = (name != "その他・未分類" and impressions >= 50
+                   and 8 <= position <= 20 and ctr < 0.02)
+        if differs and impressions >= 50:
+            action = "実流入先と推奨意図ページの違いを精査（自動移転はしない）"
+            priority = "review_intent"
+        elif rewrite:
+            action = "この実流入ページのtitle・導入・内部リンクを精査"
+            priority = "rewrite"
+        else:
+            action = "継続観測（実流入先の改稿を即断しない）"
+            priority = "observe"
+        page_intents.append({
+            "cluster": name, "observed_page": page, "suggested_target": suggested,
+            "intent_mismatch": differs, "clicks": g["clicks"],
+            "impressions": impressions, "ctr": ctr, "average_position": position,
+            "query_count": len(g["queries"]), "action": action, "priority": priority,
+        })
+    order = {"review_intent": 0, "rewrite": 1, "observe": 2}
+    page_intents.sort(key=lambda p: (order[p["priority"]], -p["impressions"], p["observed_page"]))
     warnings = [
         "このレポートは提供されたCSVだけに基づきます。GSCに接続していません。",
         "Search Consoleは匿名化・行数上限があり、行合計はサイト総計とは限りません。",
@@ -141,10 +183,11 @@ def analyze(rows: list[dict], has_page: bool, window: int) -> dict:
     if not has_page:
         warnings.append("クエリのみのCSVです。検索語と個別ページを結び付けた改善提案はできません。")
     else:
-        warnings.append("ページ別改善の精査は同じ行にqueryとpageを含むCSVが必要です。")
+        warnings.append("実流入ページはquery×page行からのみ集計しています。推奨ページは仮説であり実流入先と同一とは限りません。")
     return {"window_days_label": window, "query_page_rows": has_page,
-            "row_count": len(rows), "clusters": clusters, "warnings": warnings,
-            "next_step": ("改善候補クラスターのランディングページを確認し既存ページから検証"
+            "row_count": len(rows), "clusters": clusters, "page_intents": page_intents,
+            "warnings": warnings,
+            "next_step": ("page_intentsの実流入先を優先して検索意図と既存ページを照合"
                           if has_page else
                           "Search Consoleでページ×クエリの同時データを取得して着地先を特定")}
 
@@ -158,6 +201,15 @@ def markdown(report: dict) -> str:
     for c in report["clusters"]:
         lines.append(f"| {c['cluster']} | {c['impressions']} | {c['clicks']} | "
                      f"{c['ctr']:.1%} | {c['average_position']:.1f} | {c['action']} |")
+    if report["query_page_rows"]:
+        lines.extend(["", "## 実流入先×検索意図（CSVの同一行に基づく）",
+                      "| 実流入先 | 検索意図 | 表示 | クリック | CTR | 参考順位 | 精査 |",
+                      "|---|---|---:|---:|---:|---:|---|"])
+        for p in report["page_intents"][:20]:
+            lines.append(f"| {p['observed_page']} | {p['cluster']} | {p['impressions']} | "
+                         f"{p['clicks']} | {p['ctr']:.1%} | {p['average_position']:.1f} | {p['action']} |")
+        if len(report["page_intents"]) > 20:
+            lines.append(f"上位20件を表示（総数{len(report['page_intents'])}件）。JSON出力で全件確認。")
     lines.extend(["", "**次の検証**：" + report["next_step"], "", "**注意**"])
     lines.extend("- " + warning for warning in report["warnings"])
     return "\n".join(lines)

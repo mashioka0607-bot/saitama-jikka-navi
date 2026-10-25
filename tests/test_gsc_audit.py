@@ -48,6 +48,33 @@ class GSCExportTests(unittest.TestCase):
         self.assertIn("結び付けた", " ".join(report["warnings"]))
         self.assertIn("同時データ", report["next_step"])
 
+    def test_actual_landing_page_is_not_assumed_from_query_intent(self):
+        rows, has_page = self.parse(
+            "Query,Page,Clicks,Impressions,Position\n"
+            "残置物 そのまま 売却,https://saitama-jikka-navi.pages.dev/shindan/,0,70,11\n"
+            "残置物 そのまま 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,11\n"
+        )
+        report = audit.analyze(rows, has_page, 28)
+        observed = {p["observed_page"]: p for p in report["page_intents"]}
+        mismatch = observed["/shindan/"]
+        self.assertEqual(mismatch["suggested_target"], "/tedori-hikaku/")
+        self.assertTrue(mismatch["intent_mismatch"])
+        self.assertEqual(mismatch["priority"], "review_intent")
+        matched = observed["/tedori-hikaku/"]
+        self.assertFalse(matched["intent_mismatch"])
+        self.assertEqual(matched["priority"], "rewrite")
+        self.assertIn("実流入先", audit.markdown(report))
+
+    def test_cluster_average_does_not_trigger_false_page_rewrite(self):
+        rows, has_page = self.parse(
+            "Query,Page,Clicks,Impressions,Position\n"
+            "残置物 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,0,50,3\n"
+            "残置物 売却,https://saitama-jikka-navi.pages.dev/shindan/,0,50,25\n"
+        )
+        report = audit.analyze(rows, has_page, 28)
+        self.assertEqual(report["clusters"][0]["priority"], "rewrite")
+        self.assertTrue(all(p["priority"] != "rewrite" for p in report["page_intents"]))
+
     def test_invalid_and_page_only_are_rejected(self):
         with self.assertRaisesRegex(ValueError, "Missing Search Console columns"):
             self.parse("ページ,クリック数,表示回数,掲載順位\n/test/,1,30,10\n")
