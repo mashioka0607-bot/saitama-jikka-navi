@@ -25,6 +25,8 @@ jobs:
         run: node tests/test_grant_deadline_guard.js
       - name: Validate diagnosis decisions by user intent
         run: node tests/test_diagnosis_routing.js
+      - name: Validate low-price brokerage fee scenario and limit
+        run: node tests/test_low_price_broker.js
       - name: Run affiliate and GA4 regression tests
         run: python -m unittest discover -s tests -p 'test_affiliate_quality_gate.py' -v
       - name: Verify Search Console CSV audit (offline fixtures)
