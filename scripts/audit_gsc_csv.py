@@ -26,6 +26,27 @@ from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urlparse
 
+
+def require_site_page_url(value: str, context: str) -> None:
+    """Fail closed if a GSC page/filter URL belongs to another property.
+
+    Do not collapse another host (or a URL with a query string) into this
+    site's /path/: that would fabricate evidence for a page's SEO performance.
+    The canonical origin is configured in site_data.json.
+    """
+    config_path = Path(__file__).resolve().parents[1] / "site_data.json"
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    origin = urlparse(config["base_url"].strip())
+    parsed = urlparse(value.strip())
+    if (parsed.scheme != "https" or parsed.scheme != origin.scheme
+            or parsed.netloc.casefold() != origin.netloc.casefold()
+            or parsed.username or parsed.password or parsed.params
+            or parsed.query or parsed.fragment):
+        raise ValueError(
+            f"{context}: expected a clean HTTPS URL on configured site origin "
+            f"{origin.scheme}://{origin.netloc}; got {value!r}. "
+            "Do not mix GSC properties or collapse query URLs into a path.")
+
 HEADERS = {
     "query": ("query", "queries", "上位のクエリ", "検索クエリ", "クエリ"),
     "page": ("page", "pages", "上位のページ", "ページ"),
@@ -77,6 +98,7 @@ def attach_page_filter(rows: list[dict], has_page: bool, filter_url: str) -> tup
         raise ValueError("--page-filter requires the full HTTPS page URL used in GSC")
     if parsed.query or parsed.fragment or parsed.username or parsed.password:
         raise ValueError("--page-filter must be a clean exact page URL without credentials, query or fragment")
+    require_site_page_url(filter_url, "--page-filter")
     page = _path(filter_url)
     return ([dict(row, page=page) for row in rows], True)
 
@@ -107,7 +129,10 @@ def read_export(path: Path) -> tuple[list[dict], bool]:
                 raise ValueError(f"Impossible Search Console metric at CSV line {line}")
             if impressions == 0:
                 continue
-            page = _path(raw.get(columns["page"]) or "") if columns["page"] else ""
+            page_value = (raw.get(columns["page"]) or "").strip() if columns["page"] else ""
+            if page_value:
+                require_site_page_url(page_value, f"Search Console Page at CSV line {line}")
+            page = _path(page_value) if page_value else ""
             result.append({"query": query, "page": page, "clicks": clicks,
                            "impressions": impressions, "position": position})
     return result, bool(columns["page"])

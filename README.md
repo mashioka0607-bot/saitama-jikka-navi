@@ -41,3 +41,4 @@ python scripts/audit_gsc_csv.py Queries.csv --window 28 --page-filter https://sa
 
 `/kaitai-check/` と90日についても**ページフィルタを切り替えてから**別々にエクスポートしてください。**フィルタなしのクエリCSVへ `--page-filter` を指定してはいけません。** スクリプトはGSC画面のフィルタ状態を検証できず、ページの紐付けは操作者の申告として警告を表示します。GSC自体へのAPI接続・実測値取得を行うものではありません。Google公式：[パフォーマンスレポート](https://support.google.com/webmasters/answer/7576553) / [高度なフィルタ](https://support.google.com/webmasters/answer/17011165) / [Search Analytics API](https://developers.google.com/webmaster-tools/v1/searchanalytics/query)。
 
+**データ帰属の安全確認**：監査ツールは `site_data.json > base_url` と異なるドメインのページ行・完全一致フィルタを拒否します。`?` 付きURLの行も、同じパスへ合算して誤認しないため拒否します。GSCの対象プロパティ、正規URL、エクスポート対象を確認し、サイト移転時は `base_url` を更新してから分析してください。CSVから本当のGoogleインデックス状況は判定できません。
