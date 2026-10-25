@@ -145,6 +145,21 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
                 completed.returncode, 0,
                 completed.stdout + "\n" + completed.stderr,
             )
+            # Every canonical URL must appear in both published sitemap formats.
+            import xml.etree.ElementTree as ET
+            xml_tree = ET.parse(project / "dist" / "sitemap.xml")
+            published_urls = [
+                (n.text or "").strip()
+                for n in xml_tree.getroot().findall(".//{*}loc")
+            ]
+            plain_urls = (project / "dist" / "sitemap.txt").read_text(
+                encoding="utf-8"
+            ).splitlines()
+            self.assertEqual(plain_urls, published_urls)
+            self.assertIn(
+                "https://saitama-jikka-navi.pages.dev/editorial-policy/",
+                published_urls,
+            )
             homepage = (project / "dist" / "index.html").read_text(encoding="utf-8")
             parser = quality.AffiliateLinkParser()
             parser.feed(homepage)
