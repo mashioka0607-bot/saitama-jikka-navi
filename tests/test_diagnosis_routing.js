@@ -6,7 +6,7 @@ const html = fs.readFileSync('static_pages/shindan/index.html', 'utf8');
 const match = html.match(/<script>([\s\S]*?)<\/script>/);
 assert.ok(match, 'diagnosis script missing');
 
-function diagnose({state='empty', exit='unknown', registration='na', distance='yes', deadline='no'} = {}) {
+function diagnose({state='empty', exit='unknown', registration='unknown', distance='yes', deadline='no'} = {}) {
   const values = {state, exit, registration, distance, deadline};
   let onSubmit;
   const result = {innerHTML:'', style:{}, scrollIntoView(){}};
