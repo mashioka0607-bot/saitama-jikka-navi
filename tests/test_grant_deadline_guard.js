@@ -7,6 +7,7 @@ const assert = require('assert');
 const all = fs.readFileSync('static_pages/kaitai-check/grants.js', 'utf8');
 const kawaguchi = all.split('\n').find(line => line.startsWith("['川口市'"));
 assert.ok(kawaguchi && kawaguchi.includes('地方税完納') && kawaguchi.includes('事例紹介') && kawaguchi.includes('上限100万円') && kawaguchi.includes('満額支給とは限らない'), 'Kawaguchi official eligibility and payout caveat missing');
+assert.ok(kawaguchi.includes('完了報告 2027-01-29'), 'Kawaguchi post-demolition report deadline missing from published selector');
 const guard = all.slice(all.indexOf('/* Dynamic guard for 2026 municipal grant deadlines.'));
 assert.ok(guard.startsWith('/* Dynamic guard'), 'Guard marker missing');
 
