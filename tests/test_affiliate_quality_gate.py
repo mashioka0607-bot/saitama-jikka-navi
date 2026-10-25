@@ -216,6 +216,12 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn('net:price+reuse-disposal-fee-other-months*monthly', static_page)
             self.assertIn("x.holding.toLocaleString()", static_page)
             self.assertIn("comparison_version:'v3'", static_page)
+            # Approved paid offer requires an upfront, unambiguous PR label
+            # plus the separate label beside the conversion button.
+            self.assertEqual(static_page.count('id="tedori-ad-disclosure"'), 1)
+            self.assertIn('<strong>[PR] アフィリエイト広告について</strong>', static_page)
+            self.assertLess(static_page.index('id="tedori-ad-disclosure"'),
+                            static_page.index('<section class="hero">'))
             self.assertIn('id="tedori-affiliate-next"', static_page)
             self.assertIn('data-context="tedori_compare_complete"', static_page)
             self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static_page)
