@@ -121,7 +121,7 @@ class GSCExportTests(unittest.TestCase):
                 "残置物 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/?variant=1,0,70,11\n")
         rows, has_page = self.parse(
             "Query,Clicks,Impressions,Position\n残置物 売却,0,70,11\n")
-        with self.assertRaisesRegex(ValueError, "configured site origin"):
+        with self.assertRaisesRegex(ValueError, "clean exact page URL"):
             audit.attach_page_filter(
                 rows, has_page, "https://saitama-jikka-navi.pages.dev/tedori-hikaku/?variant=1")
 
