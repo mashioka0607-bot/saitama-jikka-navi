@@ -285,6 +285,13 @@ if 'tedori_real_quotes_v2' not in tedori or 'real_appraisal_compare' not in tedo
     raise RuntimeError('Deploy blocked: real appraisal comparison v2 missing from tedori-hikaku')
 if 'tedori_tax_gate_v1' not in tedori or 'www.nta.go.jp/taxes/shiraberu/taxanswer/joto/3306.htm' not in tedori:
     raise RuntimeError('Deploy blocked: inherited-home tax eligibility gate missing from tedori-hikaku')
+# The same-condition quote request lets users acquire comparable real offers
+# before returning to the calculated and real-quote comparison steps.
+for required in ('id="quote-request-template"', 'id="quote-request-text"', 'id="copy-quote-request"',
+                 'quote_request_copy', '処分責任・費用負担'):
+    if required not in tedori:
+        raise RuntimeError(f'Deploy blocked: real-quote request template missing: {required}')
+
 for required_label in ('家財・不用品の買取額', '残置物の処分・撤去で自己負担する額'):
     if required_label not in tedori:
         raise RuntimeError(f'Deploy blocked: quote comparison field missing: {required_label}')
