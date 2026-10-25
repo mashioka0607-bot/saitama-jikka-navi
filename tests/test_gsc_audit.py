@@ -77,8 +77,8 @@ class GSCExportTests(unittest.TestCase):
 
     def test_gsc_ui_exact_page_filtered_queries(self):
         rows, has_page = self.parse(
-            "Query,Clicks,Impressions,CTR,Position\\n"
-            "残置物 そのまま 売却,0,70,0%,11\\n"
+            "Query,Clicks,Impressions,CTR,Position\n"
+            "残置物 そのまま 売却,0,70,0%,11\n"
         )
         self.assertFalse(has_page)
         rows, has_page = audit.attach_page_filter(
@@ -91,7 +91,7 @@ class GSCExportTests(unittest.TestCase):
 
     def test_page_filter_cannot_be_inferred_or_combined(self):
         rows, has_page = self.parse(
-            "Query,Clicks,Impressions,Position\\n残置物 売却,0,70,11\\n")
+            "Query,Clicks,Impressions,Position\n残置物 売却,0,70,11\n")
         with self.assertRaisesRegex(ValueError, "full HTTPS"):
             audit.attach_page_filter(rows, has_page, "/tedori-hikaku/")
         rows, has_page = audit.attach_page_filter(
