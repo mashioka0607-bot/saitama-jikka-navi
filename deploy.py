@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 import re
+import xml.etree.ElementTree as ET
 import shutil
 import subprocess
 import sys
@@ -240,13 +241,18 @@ if xml_path.exists():
         xml = xml.replace('</urlset>', additions + '</urlset>')
         xml_path.write_text(xml, encoding='utf-8')
 
+# Keep the plain-text sitemap aligned with the published XML URL set.
+# The repository's copied sitemap.txt can omit newer generated pages.
 txt_path = DIST / 'sitemap.txt'
-if txt_path.exists():
-    existing = txt_path.read_text(encoding='utf-8').splitlines()
-    for u in curated_urls:
-        if u not in existing:
-            existing.append(u)
-    txt_path.write_text('\n'.join(existing) + '\n', encoding='utf-8')
+xml_urls = [
+    (node.text or '').strip()
+    for node in ET.parse(xml_path).getroot().findall('.//{*}loc')
+]
+if not xml_urls or any(not url for url in xml_urls):
+    raise RuntimeError('Deploy blocked: sitemap.xml contains no valid loc entries')
+if len(set(xml_urls)) != len(xml_urls):
+    raise RuntimeError('Deploy blocked: duplicate canonical URLs in sitemap.xml')
+txt_path.write_text('\n'.join(xml_urls) + '\n', encoding='utf-8')
 
 headers = DIST / '_headers'
 headers.write_text(
