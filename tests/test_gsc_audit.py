@@ -75,6 +75,30 @@ class GSCExportTests(unittest.TestCase):
         self.assertEqual(report["clusters"][0]["priority"], "rewrite")
         self.assertTrue(all(p["priority"] != "rewrite" for p in report["page_intents"]))
 
+    def test_gsc_ui_exact_page_filtered_queries(self):
+        rows, has_page = self.parse(
+            "Query,Clicks,Impressions,CTR,Position\n"
+            "残置物 そのまま 売却,0,70,0%,11\n"
+        )
+        self.assertFalse(has_page)
+        rows, has_page = audit.attach_page_filter(
+            rows, has_page, "https://saitama-jikka-navi.pages.dev/tedori-hikaku/")
+        report = audit.analyze(rows, has_page, 28, source_kind="manual_page_filter")
+        self.assertEqual(report["source_kind"], "manual_page_filter")
+        self.assertEqual(report["page_intents"][0]["observed_page"], "/tedori-hikaku/")
+        self.assertEqual(report["page_intents"][0]["priority"], "rewrite")
+        self.assertIn("CSV単体では", " ".join(report["warnings"]))
+
+    def test_page_filter_cannot_be_inferred_or_combined(self):
+        rows, has_page = self.parse(
+            "Query,Clicks,Impressions,Position\n残置物 売却,0,70,11\n")
+        with self.assertRaisesRegex(ValueError, "full HTTPS"):
+            audit.attach_page_filter(rows, has_page, "/tedori-hikaku/")
+        rows, has_page = audit.attach_page_filter(
+            rows, has_page, "https://saitama-jikka-navi.pages.dev/tedori-hikaku/")
+        with self.assertRaisesRegex(ValueError, "Page column"):
+            audit.attach_page_filter(rows, has_page, "https://saitama-jikka-navi.pages.dev/")
+
     def test_invalid_and_page_only_are_rejected(self):
         with self.assertRaisesRegex(ValueError, "Missing Search Console columns"):
             self.parse("ページ,クリック数,表示回数,掲載順位\n/test/,1,30,10\n")
