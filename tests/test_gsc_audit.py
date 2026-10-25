@@ -105,10 +105,10 @@ class GSCExportTests(unittest.TestCase):
         # not traffic to this website. Never label it /tedori-hikaku/.
         with self.assertRaisesRegex(ValueError, "configured site origin"):
             self.parse(
-                "Query,Page,Clicks,Impressions,Position\\n"
-                "残置物 売却,https://example.org/tedori-hikaku/,0,70,11\\n")
+                "Query,Page,Clicks,Impressions,Position\n"
+                "残置物 売却,https://example.org/tedori-hikaku/,0,70,11\n")
         rows, has_page = self.parse(
-            "Query,Clicks,Impressions,Position\\n残置物 売却,0,70,11\\n")
+            "Query,Clicks,Impressions,Position\n残置物 売却,0,70,11\n")
         with self.assertRaisesRegex(ValueError, "configured site origin"):
             audit.attach_page_filter(rows, has_page, "https://example.org/tedori-hikaku/")
 
@@ -117,10 +117,10 @@ class GSCExportTests(unittest.TestCase):
         # behavior is verified, rather than merging them by pathname.
         with self.assertRaisesRegex(ValueError, "configured site origin"):
             self.parse(
-                "Query,Page,Clicks,Impressions,Position\\n"
-                "残置物 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/?variant=1,0,70,11\\n")
+                "Query,Page,Clicks,Impressions,Position\n"
+                "残置物 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/?variant=1,0,70,11\n")
         rows, has_page = self.parse(
-            "Query,Clicks,Impressions,Position\\n残置物 売却,0,70,11\\n")
+            "Query,Clicks,Impressions,Position\n残置物 売却,0,70,11\n")
         with self.assertRaisesRegex(ValueError, "configured site origin"):
             audit.attach_page_filter(
                 rows, has_page, "https://saitama-jikka-navi.pages.dev/tedori-hikaku/?variant=1")
