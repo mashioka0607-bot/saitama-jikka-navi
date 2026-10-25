@@ -6,7 +6,7 @@ const html = fs.readFileSync('static_pages/shindan/index.html', 'utf8');
 const match = html.match(/<script>([\s\S]*?)<\/script>/);
 assert.ok(match, 'diagnosis script missing');
 
-function diagnose({state='empty', exit='unknown', registration='na', distance='yes', deadline='no'} = {}) {
+function diagnose({state='empty', exit='unknown', registration='unknown', distance='yes', deadline='no'} = {}) {
   const values = {state, exit, registration, distance, deadline};
   let onSubmit;
   const result = {innerHTML:'', style:{}, scrollIntoView(){}};
@@ -69,4 +69,23 @@ assert.match(cleanupUrgent.html, /期限優先の確認/);
 const registrationUrgent = diagnose({state:'inherited', exit:'sell', registration:'notdone', deadline:'yes'});
 assert.equal(registrationUrgent.route, 'inheritance_registration');
 assert.match(registrationUrgent.html, /権限を確認/);
-console.log('Diagnosis routing passed: undecided/registration/cleanup/sale/keep cases.');
+const inheritedUnverifiedSale = diagnose({state:'inherited',exit:'sell',registration:'unknown'});
+assert.equal(inheritedUnverifiedSale.route, 'ownership_unverified');
+assert.match(inheritedUnverifiedSale.html, /登記名義/);
+assert.match(inheritedUnverifiedSale.html, /司法書士/);
+assert.doesNotMatch(inheritedUnverifiedSale.html, /href="\/tedori-hikaku\/"/);
+
+const inheritedUnverifiedCleanup = diagnose({state:'inherited',exit:'clear',registration:'unknown'});
+assert.equal(inheritedUnverifiedCleanup.route, 'ownership_unverified');
+assert.doesNotMatch(inheritedUnverifiedCleanup.html, /href="\/tedori-hikaku\/"/);
+
+const inheritedInconsistentRegistration = diagnose({state:'inherited',exit:'sell',registration:'na'});
+assert.equal(inheritedInconsistentRegistration.route, 'ownership_unverified');
+
+const nonInheritedUnverifiedSale = diagnose({state:'empty',exit:'sell',registration:'unknown'});
+assert.equal(nonInheritedUnverifiedSale.route, 'ownership_unverified');
+
+const nonInheritedCleanup = diagnose({state:'empty',exit:'clear',registration:'unknown'});
+assert.equal(nonInheritedCleanup.route, 'clear_prefecture');
+
+console.log('Diagnosis routing passed: undecided/registration/cleanup/sale/keep + ownership unverified cases.');
