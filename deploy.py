@@ -130,6 +130,20 @@ if primary_offer:
         raise RuntimeError('Primary offer requires an approved HTTPS URL')
     tedori_path = DIST / 'tedori-hikaku' / 'index.html'
     markup = tedori_path.read_text(encoding='utf-8')
+    # Disclosure must be visible before the comparison hero, not only after
+    # a visitor submits the form and sees the affiliate CTA in the result.
+    main_anchor = '<main class="wrap">'
+    disclosure = (
+        '<div id="tedori-ad-disclosure" class="notice" role="note">'
+        '<strong>[PR] アフィリエイト広告について</strong>'
+        '<p>このページには広告が含まれます。提携先への申込み等により'
+        '当サイトが報酬を受け取る場合があります。'
+        '掲載サービスへの申込みは任意で、比較計算の結果とは独立しています。</p>'
+        '</div>'
+    )
+    if markup.count(main_anchor) != 1 or 'id="tedori-ad-disclosure"' in markup:
+        raise RuntimeError('Tedori first-view ad disclosure anchor missing or duplicated')
+    markup = markup.replace(main_anchor, main_anchor + disclosure, 1)
     result_anchor = '<div id="r" class="result" aria-live="polite"></div>'
     if markup.count(result_anchor) != 1 or 'id="tedori-affiliate-next"' in markup:
         raise RuntimeError('Tedori conversion insertion point missing or duplicated')
