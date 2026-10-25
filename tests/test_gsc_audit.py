@@ -99,6 +99,32 @@ class GSCExportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Page column"):
             audit.attach_page_filter(rows, has_page, "https://saitama-jikka-navi.pages.dev/")
 
+
+    def test_cross_property_urls_are_rejected_before_aggregation(self):
+        # A foreign GSC property can have exactly the same path, but it is
+        # not traffic to this website. Never label it /tedori-hikaku/.
+        with self.assertRaisesRegex(ValueError, "configured site origin"):
+            self.parse(
+                "Query,Page,Clicks,Impressions,Position\\n"
+                "残置物 売却,https://example.org/tedori-hikaku/,0,70,11\\n")
+        rows, has_page = self.parse(
+            "Query,Clicks,Impressions,Position\\n残置物 売却,0,70,11\\n")
+        with self.assertRaisesRegex(ValueError, "configured site origin"):
+            audit.attach_page_filter(rows, has_page, "https://example.org/tedori-hikaku/")
+
+    def test_query_suffix_is_not_silently_collapsed_into_canonical_page(self):
+        # Treat query-bearing URLs as distinct until canonical/redirect
+        # behavior is verified, rather than merging them by pathname.
+        with self.assertRaisesRegex(ValueError, "configured site origin"):
+            self.parse(
+                "Query,Page,Clicks,Impressions,Position\\n"
+                "残置物 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/?variant=1,0,70,11\\n")
+        rows, has_page = self.parse(
+            "Query,Clicks,Impressions,Position\\n残置物 売却,0,70,11\\n")
+        with self.assertRaisesRegex(ValueError, "configured site origin"):
+            audit.attach_page_filter(
+                rows, has_page, "https://saitama-jikka-navi.pages.dev/tedori-hikaku/?variant=1")
+
     def test_invalid_and_page_only_are_rejected(self):
         with self.assertRaisesRegex(ValueError, "Missing Search Console columns"):
             self.parse("ページ,クリック数,表示回数,掲載順位\n/test/,1,30,10\n")
