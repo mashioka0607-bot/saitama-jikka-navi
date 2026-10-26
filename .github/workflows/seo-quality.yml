@@ -23,6 +23,8 @@ jobs:
         run: node --check static_pages/kaitai-check/grants.js
       - name: Test Japan-time grant deadline warnings
         run: node tests/test_grant_deadline_guard.js
+      - name: Verify municipal grant deadlines against reviewed source data
+        run: python -m unittest discover -s tests -p 'test_grant_deadline_consistency.py' -v
       - name: Validate diagnosis decisions by user intent
         run: node tests/test_diagnosis_routing.js
       - name: Validate low-price brokerage fee scenario and limit
