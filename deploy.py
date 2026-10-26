@@ -35,6 +35,38 @@ if static_pages.exists():
     shutil.copytree(static_pages, DIST, dirs_exist_ok=True)
     print('Copied curated static pages')
 
+# High-intent visitors should reach the right calculator without scrolling through
+# the long safety explanations. Both routes remain neutral and non-commercial.
+tedori_path = DIST / 'tedori-hikaku' / 'index.html'
+markup = tedori_path.read_text(encoding='utf-8')
+hero_match = re.search(r'<section class="hero">[\s\S]*?</section>', markup)
+if (not hero_match or markup.count('<section class="hero">') != 1
+        or 'id="tedori-quick-path"' in markup
+        or 'id="tedori_real_quotes_v2"' not in markup):
+    raise RuntimeError('Tedori quick-path anchor or comparison target missing')
+quick_path = """<section class="section notice" id="tedori-quick-path" aria-label="手取り比較への入口">
+<h2>今の状況から、すぐ比較を始める</h2>
+<p>まだ査定がなければ概算を、査定が届いていれば各社の残置物負担まで含む比較を使えます。いずれも登録や送信は不要です。</p>
+<p><a class="button" href="#calc" data-compare-stage="estimate">査定前：概算で比較する</a>
+<a class="button" href="#tedori_real_quotes_v2" data-compare-stage="real_quotes">査定後：最大3社の手取りを比較する</a></p>
+<small>計算は税前の概算です。入力した住所・金額を当サイトへ送る機能ではありません。</small>
+</section>
+<script id="tedori-quick-path-measure">(function(){
+const nav=document.getElementById('tedori-quick-path');
+if(!nav)return;
+nav.addEventListener('click',function(event){
+  const link=event.target&&event.target.closest&&event.target.closest('a[data-compare-stage]');
+  if(!link||typeof window.gtag!=='function')return;
+  window.gtag('event','compare_path_select',{
+    comparison_stage:link.dataset.compareStage,
+    source_page:window.location.pathname
+  });
+});
+})();</script>"""
+markup = markup[:hero_match.end()] + quick_path + markup[hero_match.end():]
+tedori_path.write_text(markup, encoding='utf-8')
+print('Added two direct calculator paths for pre-quote and post-quote visitors')
+
 # Curated pages are copied after the generated layout, so keep the editorial
 # disclosure reachable from their footer as well (without editing page content).
 editorial_link = '<a href="/editorial-policy/">編集方針</a>'
