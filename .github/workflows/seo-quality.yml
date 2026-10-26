@@ -80,6 +80,8 @@ jobs:
 
       - name: Check production smoke script syntax
         run: python -m py_compile scripts/check_live_site.py
+      - name: Test production release-manifest validation
+        run: python -m unittest discover -s tests -p 'test_release_manifest.py' -v
       - name: Check public Cloudflare URL after main push (informational)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         continue-on-error: true
