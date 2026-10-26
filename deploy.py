@@ -373,7 +373,8 @@ if 'tedori_tax_gate_v1' not in tedori or 'www.nta.go.jp/taxes/shiraberu/taxanswe
 # The same-condition quote request lets users acquire comparable real offers
 # before returning to the calculated and real-quote comparison steps.
 for required in ('id="quote-request-template"', 'id="quote-request-text"', 'id="copy-quote-request"',
-                 'quote_request_copy', '処分責任・費用負担'):
+                 'quote_request_copy', '処分責任・費用負担',
+                 '残置物を残して引き渡す場合', '売買契約書や別紙'):
     if required not in tedori:
         raise RuntimeError(f'Deploy blocked: real-quote request template missing: {required}')
 
