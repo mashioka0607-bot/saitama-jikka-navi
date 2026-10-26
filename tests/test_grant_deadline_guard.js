@@ -46,4 +46,28 @@ for (const [date, city, expected] of cases) {
   if (expected) assert.ok(outcome.warning.includes(expected), date + ' / ' + city + ': ' + JSON.stringify(outcome));
   else assert.equal(outcome.warning, '', date + ' / ' + city);
 }
-console.log('Seven Japan-time grant deadline cases passed');
+
+const primaryHtml=fs.readFileSync('static_pages/kaitai-check/index.html','utf8');
+const primaryScript=primaryHtml.split('<script id="kawaguchi-primary-deadline-guard">')[1]?.split('</script>')[0];
+assert.ok(primaryScript, 'primary municipality alert must have a date-aware guard');
+function checkPrimary(today) {
+  const note={hidden:true,textContent:''};
+  const IntlFake={DateTimeFormat:class{format(){return today;}}};
+  vm.runInNewContext(primaryScript,{document:{getElementById:id=>id==='kawaguchi-deadline-status'?note:null},Intl:IntlFake,Date});
+  return note;
+}
+for (const [today,expected,visible] of [
+  ['2026-10-22','',false],
+  ['2026-10-26','残り4日',true],
+  ['2026-10-30','残り0日',true],
+  ['2026-10-31','事前診断依頼の公表期限',true],
+  ['2026-11-13','交付申請の公表期限',true],
+  ['2026-11-14','ともに経過',true],
+  ['2027-04-01','過年度の制度情報',true]
+]) {
+  const note=checkPrimary(today);
+  assert.equal(!note.hidden, visible, 'primary alert visibility on '+today);
+  if(expected)assert.ok(note.textContent.includes(expected), 'primary alert text on '+today+': '+note.textContent);
+}
+
+console.log('Seven selector and seven primary-alert Japan-time grant deadline cases passed');
