@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import os
 import re
 import xml.etree.ElementTree as ET
 import shutil
@@ -319,6 +320,16 @@ if len(set(xml_urls)) != len(xml_urls):
     raise RuntimeError('Deploy blocked: duplicate canonical URLs in sitemap.xml')
 txt_path.write_text('\n'.join(xml_urls) + '\n', encoding='utf-8')
 
+# Cloudflare Pages supplies CF_PAGES_COMMIT_SHA on Git-integrated builds.
+# Publish the exact deployed commit so HTTP smoke checks detect stale releases.
+release_sha = (os.environ.get('CF_PAGES_COMMIT_SHA') or os.environ.get('GITHUB_SHA') or '').strip().lower()
+if release_sha:
+    if not re.fullmatch(r'[0-9a-f]{40}', release_sha):
+        raise RuntimeError('Deploy blocked: invalid release commit SHA')
+    (DIST / 'release.json').write_text(
+        json.dumps({'git_sha': release_sha}) + '\n', encoding='utf-8'
+    )
+
 headers = DIST / '_headers'
 headers.write_text(
     '/sitemap.xml\n'
@@ -328,7 +339,10 @@ headers.write_text(
     '  Content-Type: text/plain; charset=UTF-8\n'
     '  Cache-Control: no-cache\n\n'
     '/robots.txt\n'
-    '  Content-Type: text/plain; charset=UTF-8\n',
+    '  Content-Type: text/plain; charset=UTF-8\n\n'
+    '/release.json\n'
+    '  Content-Type: application/json; charset=UTF-8\n'
+    '  Cache-Control: no-store\n',
     encoding='utf-8'
 )
 print('Wrote Cloudflare _headers for sitemap and robots files')
