@@ -57,9 +57,13 @@ def check() -> list[str]:
             problems.append(f"{city}: public official URL differs from reviewed source")
         # Review/approval is insufficient if post-work completion reports are late.
         # Never omit a confirmed deadline from the public municipality selector.
-        for date in re.findall(r"完了報告\\s*(20\\d{2}-\\d{2}-\\d{2})", item.get("deadline") or ""):
-            if date not in " ".join(row[1:4]):
-                problems.append(f"{city}: completion report deadline {date} missing publicly")
+        # Every official deadline in reviewed data must also be visible to users.
+        # This includes post-work reports and separate property-tax subsidy
+        # applications, not only initial application deadlines.
+        public_text = " ".join(row[1:4])
+        for date in sorted(set(re.findall(r"20\\d{2}-\\d{2}-\\d{2}", item.get("deadline") or ""))):
+            if date not in public_text:
+                problems.append(f"{city}: reviewed deadline {date} missing publicly")
         if "受付終了" in status and "受付終了" not in public_status:
             problems.append(f"{city}: reviewed CLOSED status is not reflected publicly")
         if "受付終了" not in status and "受付終了" in public_status:
