@@ -33,6 +33,8 @@ jobs:
         run: node tests/test_low_price_broker.js
       - name: Reject stale estimates and stale commercial CTA on input edits
         run: node tests/test_tedori_stale_result.js
+      - name: Verify brokerage appraisal vs direct purchase price disclosures
+        run: python -m unittest discover -s tests -p 'test_quote_type_disclosure.py' -v
       - name: Verify quick paths to pre-quote and post-quote comparison
         run: python -m unittest discover -s tests -p 'test_tedori_quick_path.py' -v
       - name: Run affiliate and GA4 regression tests
