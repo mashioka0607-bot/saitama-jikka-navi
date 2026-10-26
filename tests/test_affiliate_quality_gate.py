@@ -242,6 +242,8 @@ class AffiliateDeployIntegrationTests(unittest.TestCase):
             self.assertIn('href="' + URL.replace("&", "&amp;") + '"', static_page)
             self.assertIn("gtag('event','affiliate_click'", static_page)
             self.assertIn("context:next.dataset.comparisonStep||'estimate'", static_page)
+            self.assertIn("offer_id:'primary'", static_page)
+            self.assertIn("source_page:window.location.pathname", static_page)
             # Only a visible, validated paid CTA counts as a view. Repeated
             # estimates must not inflate the offer-impression denominator.
             self.assertIn("const viewedSteps=new Set()", static_page)

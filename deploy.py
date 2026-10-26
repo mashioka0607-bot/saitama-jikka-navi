@@ -217,7 +217,11 @@ if(quoteForm){
 const link=next.querySelector('.affiliate');
 link.addEventListener('click',function(){
   if(typeof window.gtag==='function'){
-    window.gtag('event','affiliate_click',{offer:'primary',context:next.dataset.comparisonStep||'estimate'});
+    window.gtag('event','affiliate_click',{
+      offer:'primary',offer_id:'primary',
+      context:next.dataset.comparisonStep||'estimate',
+      source_page:window.location.pathname
+    });
   }
 });
 })();</script>"""
