@@ -61,7 +61,7 @@ def check() -> list[str]:
         # This includes post-work reports and separate property-tax subsidy
         # applications, not only initial application deadlines.
         public_text = " ".join(row[1:4])
-        for date in sorted(set(re.findall(r"20\\d{2}-\\d{2}-\\d{2}", item.get("deadline") or ""))):
+        for date in sorted(set(re.findall(r"20\d{2}-\d{2}-\d{2}", item.get("deadline") or ""))):
             if date not in public_text:
                 problems.append(f"{city}: reviewed deadline {date} missing publicly")
         if "受付終了" in status and "受付終了" not in public_status:
