@@ -231,6 +231,35 @@ link.addEventListener('click',function(){
     tedori_path.write_text(markup, encoding='utf-8')
     print('Injected approved primary offer after tedori comparison with GA4 event')
  
+
+# Users may edit an estimate or an actual quote after viewing the result.
+# An obsolete winner and its affiliate CTA must not remain actionable until
+# the user recalculates with the new inputs. Keep the note local to the
+# calculator whose values changed; do not disrupt the other comparison.
+tedori_path = DIST / 'tedori-hikaku' / 'index.html'
+markup = tedori_path.read_text(encoding='utf-8')
+freshness_script = """<script id="tedori-comparison-freshness-v1">(function(){
+  [['calc','r'],['quote-compare','quote-result']].forEach(function(pair){
+    const form=document.getElementById(pair[0]);
+    const result=document.getElementById(pair[1]);
+    if(!form||!result)return;
+    form.addEventListener('input',function(){
+      // Only invalidate a completed comparison, not initial empty output
+      // or a validation message requesting missing input.
+      if(!result.querySelector('h2,h3,ol'))return;
+      const ad=document.getElementById('tedori-affiliate-next');
+      if(ad&&result.contains(ad))ad.hidden=true;
+      result.innerHTML='<p role="status">入力が変更されました。前回の手取り比較結果は古いため、再計算してください。</p>';
+      result.style.display='block';
+    });
+  });
+})();</script>"""
+if markup.count('</body>') != 1 or 'id="tedori-comparison-freshness-v1"' in markup:
+    raise RuntimeError('Tedori comparison freshness insertion point missing or duplicated')
+markup = markup.replace('</body>', freshness_script + '</body>', 1)
+tedori_path.write_text(markup, encoding='utf-8')
+print('Enabled stale-result invalidation for take-home and real-quote comparisons')
+
 curated_urls = [
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/gyosha-erabi/',
     'https://saitama-jikka-navi.pages.dev/kawagoe-shi/katazuke-hiyou-urenai/',
