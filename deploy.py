@@ -39,7 +39,7 @@ if static_pages.exists():
 # the long safety explanations. Both routes remain neutral and non-commercial.
 tedori_path = DIST / 'tedori-hikaku' / 'index.html'
 markup = tedori_path.read_text(encoding='utf-8')
-hero_match = re.search(r'<section class="hero">[\\s\\S]*?</section>', markup)
+hero_match = re.search(r'<section class="hero">[\s\S]*?</section>', markup)
 if (not hero_match or markup.count('<section class="hero">') != 1
         or 'id="tedori-quick-path"' in markup
         or 'id="tedori_real_quotes_v2"' not in markup):
