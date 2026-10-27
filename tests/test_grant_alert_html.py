@@ -14,13 +14,16 @@ class GrantAlertHtmlTests(unittest.TestCase):
         for phrase in ("上尾市", "2026年10月13日", "受付終了", "川口市",
                        "2026年10月30日", "11月13日", "2027年1月29日",
                        "早期終了", "2026年10月27日", "白岡市", "2026年10月13日時点",
-                       "30万円", "家財道具の処分費用は対象外"):
+                       "30万円", "家財道具の処分費用は対象外",
+                       "解体後の固定資産税等にも別の補助制度", "最大2年度",
+                       "解体後すぐに売却する場合は受給を前提に手残りへ加算しない"):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, notice)
         for official_url in (
             "https://www.city.ageo.lg.jp/page/421263.html",
             "https://www.city.kawaguchi.lg.jp/soshiki/01130/040/akiyatoutaisaku/27633.html",
             "https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7523.html",
+            "https://www.city.shiraoka.lg.jp/soshiki/seikatsukeizaibu/kankyoka/1_1/7524.html",
         ):
             self.assertIn(official_url, notice)
         self.assertIn("期限内でも当日の受理・予算残額を保証するものではありません", notice)
