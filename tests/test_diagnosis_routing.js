@@ -87,5 +87,11 @@ assert.equal(nonInheritedUnverifiedSale.route, 'ownership_unverified');
 
 const nonInheritedCleanup = diagnose({state:'empty',exit:'clear',registration:'unknown'});
 assert.equal(nonInheritedCleanup.route, 'clear_prefecture');
+assert.match(nonInheritedCleanup.html, /一般廃棄物|家庭ごみ/);
+assert.match(nonInheritedCleanup.html, /古物商や産業廃棄物収集運搬業/);
+assert.match(nonInheritedCleanup.html, /https:\/\/www\.pref\.saitama\.lg\.jp\/b0304\/shohisoudan\/jirei\/sumai\/20200625\.html/);
+assert.ok(html.includes('id="saitama-clearance-permit-check"'), 'statewide permit guidance should be crawlable HTML');
+assert.ok(html.includes('一般廃棄物収集運搬業'), 'municipal licensing requirement missing');
+assert.ok(html.includes('追加料金'), 'cost-disclosure checklist missing');
 
 console.log('Diagnosis routing passed: undecided/registration/cleanup/sale/keep + ownership unverified cases.');
