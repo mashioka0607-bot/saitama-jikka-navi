@@ -24,6 +24,11 @@ class TedoriQuickPathTests(unittest.TestCase):
         self.assertLess(html.index('id="tedori-quick-path"'), html.index('id="calc"'))
         self.assertLess(html.index('id="tedori-quick-path"'), html.index('id="tedori_real_quotes_v2"'))
 
+    def test_prefecture_referral_does_not_overpromise_residual_item_appraisal(self):
+        html = self.markup
+        self.assertIn('埼玉県公式の空き家相談先を探す（残置物対応は個別確認）', html)
+        self.assertNotIn('残置物を残したまま査定できる相談先を探す（埼玉県公式）', html)
+
     def test_tracking_has_no_user_entered_data_and_no_affiliate_url(self):
         html = self.markup
         self.assertEqual(html.count('id="tedori-quick-path-measure"'), 1)
