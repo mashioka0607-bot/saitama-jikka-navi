@@ -17,7 +17,7 @@ class GrantAlertHtmlTests(unittest.TestCase):
                        "30万円", "家財道具の処分費用は対象外",
                        "解体後の固定資産税等にも別の補助制度", "最大2年度",
                        "解体後すぐに売却する場合は受給を前提に手残りへ加算しない",
-                       "2026年10月1日", "公図の写し", "地番図を代わりに提出できるかは未確認", "久喜支局"):
+                       "10月1日更新", "公図の写し", "地番図を代わりに提出できるかは未確認", "久喜支局"):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, notice)
         for official_url in (
@@ -30,7 +30,7 @@ class GrantAlertHtmlTests(unittest.TestCase):
             self.assertIn(official_url, notice)
         self.assertIn("期限内でも当日の受理・予算残額を保証するものではありません", notice)
         js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
-        self.assertIn("市役所での公図交付は2026-10-01に廃止", js)
+        self.assertIn("市は2026-10-01更新ページで公図交付の廃止を案内", js)
         self.assertIn("地番図を代用できるかは環境課に確認", js)
         self.assertIn("https://www.city.shiraoka.lg.jp/soshiki/soumubu/zeimuka/4/5/9997.html", js)
 
