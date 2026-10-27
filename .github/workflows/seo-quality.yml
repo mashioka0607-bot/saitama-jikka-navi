@@ -39,6 +39,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_tedori_quick_path.py' -v
       - name: Run affiliate and GA4 regression tests
         run: python -m unittest discover -s tests -p 'test_affiliate_quality_gate.py' -v
+      - name: Prevent republishing member-only ASP terms
+        run: python -m unittest discover -s tests -p 'test_public_asp_research.py' -v
       - name: Verify Search Console CSV audit (offline fixtures)
         run: python -m unittest discover -s tests -p 'test_gsc_audit.py' -v
       - name: Guard disclosure of illustrative prices on the take-home calculator
