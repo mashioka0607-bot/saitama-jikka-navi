@@ -30,7 +30,7 @@ class GrantAlertHtmlTests(unittest.TestCase):
             self.assertIn(official_url, notice)
         self.assertIn("期限内でも当日の受理・予算残額を保証するものではありません", notice)
         js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
-        self.assertIn("市役所での公図交付は2026-10-01に廃止", js)
+        self.assertIn("市は2026-10-01更新ページで公図交付の廃止を案内", js)
         self.assertIn("地番図を代用できるかは環境課に確認", js)
         self.assertIn("https://www.city.shiraoka.lg.jp/soshiki/soumubu/zeimuka/4/5/9997.html", js)
 
