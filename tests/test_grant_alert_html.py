@@ -17,7 +17,7 @@ class GrantAlertHtmlTests(unittest.TestCase):
                        "30万円", "家財道具の処分費用は対象外",
                        "解体後の固定資産税等にも別の補助制度", "最大2年度",
                        "解体後すぐに売却する場合は受給を前提に手残りへ加算しない",
-                       "2026年10月1日", "公図の写し", "地番図を代わりに提出できるかは未確認", "久喜支局"):
+                       "10月1日更新", "公図の写し", "地番図を代わりに提出できるかは未確認", "久喜支局"):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, notice)
         for official_url in (
