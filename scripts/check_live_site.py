@@ -43,25 +43,14 @@ def validate_release_manifest(payload: str, expected_sha: str) -> str | None:
 
 
 def inspect(base_url: str, expected_sha: str | None = None) -> list[str]:
-    """A failed fetch means unverified external availability, not proven outage."""
+    """Confirm the release SHA first; only probe pages once deployment is current.
+
+    Cloudflare Pages may finish after GitHub's push workflow begins. Rechecking
+    seven old-release pages on every attempt wastes time and can time out before
+    the new release becomes available.
+    """
     problems = []
     host = urlsplit(base_url).hostname
-    for path, expected in PROBES.items():
-        url = base_url.rstrip("/") + path
-        try:
-            request = Request(url, headers={"User-Agent": "Saitama-Jikka-Navi-ReleaseCheck/1.0"})
-            with urlopen(request, timeout=10) as response:
-                status = response.status
-                final_host = urlsplit(response.geturl()).hostname
-                body = response.read(1_000_000).decode("utf-8", errors="replace")
-            if status != 200:
-                problems.append(f"{path}: HTTP {status}")
-            elif final_host != host:
-                problems.append(f"{path}: redirected off configured hostname ({final_host})")
-            elif expected not in body:
-                problems.append(f"{path}: expected public content not found")
-        except (HTTPError, URLError, TimeoutError, OSError) as exc:
-            problems.append(f"{path}: {type(exc).__name__}: {str(exc)[:150]}")
     if expected_sha:
         path = "/release.json"
         try:
@@ -83,8 +72,28 @@ def inspect(base_url: str, expected_sha: str | None = None) -> list[str]:
                     problems.append(failure)
         except (HTTPError, URLError, TimeoutError, OSError) as exc:
             problems.append(f"{path}: {type(exc).__name__}: {str(exc)[:150]}")
-    return problems
+        # Do not mistake a healthy but older production build for this commit.
+        # Wait for the new manifest before checking the rest of the site.
+        if problems:
+            return problems
 
+    for path, expected in PROBES.items():
+        url = base_url.rstrip("/") + path
+        try:
+            request = Request(url, headers={"User-Agent": "Saitama-Jikka-Navi-ReleaseCheck/1.0"})
+            with urlopen(request, timeout=10) as response:
+                status = response.status
+                final_host = urlsplit(response.geturl()).hostname
+                body = response.read(1_000_000).decode("utf-8", errors="replace")
+            if status != 200:
+                problems.append(f"{path}: HTTP {status}")
+            elif final_host != host:
+                problems.append(f"{path}: redirected off configured hostname ({final_host})")
+            elif expected not in body:
+                problems.append(f"{path}: expected public content not found")
+        except (HTTPError, URLError, TimeoutError, OSError) as exc:
+            problems.append(f"{path}: {type(exc).__name__}: {str(exc)[:150]}")
+    return problems
 
 def main() -> int:
     config = json.loads((ROOT / "site_data.json").read_text(encoding="utf-8"))
@@ -96,8 +105,9 @@ def main() -> int:
     if expected_sha and not re.fullmatch(r"[0-9a-f]{40}", expected_sha):
         print("Invalid GITHUB_SHA; cannot validate public deployment freshness.")
         return 1
-    # The Pages deployment may complete shortly after a GitHub push.
-    attempts = 6
+    # Cloudflare's deployment check can finish after the initial ~2-minute CI probe.
+    # With a stale manifest, only one lightweight URL is retried.
+    attempts = 12
     for attempt in range(1, attempts + 1):
         problems = inspect(base_url, expected_sha or None)
         if not problems:
