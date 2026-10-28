@@ -37,5 +37,15 @@ class GrantAlertHtmlTests(unittest.TestCase):
         self.assertIn("https://www.city.shiraoka.lg.jp/soshiki/soumubu/zeimuka/4/5/9997.html", js)
 
 
+    def test_municipality_selector_is_above_lengthy_deadline_alert(self):
+        page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        selector_title = '自治体を選んで「今、契約してよいか」確認'
+        alert_id = 'id="grant-2026-primary-alert"'
+        self.assertLess(page.index(selector_title), page.index(alert_id))
+        selector = page.split(selector_title, 1)[1].split("</section>", 1)[0]
+        self.assertIn('id="grant-city"', selector)
+        self.assertIn('href="/tedori-hikaku/"', selector)
+
+
 if __name__ == "__main__":
     unittest.main()
