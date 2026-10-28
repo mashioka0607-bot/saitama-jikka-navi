@@ -47,5 +47,21 @@ class GrantAlertHtmlTests(unittest.TestCase):
         self.assertIn('href="/tedori-hikaku/"', selector)
 
 
+
+    def test_sakado_renovation_eligibility_is_not_sold_as_clearance_subsidy(self):
+        import json
+        data = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
+        sakado = next(m for m in data["municipalities"] if m["municipality"] == "坂戸市")
+        alternative = sakado["alternative_renovation_grant"]
+        self.assertIn("5年以上", alternative["ownership_and_occupancy"])
+        self.assertIn("売却", alternative["repayment"])
+        self.assertIn("改修工事を伴わない家財処分は対象外", alternative["scope"])
+        page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        for phrase in ("5年以上居住", "改修工事を伴う家財処分", "5年以内に売却", "家財道具の処分費を対象外", alternative["official_url"]):
+            self.assertIn(phrase, page)
+        js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
+        for phrase in ("坂戸市", "5年以上の自己居住", "5年以内の売却", "改修を伴う家財処分", alternative["official_url"]):
+            self.assertIn(phrase, js)
+
 if __name__ == "__main__":
     unittest.main()
