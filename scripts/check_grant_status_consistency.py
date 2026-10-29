@@ -78,6 +78,12 @@ def check() -> list[str]:
             displayed = f"{contractor}上限{yen // 10000}万円"
             if yen <= 0 or yen % 10000 or displayed not in public_text:
                 problems.append(f"{city}: contractor cap {displayed} missing publicly")
+        # Fukaya's resident-tax-exempt household tier changes the ceiling by 50万円.
+        # Guard both tier labels and caps without implying the applicant qualifies.
+        for tier, yen in (item.get("income_tier_caps_jpy") or {}).items():
+            displayed = f"{tier}上限{yen // 10000}万円"
+            if yen <= 0 or yen % 10000 or displayed not in public_text:
+                problems.append(f"{city}: income-tier cap {displayed} missing publicly")
         # Municipality-specific zone caps can change the economic decision by 20万円.
         # Guard amounts in user-facing copy against silent drift from official source notes.
         for zone, yen in (item.get("zone_caps_jpy") or {}).items():
