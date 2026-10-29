@@ -63,8 +63,11 @@ if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value
           const remainingDays = Math.round((Date.parse(upcoming[0] + 'T00:00:00Z') -
             Date.parse(today + 'T00:00:00Z')) / 86400000);
           if (remainingDays <= 7) {
-            warning = upcoming[1] + 'の公表期限（' + upcoming[0] + '）まで残り' +
-              remainingDays + '日です。ただし予算到達による早期終了の可能性があります。' +
+            warning = (remainingDays === 0
+              ? upcoming[1] + 'の公表期限は本日（' + upcoming[0] + '）です。'
+              : upcoming[1] + 'の公表期限（' + upcoming[0] + '）まで残り' +
+                remainingDays + '日です。') +
+              'ただし予算到達による早期終了の可能性があります。' +
               '新規受付・対象条件を自治体公式窓口へ確認し、補助を見込んで先に契約しないでください。';
             if (title) title.textContent = citySelect.value + '：公表期限間近・受付は要確認';
           }
