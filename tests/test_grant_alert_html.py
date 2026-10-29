@@ -37,6 +37,21 @@ class GrantAlertHtmlTests(unittest.TestCase):
         self.assertIn("https://www.city.shiraoka.lg.jp/soshiki/soumubu/zeimuka/4/5/9997.html", js)
 
 
+    def test_fukaya_separate_tax_reduction_is_sourced_and_not_sale_income(self):
+        import json
+        data = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
+        fukaya = next(m for m in data["municipalities"] if m["municipality"] == "深谷市")
+        relief = fukaya["post_demolition_tax_relief"]
+        self.assertEqual(relief["duration_years"], 3)
+        page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        notice = page.split('id="grant-2026-primary-alert"', 1)[1].split("</section>", 1)[0]
+        js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
+        for phrase in ("深谷市", "最大3年間", "固定資産税・都市計画税", "別途減免申請", "解体後すぐに売却", "売却等で納税義務者が変わった場合"):
+            self.assertIn(phrase, notice)
+        for phrase in ("深谷市", "最大3年間", "即時売却", "減免申請", "納税義務者", relief["official_url"]):
+            self.assertIn(phrase, js)
+        self.assertIn(relief["official_url"], notice)
+
     def test_municipality_selector_is_above_lengthy_deadline_alert(self):
         page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
         selector_title = '自治体を選んで「今、契約してよいか」確認'

@@ -120,6 +120,18 @@ def check() -> list[str]:
             for phrase in ("固定資産税", "最大2年度", "更地", "売却予定"):
                 if phrase not in public_text:
                     problems.append(f"{city}: tax relief condition {phrase!r} missing publicly")
+        # Fukaya's separate post-demolition tax reduction only applies to qualified
+        # land held after demolition. It must not be monetized as immediate sale cash.
+        tax_reduction = item.get("post_demolition_tax_relief")
+        if tax_reduction:
+            official_url = tax_reduction.get("official_url")
+            if not official_url or official_url not in PUBLIC_JS.read_text(encoding="utf-8"):
+                problems.append(f"{city}: separate tax reduction official link missing")
+            if tax_reduction.get("duration_years") != 3:
+                problems.append(f"{city}: reviewed tax reduction duration changed")
+            for phrase in ("固定資産税", "最大3年間", "即時売却", "減免申請", "納税義務者"):
+                if phrase not in public_text:
+                    problems.append(f"{city}: tax reduction condition {phrase!r} missing publicly")
         # A reopening or closing date must be shown, so users can distinguish
         # a dated municipality announcement from today's unverified budget status.
         if "受付終了" in status or "受付再開" in status:
