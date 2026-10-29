@@ -19,6 +19,8 @@ jobs:
           python-version: '3.11'
       - name: Build deploy artifact and run crawl/index checks
         run: python deploy.py
+      - name: Verify editorial policy links on published decision tools
+        run: python -m unittest discover -s tests -p 'test_static_trust_footer.py' -v
       - name: Validate grant selector JavaScript syntax
         run: node --check static_pages/kaitai-check/grants.js
       - name: Test Japan-time grant deadline warnings
