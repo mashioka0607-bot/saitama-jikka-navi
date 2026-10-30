@@ -51,9 +51,9 @@ class GSCExportTests(unittest.TestCase):
                 self.assertEqual(audit.classify(query), expected)
 
         rows, has_page = self.parse(
-            "Query,Page,Clicks,Impressions,Position\\n"
-            "実家 家財 買取,https://saitama-jikka-navi.pages.dev/faq/,0,60,12\\n"
-            "残置物 そのまま 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,12\\n"
+            "Query,Page,Clicks,Impressions,Position\n"
+            "実家 家財 買取,https://saitama-jikka-navi.pages.dev/faq/,0,60,12\n"
+            "残置物 そのまま 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,12\n"
         )
         report = audit.analyze(rows, has_page, 28)
         clusters = {x["cluster"]: x for x in report["clusters"]}
