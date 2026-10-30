@@ -54,6 +54,20 @@ HEADERS = {
     "impressions": ("impressions", "表示回数", "表示"),
     "position": ("position", "掲載順位", "平均掲載順位", "平均順位"),
 }
+# Separate contents-only buyback / clearance from a decision to sell the house.
+# The distinction matters before enabling any property-sale affiliate offer: a
+# reader wanting to sell furniture is not a qualified real-estate lead.
+CONTENTS_ONLY = re.compile(
+    r"(?:家財|家具|家電|不用品|遺品|楽器).*(?:買取|査定|処分|回収|見積|売却)"
+    r"|(?:買取|査定|処分|回収|見積|売却).*(?:家財|家具|家電|不用品|遺品|楽器)"
+)
+REAL_ESTATE_DECISION = re.compile(
+    r"(?:実家|空き家|不動産|残置物|家屋|住宅|家ごと|片付け前).*(?:売却|売る|現況買取)"
+    r"|(?:売却|売る).*(?:実家|空き家|不動産|残置物|家屋|住宅)"
+    r"|(?:空き家|不動産|家屋|住宅|家ごと)買取"
+    r"|残置物.*(?:買取|査定)"
+)
+
 # First matching class wins. These are hypotheses, not keyword-volume estimates.
 CLUSTERS = (
     ("片付け前・残置物あり売却", "/tedori-hikaku/",
@@ -140,6 +154,10 @@ def read_export(path: Path) -> tuple[list[dict], bool]:
 
 def classify(query: str) -> tuple[str, str]:
     normal = re.sub(r"\s+", "", query).casefold()
+    # A8-style household buyback/clearance intent is NOT automatically intent
+    # to sell the real estate. Suggest the neutral FAQ, never a property CTA.
+    if CONTENTS_ONLY.search(normal) and not REAL_ESTATE_DECISION.search(normal):
+        return "家財買取・不用品処分（住宅売却未確定）", "/faq/"
     for name, target, pattern in CLUSTERS:
         if pattern.search(normal):
             return name, target
