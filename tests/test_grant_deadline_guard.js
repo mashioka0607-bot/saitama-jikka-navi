@@ -11,7 +11,7 @@ assert.ok(kawaguchi.includes('完了報告 2027-01-29'), 'Kawaguchi post-demolit
 const guard = all.slice(all.indexOf('/* Dynamic guard for 2026 municipal grant deadlines.'));
 assert.ok(guard.startsWith('/* Dynamic guard'), 'Guard marker missing');
 
-function check(today, city) {
+function check(today, city, time = '12:00') {
   let onChange;
   const citySelect = { value: city, addEventListener: (_, fn) => { onChange = fn; } };
   const title = { textContent: city + '：受付中' };
@@ -25,7 +25,7 @@ function check(today, city) {
     getElementById: id => id === 'grant-city' ? citySelect : id === 'grant-result' ? result : null,
     createElement: () => ({ setAttribute() {}, textContent: '' })
   };
-  const IntlFake = { DateTimeFormat: class { format() { return today; } } };
+  const IntlFake = { DateTimeFormat: class { constructor(_, opts) { this.isTime = Boolean(opts.hour); } format() { return this.isTime ? time : today; } } };
   vm.runInNewContext(guard, { document, Intl: IntlFake, Date });
   assert.equal(typeof onChange, 'function');
   onChange();
@@ -51,12 +51,18 @@ const deadlineDay = check('2026-10-30', '川口市');
 assert.ok(deadlineDay.warning.includes('9:00～16:30') && deadlineDay.warning.includes('8:30～17:15') && deadlineDay.warning.includes('048-229-7805'), 'municipal contact hours must appear on deadline day');
 assert.ok(!check('2026-10-24', '川口市').warning.includes('9:00～16:30'), 'last-day contact hours should only appear on the last day');
 
+for (const [time, expected] of [['16:30', '9:00～16:30'], ['16:31', '窓口受付'], ['17:15', '電話の公表受付時間'], ['17:16', 'ともに終了'], ['18:05', 'ともに終了']]) {
+  const afterHours = check('2026-10-30', '川口市', time);
+  assert.ok(afterHours.warning.includes(expected), 'selector '+time+': '+afterHours.warning);
+  if (time >= '17:16') assert.ok(afterHours.title.includes('受付時間終了'), 'selector title '+time);
+}
+
 const primaryHtml=fs.readFileSync('static_pages/kaitai-check/index.html','utf8');
 const primaryScript=primaryHtml.split('<script id="kawaguchi-primary-deadline-guard">')[1]?.split('</script>')[0];
 assert.ok(primaryScript, 'primary municipality alert must have a date-aware guard');
-function checkPrimary(today) {
+function checkPrimary(today, time = '12:00') {
   const note={hidden:true,textContent:''};
-  const IntlFake={DateTimeFormat:class{format(){return today;}}};
+  const IntlFake={DateTimeFormat:class{constructor(_,opts){this.isTime=Boolean(opts.hour);}format(){return this.isTime?time:today;}}};
   vm.runInNewContext(primaryScript,{document:{getElementById:id=>id==='kawaguchi-deadline-status'?note:null},Intl:IntlFake,Date});
   return note;
 }
@@ -72,6 +78,11 @@ for (const [today,expected,visible] of [
   const note=checkPrimary(today);
   assert.equal(!note.hidden, visible, 'primary alert visibility on '+today);
   if(expected)assert.ok(note.textContent.includes(expected), 'primary alert text on '+today+': '+note.textContent);
+}
+
+for (const [time, expected] of [['16:30', '9:00～16:30'], ['16:31', '窓口受付'], ['17:15', '電話の公表受付時間'], ['17:16', 'ともに終了'], ['18:05', 'ともに終了']]) {
+  const afterHours = checkPrimary('2026-10-30', time);
+  assert.ok(afterHours.textContent.includes(expected), 'primary '+time+': '+afterHours.textContent);
 }
 
 const dayPrimary = checkPrimary('2026-10-30');
