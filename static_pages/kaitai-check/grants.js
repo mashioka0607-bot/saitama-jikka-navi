@@ -64,7 +64,10 @@ if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value
             Date.parse(today + 'T00:00:00Z')) / 86400000);
           if (remainingDays <= 7) {
             warning = (remainingDays === 0
-              ? upcoming[1] + 'の公表期限は本日（' + upcoming[0] + '）です。'
+              ? upcoming[1] + 'の公表期限は本日（' + upcoming[0] + '）です。' +
+                (citySelect.value === '川口市'
+                  ? '市公式の窓口受付は9:00～16:30、電話受付は8:30～17:15（048-229-7805）。当日受付方法は市へ確認。'
+                  : '')
               : upcoming[1] + 'の公表期限（' + upcoming[0] + '）まで残り' +
                 remainingDays + '日です。') +
               'ただし予算到達による早期終了の可能性があります。' +
