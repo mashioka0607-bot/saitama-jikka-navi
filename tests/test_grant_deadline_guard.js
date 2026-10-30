@@ -90,6 +90,6 @@ for (const [time, expected] of [['16:30', '9:00～16:30'], ['16:31', '窓口受�
 const dayPrimary = checkPrimary('2026-10-30');
 assert.ok(dayPrimary.textContent.includes('9:00～16:30') && dayPrimary.textContent.includes('8:30～17:15') && dayPrimary.textContent.includes('048-229-7805'), 'primary deadline warning must show official contact hours');
 assert.ok(checkPrimary('2026-10-30','18:05').textContent.includes('郵送先') && check('2026-10-30','川口市','18:05').warning.includes('消印有効'), 'after-hours notices must distinguish official postal destination from unknown postmark acceptance');
-assert.ok(primaryHtml.includes('窓口受付時間は9:00～16:30') && primaryHtml.includes('郵送等の取扱いは未確認'), 'crawlable primary notice must show hours without promising postal acceptance');
+assert.ok(primaryHtml.includes('窓口受付時間は9:00～16:30') && primaryHtml.includes('期限日必着か当日消印有効かは明記されていません'), 'crawlable primary notice must show hours without promising postal acceptance');
 
 console.log('Seven selector and seven primary-alert Japan-time grant deadline cases passed');
