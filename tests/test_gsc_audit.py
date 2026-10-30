@@ -35,6 +35,32 @@ class GSCExportTests(unittest.TestCase):
         self.assertEqual(cluster["observed_pages"], ["/tedori-hikaku/"])
         self.assertTrue(any(x["priority"] == "observe" for x in report["clusters"]))
 
+    def test_household_reuse_intent_is_not_property_sale_intent(self):
+        # 家財だけを売る読者を、空き家売却の成果候補へ混ぜない。
+        examples = {
+            "実家 家財 買取": ("家財買取・不用品処分（住宅売却未確定）", "/faq/"),
+            "遺品整理 不用品回収 見積": ("家財買取・不用品処分（住宅売却未確定）", "/faq/"),
+            "空き家 家財 買取": ("家財買取・不用品処分（住宅売却未確定）", "/faq/"),
+            "家財 売却": ("家財買取・不用品処分（住宅売却未確定）", "/faq/"),
+            "実家 片付け前 売却": ("片付け前・残置物あり売却", "/tedori-hikaku/"),
+            "残置物 そのまま 売却": ("片付け前・残置物あり売却", "/tedori-hikaku/"),
+            "残置物 そのまま 買取": ("片付け前・残置物あり売却", "/tedori-hikaku/"),
+        }
+        for query, expected in examples.items():
+            with self.subTest(query=query):
+                self.assertEqual(audit.classify(query), expected)
+
+        rows, has_page = self.parse(
+            "Query,Page,Clicks,Impressions,Position\\n"
+            "実家 家財 買取,https://saitama-jikka-navi.pages.dev/faq/,0,60,12\\n"
+            "残置物 そのまま 売却,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,12\\n"
+        )
+        report = audit.analyze(rows, has_page, 28)
+        clusters = {x["cluster"]: x for x in report["clusters"]}
+        self.assertEqual(clusters["家財買取・不用品処分（住宅売却未確定）"]["impressions"], 60)
+        self.assertEqual(clusters["家財買取・不用品処分（住宅売却未確定）"]["target"], "/faq/")
+        self.assertEqual(clusters["片付け前・残置物あり売却"]["impressions"], 70)
+
     def test_query_only_does_not_invent_landing_page(self):
         rows, has_page = self.parse(
             "Query,Clicks,Impressions,CTR,Position\n"
