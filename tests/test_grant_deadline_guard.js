@@ -47,6 +47,10 @@ for (const [date, city, expected] of cases) {
   else assert.equal(outcome.warning, '', date + ' / ' + city);
 }
 
+const deadlineDay = check('2026-10-30', '川口市');
+assert.ok(deadlineDay.warning.includes('9:00～16:30') && deadlineDay.warning.includes('8:30～17:15') && deadlineDay.warning.includes('048-229-7805'), 'municipal contact hours must appear on deadline day');
+assert.ok(!check('2026-10-24', '川口市').warning.includes('9:00～16:30'), 'last-day contact hours should only appear on the last day');
+
 const primaryHtml=fs.readFileSync('static_pages/kaitai-check/index.html','utf8');
 const primaryScript=primaryHtml.split('<script id="kawaguchi-primary-deadline-guard">')[1]?.split('</script>')[0];
 assert.ok(primaryScript, 'primary municipality alert must have a date-aware guard');
@@ -69,5 +73,9 @@ for (const [today,expected,visible] of [
   assert.equal(!note.hidden, visible, 'primary alert visibility on '+today);
   if(expected)assert.ok(note.textContent.includes(expected), 'primary alert text on '+today+': '+note.textContent);
 }
+
+const dayPrimary = checkPrimary('2026-10-30');
+assert.ok(dayPrimary.textContent.includes('9:00～16:30') && dayPrimary.textContent.includes('8:30～17:15') && dayPrimary.textContent.includes('048-229-7805'), 'primary deadline warning must show official contact hours');
+assert.ok(primaryHtml.includes('窓口受付時間は9:00～16:30') && primaryHtml.includes('郵送等の取扱いは未確認'), 'crawlable primary notice must show hours without promising postal acceptance');
 
 console.log('Seven selector and seven primary-alert Japan-time grant deadline cases passed');
