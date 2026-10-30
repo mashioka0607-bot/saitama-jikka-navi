@@ -8,6 +8,7 @@ const all = fs.readFileSync('static_pages/kaitai-check/grants.js', 'utf8');
 const kawaguchi = all.split('\n').find(line => line.startsWith("['川口市'"));
 assert.ok(kawaguchi && kawaguchi.includes('地方税完納') && kawaguchi.includes('事例紹介') && kawaguchi.includes('上限100万円') && kawaguchi.includes('満額支給とは限らない'), 'Kawaguchi official eligibility and payout caveat missing');
 assert.ok(kawaguchi.includes('完了報告 2027-01-29'), 'Kawaguchi post-demolition report deadline missing from published selector');
+assert.ok(kawaguchi.includes('事前診断10/30公表期限') && !kawaguchi.includes('公表期限内・対象限定'), 'Kawaguchi crawlable selector must not describe an elapsed deadline as still within the window');
 const guard = all.slice(all.indexOf('/* Dynamic guard for 2026 municipal grant deadlines.'));
 assert.ok(guard.startsWith('/* Dynamic guard'), 'Guard marker missing');
 
@@ -49,6 +50,7 @@ for (const [date, city, expected] of cases) {
 
 const deadlineDay = check('2026-10-30', '川口市');
 assert.ok(deadlineDay.warning.includes('9:00～16:30') && deadlineDay.warning.includes('8:30～17:15') && deadlineDay.warning.includes('048-229-7805'), 'municipal contact hours must appear on deadline day');
+assert.ok(deadlineDay.warning.includes('郵送先') && deadlineDay.warning.includes('必着'), 'postage destination exists but deadline-day receipt/postmark policy is unverified');
 assert.ok(!check('2026-10-24', '川口市').warning.includes('9:00～16:30'), 'last-day contact hours should only appear on the last day');
 
 for (const [time, expected] of [['16:30', '9:00～16:30'], ['16:31', '窓口受付'], ['17:15', '電話の公表受付時間'], ['17:16', 'ともに終了'], ['18:05', 'ともに終了']]) {
@@ -87,6 +89,7 @@ for (const [time, expected] of [['16:30', '9:00～16:30'], ['16:31', '窓口受�
 
 const dayPrimary = checkPrimary('2026-10-30');
 assert.ok(dayPrimary.textContent.includes('9:00～16:30') && dayPrimary.textContent.includes('8:30～17:15') && dayPrimary.textContent.includes('048-229-7805'), 'primary deadline warning must show official contact hours');
+assert.ok(checkPrimary('2026-10-30','18:05').textContent.includes('郵送先') && check('2026-10-30','川口市','18:05').warning.includes('消印有効'), 'after-hours notices must distinguish official postal destination from unknown postmark acceptance');
 assert.ok(primaryHtml.includes('窓口受付時間は9:00～16:30') && primaryHtml.includes('郵送等の取扱いは未確認'), 'crawlable primary notice must show hours without promising postal acceptance');
 
 console.log('Seven selector and seven primary-alert Japan-time grant deadline cases passed');
