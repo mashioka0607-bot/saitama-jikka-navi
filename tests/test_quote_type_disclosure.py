@@ -34,6 +34,14 @@ class QuoteTypeDisclosureTests(unittest.TestCase):
         self.assertIn('仲介査定額は成約価格の保証ではありません', self.html)
         self.assertIn('https://suumo.jp/baikyaku/', self.html)
 
+    def test_unclassified_prices_cannot_be_ranked_or_unlock_paid_cta(self):
+        self.assertIn('id="quote-clearance-net-warning-v1"', self.html)
+        self.assertIn('相殺後の請求額', self.html)
+        self.assertIn("document.getElementById('q'+i+'t').value==='unknown'", self.html)
+        self.assertIn('提示の種類（仲介の売却査定／直接買取提示）を選択してください', self.html)
+        deploy = (ROOT / 'deploy.py').read_text(encoding='utf-8')
+        self.assertIn("quoteType&&quoteType.value!=='unknown'", deploy)
+
     def test_result_labels_quotes_without_claiming_completed_sale(self):
         self.assertIn("const mode=document.getElementById('q'+i+'t').value", self.html)
         self.assertIn("mode:mode,price:price", self.html)
