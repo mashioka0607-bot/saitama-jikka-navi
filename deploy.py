@@ -239,9 +239,10 @@ if(quoteForm){
     });
     const ready=priced.length>0&&priced.every(function(i){
       const fee=document.getElementById('q'+i+'f');
-      return fee&&fee.value.trim()!=='';
+      const quoteType=document.getElementById('q'+i+'t');
+      return fee&&fee.value.trim()!==''&&quoteType&&quoteType.value!=='unknown';
     });
-    // The real-quote comparison rejects any priced row without a fee.
+    // Reject priced rows with unknown appraisal vs buyout type or missing fees.
     // Do not expose the paid CTA after that validation error.
     next.hidden=!ready;
     if(ready)revealOffer(priced.length>=2?'real_quotes_compare':'single_quote');
