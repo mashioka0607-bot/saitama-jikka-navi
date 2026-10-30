@@ -35,6 +35,9 @@ if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value
     const today = new Intl.DateTimeFormat('sv-SE', {
       timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit'
     }).format(new Date());
+    const japanTime = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).format(new Date());
     const title = result.querySelector('h3');
     let warning = '';
 
@@ -75,6 +78,17 @@ if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value
             if (title) title.textContent = citySelect.value + '：公表期限間近・受付は要確認';
           }
         }
+      }
+    }
+
+    // Published office/phone hours end before midnight on Kawaguchi's deadline day.
+    if (citySelect.value === '川口市' && today === '2026-10-30') {
+      if (japanTime >= '17:16') {
+        warning = '川口市の事前診断依頼の公表期限は本日（2026-10-30）でしたが、公式の窓口受付（16:30まで）・電話受付（17:15まで）はともに終了しました。郵送等の当日受付方法や例外は未確認です。補助金を見込んで契約せず、市へ確認してください。';
+        if (title) title.textContent = '川口市：事前診断の公表受付時間終了・例外は未確認';
+      } else if (japanTime >= '16:31') {
+        warning = '川口市の事前診断依頼の公表期限は本日（2026-10-30）です。窓口受付（9:00～16:30）は終了しました。電話の公表受付時間は17:15まで（048-229-7805）ですが、電話で申請できるかは未確認です。郵送等の当日受付方法や予算残も市へ確認してください。';
+        if (title) title.textContent = '川口市：窓口受付時間終了・申請方法は要確認';
       }
     }
 

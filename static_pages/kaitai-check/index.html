@@ -4,6 +4,9 @@
   const today = new Intl.DateTimeFormat('sv-SE', {
     timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit'
   }).format(new Date());
+  const japanTime = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+  }).format(new Date());
   if (today <= '2026-10-30') {
     const days = Math.round((Date.parse('2026-10-30T00:00:00Z') -
       Date.parse(today + 'T00:00:00Z')) / 86400000);
@@ -12,6 +15,12 @@
       ? '川口市の事前診断依頼の公表期限は本日（2026年10月30日）です。市公式の窓口受付は9:00～16:30、電話受付は8:30～17:15（048-229-7805）。郵送等の当日受付方法は未確認で、予算到達による早期終了もあり、現在の受付可否は公式窓口へ確認してください。'
       : '川口市の事前診断依頼の公表期限（2026年10月30日）まで残り' +
         days + '日。予算到達による早期終了もあり、現在の受付可否は公式窓口へ確認してください。';
+    // On the last day, the published contact hours matter more than just the calendar date.
+    if (days === 0 && japanTime >= '17:16') {
+      note.textContent = '川口市の事前診断依頼の公表期限は本日（2026年10月30日）でしたが、市公式の窓口受付（16:30まで）・電話受付（17:15まで）の時間はともに終了しました。郵送等の当日受付方法や例外は未確認です。補助金を受けられる前提で契約せず、市公式窓口へご確認ください。';
+    } else if (days === 0 && japanTime >= '16:31') {
+      note.textContent = '川口市の事前診断依頼の公表期限は本日（2026年10月30日）です。市公式の窓口受付（9:00～16:30）は終了しました。電話の公表受付時間は17:15まで（048-229-7805）ですが、電話で申請できるかは未確認です。郵送等の当日受付方法、予算残や申請可否も市へ確認してください。';
+    }
   } else if (today <= '2026-11-13') {
     note.textContent = '川口市の2026年度事前診断依頼の公表期限（10月30日）は経過しました。' +
       '交付申請の公表期限は11月13日ですが、事前診断済みかどうか等で扱いが異なります。' +
