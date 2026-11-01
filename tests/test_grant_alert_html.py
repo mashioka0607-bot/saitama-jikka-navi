@@ -37,6 +37,23 @@ class GrantAlertHtmlTests(unittest.TestCase):
         self.assertIn("https://www.city.shiraoka.lg.jp/soshiki/soumubu/zeimuka/4/5/9997.html", js)
 
 
+    def test_fukaya_precheck_deadline_is_crawlable_and_not_misrepresented_as_application(self):
+        page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        notice = page.split('id="grant-2026-primary-alert"', 1)[1].split("</section>", 1)[0]
+        phrases = (
+            "深谷市：2026年11月30日は危険空家等除却補助金の「事前調査申込み」",
+            "これは補助金の交付申請そのものの期限ではありません",
+            "不良住宅判定",
+            "住民税非課税世帯は80万円",
+            "交付決定後に着工し、2027年1月29日までに完了",
+            "予算残額や現在の受付可否は未確認",
+            'href="/tedori-hikaku/"',
+            "https://www.city.fukaya.saitama.jp/soshiki/kyoudou/jiti/tanto/akiya/akiyahojyo/14716.html",
+        )
+        for phrase in phrases:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, notice)
+
     def test_fukaya_separate_tax_reduction_is_sourced_and_not_sale_income(self):
         import json
         data = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
