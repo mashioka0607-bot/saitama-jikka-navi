@@ -21,6 +21,8 @@ jobs:
         run: python deploy.py
       - name: Verify editorial policy links on published decision tools
         run: python -m unittest discover -s tests -p 'test_static_trust_footer.py' -v
+      - name: Verify Kawagoe disposal procedures against cited municipal sources
+        run: python -m unittest discover -s tests -p 'test_kawagoe_disposal_sources.py' -v
       - name: Validate grant selector JavaScript syntax
         run: node --check static_pages/kaitai-check/grants.js
       - name: Test Japan-time grant deadline warnings
