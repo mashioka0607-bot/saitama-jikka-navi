@@ -59,6 +59,20 @@ if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value
             : '') +
           '新規受付・例外・予算残額は公式窓口へ確認し、補助を見込んで契約しないでください。';
         if (title) title.textContent = citySelect.value + '：公表期限経過・受付は要確認';
+        // After a prerequisite deadline passes, still count down to the next
+        // separate application deadline; do not imply new prechecks are accepted.
+        if (pending.length) {
+          const next = pending[0];
+          const remainingDays = Math.round((Date.parse(next[0] + 'T00:00:00Z') -
+            Date.parse(today + 'T00:00:00Z')) / 86400000);
+          if (remainingDays <= 7) {
+            warning += remainingDays === 0
+              ? '必要な事前手続を済ませた方も、' + next[1] + 'の公表期限は本日（' + next[0] + '）です。'
+              : '必要な事前手続を済ませた方も、' + next[1] + 'の公表期限（' + next[0] + '）まで残り' + remainingDays + '日です。';
+            warning += '手続済みでも交付対象や予算残は未確定です。必ず自治体に確認してください。';
+            if (title) title.textContent = citySelect.value + '：残る手続の期限間近・受付は要確認';
+          }
+        }
       } else {
         // Highlight approaching official deadlines, without implying budget availability.
         const upcoming = milestones.find(function (entry) { return today <= entry[0]; });
