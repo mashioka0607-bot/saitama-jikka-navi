@@ -51,12 +51,15 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_public_asp_research.py' -v
       - name: Verify Search Console CSV audit (offline fixtures)
         run: python -m unittest discover -s tests -p 'test_gsc_audit.py' -v
+      - name: Verify Fukaya municipal estimate and source caveats
+        run: python -m unittest discover -s tests -p 'test_fukaya_official_estimate.py' -v
       - name: Guard disclosure of illustrative prices on the take-home calculator
         run: |
           grep -q 'id="sample-value-disclosure"' dist/tedori-hikaku/index.html
           grep -q '仮の数値' dist/tedori-hikaku/index.html
           grep -q 'https://www.pref.saitama.lg.jp/a1106/akiyakanrisyatouroku.html' dist/tedori-hikaku/index.html
           grep -q 'id="saitama-official-estimate"' dist/tedori-hikaku/index.html
+          grep -q 'id="fukaya-official-estimate"' dist/tedori-hikaku/index.html
           grep -q 'id="handover-three-routes"' dist/tedori-hikaku/index.html
           grep -q '契約後に更地渡し' dist/tedori-hikaku/index.html
           grep -q 'https://www.city.saitama.lg.jp/001/154/007/001/p112598.html' dist/tedori-hikaku/index.html
