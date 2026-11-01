@@ -95,5 +95,29 @@ class GrantAlertHtmlTests(unittest.TestCase):
         for phrase in ("坂戸市", "5年以上の自己居住", "5年以内の売却", "改修を伴う家財処分", alternative["official_url"]):
             self.assertIn(phrase, js)
 
+    def test_fujimi_neighbor_lot_exit_is_sourced_and_not_misrepresented_as_sale_payout(self):
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[1]
+        for file in (
+            root / "static_pages/kaitai-check/index.html",
+            root / "dist/kaitai-check/index.html",
+        ):
+            page = file.read_text(encoding="utf-8")
+            self.assertEqual(page.count('id="fujimi-neighbor-lot-option"'), 1)
+            section = page.split('id="fujimi-neighbor-lot-option"', 1)[1].split("</section>", 1)[0]
+            for value in (
+                "富士見市", "隣地統合促進補助金", "70㎡未満", "2m以上接していない",
+                "上限30万円", "上限50万円", "2027年1月31日",
+                "日曜日", "売主への補助金ではなく", "税前手取り",
+                "現況査定", "https://www.city.fujimi.saitama.jp/kurashi_tetsuzuki/sumai/2018-0511-1113-58/akiyahojoseido.html",
+                'href="/tedori-hikaku/"',
+            ):
+                with self.subTest(file=file.name, value=value):
+                    self.assertIn(value, section)
+            self.assertNotIn('class="affiliate"', section)
+            self.assertNotIn("data-affiliate", section)
+            self.assertLess(page.index('id="fujimi-neighbor-lot-option"'), page.index("解体以外の出口も先に比べる"))
+
+
 if __name__ == "__main__":
     unittest.main()
