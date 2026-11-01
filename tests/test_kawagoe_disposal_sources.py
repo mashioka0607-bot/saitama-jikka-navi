@@ -34,7 +34,7 @@ class KawagoeDisposalPrimarySources(unittest.TestCase):
         item = self.pages[slug]
         article = " ".join(x for _heading, bullets in item["sections"] for x in bullets)
         self.assertNotIn("自己搬入も事前予約が必要です", article)
-        self.assertIn("予約不要", article)
+        self.assertIn("予約の必要はありません", article)
         self.assertIn("戸別収集は予約制", article)
         built = self._page_html(slug)
         self.assertIn("予約不要", built)
