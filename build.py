@@ -48,7 +48,27 @@ for p in PAGES:
         '売却予定がなければ、片付け条件と一般廃棄物の処理方法の確認を優先してください。</p>'
         '<p><a href="/tedori-hikaku/">片付け前に税前手取りを比較する</a></p></section>'
     ) if p['slug'] in priority[:5] else ''
-    body=f'''<section class="hero"><div class="eyebrow">{esc(p['eyebrow'])}</div><h1>{esc(p['h1'])}</h1><p class="lead">{esc(p['lead'])}</p></section>{secs}{mid}<section class="section notice"><strong>自治体情報も確認</strong><p>制度・処分方法は川越市の最新公式情報も確認してください。</p></section>'''
+    # Pages with independently verified municipality procedures show their official
+    # citations directly. A plain "check the city" note is not sufficient here.
+    primary_sources = p.get('official_sources') or []
+    if primary_sources:
+        source_links = ''.join(
+            '<li><a href="' + esc(source['url']) + '" target="_blank" rel="noopener">' +
+            esc(source['label']) + '</a></li>'
+            for source in primary_sources
+        )
+        official_block = (
+            '<section class="section notice"><h2>川越市の一次情報</h2><ul>' +
+            source_links +
+            '</ul><p>受付・料金・取扱いが変わる場合があります。'
+            '申込・搬入前に公式ページで最新条件を再確認してください。</p></section>'
+        )
+    else:
+        official_block = (
+            '<section class="section notice"><strong>自治体情報も確認</strong>'
+            '<p>制度・処分方法は川越市の最新公式情報も確認してください。</p></section>'
+        )
+    body=f'''<section class="hero"><div class="eyebrow">{esc(p['eyebrow'])}</div><h1>{esc(p['h1'])}</h1><p class="lead">{esc(p['lead'])}</p></section>{secs}{mid}{official_block}'''
     write(p['slug'],layout(p['title'],p['description'],body,'/'+p['slug']+'/'))
 
 shindan='''<section class="hero"><div class="eyebrow">Diagnosis</div><h1>実家の「今やること・まだやらないこと」診断</h1><p class="lead">6つの状況から、片付けや査定を急ぐ前に確認すべき順番を整理します。診断は法律・税務上の個別判断ではありません。</p></section><section class="section"><form id="diag" class="diagnosis"><label>1. 親御さん・実家の状態<select id="status"><option value="alive">親が住んでいる／将来が心配</option><option value="facility">施設入居などで空き家</option><option value="deceased">亡くなり相続が発生</option></select></label><label>2. 名義・相続登記<select id="title"><option value="known">名義・登記状況を確認済み</option><option value="unknown">誰の名義か／登記状況が不明</option><option value="pending">相続手続き中</option></select></label><label>3. 家族・共同相続人の方針<select id="family"><option value="agreed">売る／残す等の方針は合意済み</option><option value="not_agreed">まだ話し合っていない／意見が違う</option><option value="solo">自分だけで判断できる</option></select></label><label>4. 今の希望<select id="exit"><option value="undecided">まだ決めていない</option><option value="sell">売却を検討</option><option value="keep">当面保有・管理したい</option><option value="use">住む／貸すなど活用したい</option></select></label><label>5. 家財・残置物<select id="items"><option value="many">かなり残っている</option><option value="some">一部残っている</option><option value="clear">ほぼ空</option></select><span class="hint">重要書類・形見・価値ある物を確認する前の一括処分は避けます。</span></label><label>6. 距離・期限<select id="distance"><option value="local">現地へ行きやすい</option><option value="far">遠方で何度も行けない</option><option value="urgent">退去・売却など期限が迫っている</option></select></label><button class="button" type="submit">診断結果を見る</button></form><div id="r" class="result" aria-live="polite"><h2 id="result-title"></h2><div class="result-grid"><div class="result-box"><strong>今日やること</strong><p id="do"></p></div><div class="result-box stop"><strong>今はやらないこと</strong><p id="dont"></p></div></div><p id="why"></p><p id="public"></p></div></section><script>
