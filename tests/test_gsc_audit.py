@@ -61,6 +61,27 @@ class GSCExportTests(unittest.TestCase):
         self.assertEqual(clusters["家財買取・不用品処分（住宅売却未確定）"]["target"], "/faq/")
         self.assertEqual(clusters["片付け前・残置物あり売却"]["impressions"], 70)
 
+    def test_gsc_plan_separates_contents_only_from_property_sale(self):
+        """The editorial GSC plan must agree with the audited intent router."""
+        import json
+        plan = json.loads(
+            (MODULE.parent.parent / "data" / "gsc_validation_plan.json")
+            .read_text(encoding="utf-8")
+        )
+        by_name = {item["cluster"]: item for item in plan["query_clusters"]}
+        contents = by_name["家財だけ×買取・処分"]
+        self.assertEqual(contents["target"], "/faq/")
+        for query in contents["queries"]:
+            with self.subTest(query=query):
+                self.assertEqual(audit.classify(query)[1], "/faq/")
+        sale = by_name["残置物×現況売却"]
+        self.assertEqual(sale["target"], "/tedori-hikaku/")
+        self.assertNotIn("家財そのまま 買取 埼玉", sale["queries"])
+        self.assertEqual(
+            audit.classify("実家 残置物付き 現況買取 埼玉")[1],
+            "/tedori-hikaku/"
+        )
+
     def test_query_only_does_not_invent_landing_page(self):
         rows, has_page = self.parse(
             "Query,Clicks,Impressions,CTR,Position\n"
