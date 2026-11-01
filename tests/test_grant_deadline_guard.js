@@ -107,6 +107,12 @@ for (const time of ['16:31', '17:16']) {
   assert.ok(deadlineDayNotice.textContent.includes('交付申請の公表期限は本日'), 'second deadline day: '+time);
   assert.ok(deadlineDayNotice.textContent.includes(time === '17:16' ? '電話受付' : '電話で交付申請できるか'), 'second deadline office-hours caveat: '+time);
 }
+assert.ok(!checkPrimary('2026-11-14').textContent.includes('過年度'),
+  'November 2026 is still within FY2026 despite an expired application window');
+assert.ok(checkPrimary('2026-11-14').textContent.includes('公表申請期間は終了'),
+  'post-Nov-13 notice must clearly state the published application window ended');
+assert.ok(checkPrimary('2027-04-01').textContent.includes('過年度'),
+  'FY2026 should only be called past-year information from April 2027');
 const dayPrimary = checkPrimary('2026-10-30');
 assert.ok(dayPrimary.textContent.includes('9:00～16:30') && dayPrimary.textContent.includes('8:30～17:15') && dayPrimary.textContent.includes('048-229-7805'), 'primary deadline warning must show official contact hours');
 assert.ok(checkPrimary('2026-10-30','18:05').textContent.includes('郵送先') && check('2026-10-30','川口市','18:05').warning.includes('消印有効'), 'after-hours notices must distinguish official postal destination from unknown postmark acceptance');
