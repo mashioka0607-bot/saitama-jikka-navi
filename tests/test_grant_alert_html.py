@@ -48,7 +48,7 @@ class GrantAlertHtmlTests(unittest.TestCase):
         kuki = next(m for m in source["municipalities"] if m["municipality"] == "久喜市")
         self.assertIn("2026-11-30", kuki["deadline"])
         self.assertEqual(kuki["post_demolition_tax_relief"]["duration_years"], 3)
-        self.assertIn("解体前", kuki["restricted_area_rebuilding"]["notice"])
+        self.assertIn("除却前", kuki["restricted_area_rebuilding"]["notice"])
         page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
         notice = page.split('id="kuki-2026-deadline"', 1)[1].split("</p>", 1)[0]
         js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
