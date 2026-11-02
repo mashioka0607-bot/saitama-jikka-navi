@@ -26,6 +26,10 @@ class InheritedVacantHomeTaxGateTests(unittest.TestCase):
             ):
                 with self.subTest(file=file.name, expected=expected):
                     self.assertIn(expected, segment)
+            self.assertEqual(segment.count('id="inherited-home-2026-deadline"'), 1)
+            self.assertIn("2023年に相続が始まった実家", segment)
+            self.assertIn("2026年12月31日", segment)
+            self.assertIn("相続ごとの期限と制度全体の期限", segment)
             self.assertLess(html.index('id="calc"'), html.index('id="inherited-home-tax-check"'))
             self.assertLess(html.index('id="inherited-home-tax-check"'), html.index('id="quote-request-template"'))
             self.assertNotIn("class=\"affiliate\"", segment)
