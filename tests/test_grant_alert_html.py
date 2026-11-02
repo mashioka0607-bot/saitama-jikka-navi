@@ -54,6 +54,19 @@ class GrantAlertHtmlTests(unittest.TestCase):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, notice)
 
+    def test_fukaya_renovation_program_closed_despite_published_november_deadline(self):
+        page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        alert = page.split('id="grant-2026-primary-alert"', 1)[1].split("</section>", 1)[0]
+        for phrase in (
+            "深谷市の「空き家利活用改修補助金」",
+            "上記の「危険空家等除却補助金」とは別制度",
+            "2026年8月24日に令和8年度の受付終了",
+            "11月30日までの「危険空家等除却補助金の事前調査」と混同しない",
+            "https://www.city.fukaya.saitama.jp/soshiki/kyoudou/jiti/tanto/akiya/akiyahojyo/17991.html",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, alert)
+
     def test_fukaya_separate_tax_reduction_is_sourced_and_not_sale_income(self):
         import json
         data = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
