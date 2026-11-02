@@ -9,6 +9,10 @@ const kawaguchi = all.split('\n').find(line => line.startsWith("['川口市'"));
 assert.ok(kawaguchi && kawaguchi.includes('地方税完納') && kawaguchi.includes('事例紹介') && kawaguchi.includes('上限100万円') && kawaguchi.includes('満額支給とは限らない'), 'Kawaguchi official eligibility and payout caveat missing');
 assert.ok(kawaguchi.includes('完了報告 2027-01-29'), 'Kawaguchi post-demolition report deadline missing from published selector');
 assert.ok(kawaguchi.includes('2026年度受付終了') && kawaguchi.includes('2026-11-02') && kawaguchi.includes('当初の交付申請期限') && !kawaguchi.includes('公表期限内・対象限定'), 'Kawaguchi selector must show official closure rather than remaining deadline');
+const kuki = all.split('\n').find(line => line.startsWith("['久喜市'"));
+assert.ok(kuki && kuki.includes('2026-11-30') && kuki.includes('上限30万円') &&
+  kuki.includes('事前診断') && kuki.includes('2026-12-31') &&
+  kuki.includes('即時売却') && kuki.includes('市街化調整区域'), 'Kuki primary-source subsidy precheck missing');
 const guard = all.slice(all.indexOf('/* Dynamic guard for 2026 municipal grant deadlines.'));
 assert.ok(guard.startsWith('/* Dynamic guard'), 'Guard marker missing');
 
@@ -39,6 +43,10 @@ const cases = [
   ['2026-10-30', '川口市', '本日'],
   ['2026-10-31', '川口市', '期限'],
   ['2026-10-24', '東松山市', ''],
+  ['2026-11-22', '久喜市', ''],
+  ['2026-11-24', '久喜市', '残り6日'],
+  ['2026-11-30', '久喜市', '本日'],
+  ['2026-12-01', '久喜市', '公表期限'],
   ['2026-11-02', '川口市', '受付終了'],
   ['2026-11-05', '川口市', '受付終了'],
   ['2026-11-06', '川口市', '受付終了'],
