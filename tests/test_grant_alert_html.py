@@ -12,8 +12,10 @@ class GrantAlertHtmlTests(unittest.TestCase):
         # its hidden options to search crawlers or script-disabled visitors.
         notice = page.split('id="grant-2026-primary-alert"', 1)[1].split("</section>", 1)[0]
         for phrase in ("上尾市", "2026年10月13日", "受付終了", "川口市",
-                       "2026年10月30日", "事前診断の依頼期限（2026年10月30日）は経過しました", "11月13日", "2027年1月29日", "郵送先（川口市青木2-1-1 住宅政策課）", "期限日必着か当日消印有効かは明記されていません",
-                       "早期終了", "2026年10月27日", "白岡市", "2026年10月13日時点",
+                       "2026年11月2日更新", "今年度の受付は終了", "2026年10月30日",
+                       "事前診断の依頼期限（2026年10月30日）は経過しました", "11月13日",
+                       "2026年度の新規受付が続いている意味ではありません", "2027年1月29日",
+                       "次年度の募集有無", "2026年10月27日", "白岡市", "2026年10月13日時点",
                        "30万円", "家財道具の処分費用は対象外",
                        "工事完了から30日以内", "2027年3月12日",
                        "2027年3月31日", "2028年3月10日",
@@ -36,6 +38,22 @@ class GrantAlertHtmlTests(unittest.TestCase):
         self.assertIn("地番図を代用できるかは環境課に確認", js)
         self.assertIn("https://www.city.shiraoka.lg.jp/soshiki/soumubu/zeimuka/4/5/9997.html", js)
 
+
+
+
+    def test_kawaguchi_closed_status_is_published_not_pending_november_deadline(self):
+        import json
+        source = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
+        city = next(m for m in source["municipalities"] if m["municipality"] == "川口市")
+        self.assertEqual(city["status_as_of"], "2026-11-02")
+        self.assertIn("受付終了", city["status"])
+        self.assertIn("受付終了", city["conversion_angle"])
+        published = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
+        row = next(line for line in published.splitlines() if line.startswith("['川口市'"))
+        self.assertIn("2026年度受付終了", row)
+        self.assertIn("2026-11-02", row)
+        self.assertIn("2026-11-13は当初の交付申請期限", row)
+        self.assertNotIn("公表期限内・対象限定", row)
 
     def test_fukaya_precheck_deadline_is_crawlable_and_not_misrepresented_as_application(self):
         page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
