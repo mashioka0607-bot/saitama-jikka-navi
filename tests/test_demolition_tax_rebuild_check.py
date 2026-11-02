@@ -36,5 +36,26 @@ class DemolitionTaxRebuildCheckTests(unittest.TestCase):
             self.assertNotIn("data-affiliate", segment)
 
 
+    def test_post_demolition_filing_is_clear_and_sourced(self):
+        for path in (
+            ROOT / "static_pages/kaitai-check/index.html",
+            ROOT / "dist/kaitai-check/index.html",
+        ):
+            html = path.read_text(encoding="utf-8")
+            marker = 'id="post-demolition-filing-check"'
+            self.assertEqual(html.count(marker), 1)
+            section = html.split(marker, 1)[1].split("</section>", 1)[0]
+            for phrase in (
+                "川口市", "法務局", "滅失登記", "未登記家屋", "固定資産税課",
+                "解体証明書", "一部だけ取り壊した場合",
+                "土地の固定資産税", "https://www.city.kawaguchi.lg.jp/soshiki/01050/090/faq/6980.html",
+                'href="/tedori-hikaku/"',
+            ):
+                with self.subTest(path=path, phrase=phrase):
+                    self.assertIn(phrase, section)
+            self.assertNotIn("data-affiliate", section)
+            self.assertLess(html.index(marker), html.index("解体以外の出口も先に比べる"))
+
+
 if __name__ == "__main__":
     unittest.main()
