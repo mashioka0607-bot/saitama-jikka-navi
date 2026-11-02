@@ -41,6 +41,28 @@ class GrantAlertHtmlTests(unittest.TestCase):
 
 
 
+
+    def test_kuki_november_30_demolition_deadline_and_separate_tax_relief_are_crawlable(self):
+        import json
+        source = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
+        kuki = next(m for m in source["municipalities"] if m["municipality"] == "久喜市")
+        self.assertIn("2026-11-30", kuki["deadline"])
+        self.assertEqual(kuki["post_demolition_tax_relief"]["duration_years"], 3)
+        self.assertIn("解体前", kuki["restricted_area_rebuilding"]["notice"])
+        page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        notice = page.split('id="kuki-2026-deadline"', 1)[1].split("</p>", 1)[0]
+        js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
+        row = next(line for line in js.splitlines() if line.startswith("['久喜市'"))
+        for fragment in ("久喜市", "2026年11月30日", "事前診断", "上限30万円", "交付決定後",
+                         "2026年12月31日頃", "固定資産税減免", "即時売却の手取りに加算しません", "解体前の相談"):
+            self.assertIn(fragment, notice)
+        for official in (kuki["official_url"], kuki["post_demolition_tax_relief"]["official_url"],
+                         kuki["restricted_area_rebuilding"]["official_url"]):
+            self.assertIn(official, notice)
+            self.assertIn(official, row)
+        self.assertIn("2026-11-30", row)
+        self.assertIn("現在の予算・受付可否は未確認", row)
+
     def test_kawaguchi_closed_status_is_published_not_pending_november_deadline(self):
         import json
         source = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
