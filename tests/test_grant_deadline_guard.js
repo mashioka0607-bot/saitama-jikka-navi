@@ -8,7 +8,7 @@ const all = fs.readFileSync('static_pages/kaitai-check/grants.js', 'utf8');
 const kawaguchi = all.split('\n').find(line => line.startsWith("['川口市'"));
 assert.ok(kawaguchi && kawaguchi.includes('地方税完納') && kawaguchi.includes('事例紹介') && kawaguchi.includes('上限100万円') && kawaguchi.includes('満額支給とは限らない'), 'Kawaguchi official eligibility and payout caveat missing');
 assert.ok(kawaguchi.includes('完了報告 2027-01-29'), 'Kawaguchi post-demolition report deadline missing from published selector');
-assert.ok(kawaguchi.includes('事前診断依頼の公表期限10/30経過') && !kawaguchi.includes('公表期限内・対象限定'), 'Kawaguchi crawlable selector must not describe an elapsed deadline as still within the window');
+assert.ok(kawaguchi.includes('2026年度受付終了') && kawaguchi.includes('2026-11-02') && kawaguchi.includes('当初の交付申請期限') && !kawaguchi.includes('公表期限内・対象限定'), 'Kawaguchi selector must show official closure rather than remaining deadline');
 const guard = all.slice(all.indexOf('/* Dynamic guard for 2026 municipal grant deadlines.'));
 assert.ok(guard.startsWith('/* Dynamic guard'), 'Guard marker missing');
 
@@ -39,12 +39,12 @@ const cases = [
   ['2026-10-30', '川口市', '本日'],
   ['2026-10-31', '川口市', '期限'],
   ['2026-10-24', '東松山市', ''],
-  ['2026-11-05', '川口市', '期限'],
-  ['2026-11-06', '川口市', '残り7日'],
-  ['2026-11-07', '川口市', '残り6日'],
-  ['2026-11-12', '川口市', '残り1日'],
-  ['2026-11-13', '川口市', '本日'],
-  ['2026-11-14', '川口市', '期限'],
+  ['2026-11-02', '川口市', '受付終了'],
+  ['2026-11-05', '川口市', '受付終了'],
+  ['2026-11-06', '川口市', '受付終了'],
+  ['2026-11-12', '川口市', '受付終了'],
+  ['2026-11-13', '川口市', '受付終了'],
+  ['2026-11-14', '川口市', '受付終了'],
   ['2027-04-01', '川口市', '過年度情報']
 ];
 for (const [date, city, expected] of cases) {
@@ -53,11 +53,12 @@ for (const [date, city, expected] of cases) {
   else assert.equal(outcome.warning, '', date + ' / ' + city);
 }
 
-for (const date of ['2026-11-06', '2026-11-12', '2026-11-13']) {
+for (const date of ['2026-11-02', '2026-11-06', '2026-11-12', '2026-11-13']) {
   const warning = check(date, '川口市');
-  assert.ok(warning.warning.includes('事前手続') && warning.warning.includes('予算残は未確定'),
-    'upcoming second deadline must not claim fresh eligibility: ' + JSON.stringify(warning));
-  assert.ok(warning.title.includes('期限間近'), 'second deadline must be prominent: ' + date);
+  assert.ok(warning.warning.includes('11月13日は当初の交付申請期限') &&
+    warning.warning.includes('受付中という意味ではありません'),
+    'closed grant must not count down to obsolete application deadline: ' + JSON.stringify(warning));
+  assert.ok(warning.title.includes('2026年度受付終了'), 'closure must be prominent: ' + date);
 }
 const deadlineDay = check('2026-10-30', '川口市');
 assert.ok(deadlineDay.warning.includes('9:00～16:30') && deadlineDay.warning.includes('8:30～17:15') && deadlineDay.warning.includes('048-229-7805'), 'municipal contact hours must appear on deadline day');
@@ -84,13 +85,13 @@ for (const [today,expected,visible] of [
   ['2026-10-26','残り4日',true],
   ['2026-10-30','本日',true],
   ['2026-10-31','事前診断依頼の公表期限',true],
-  ['2026-11-05','交付申請の公表期限',true],
-  ['2026-11-06','残り7日',true],
-  ['2026-11-07','残り6日',true],
-  ['2026-11-12','残り1日',true],
-  ['2026-11-13','交付申請の公表期限',true],
-  ['2026-11-14','ともに経過',true],
-  ['2027-04-01','過年度の制度情報',true]
+  ['2026-11-02','受付終了',true],
+  ['2026-11-05','受付終了',true],
+  ['2026-11-06','受付終了',true],
+  ['2026-11-12','受付終了',true],
+  ['2026-11-13','受付終了',true],
+  ['2026-11-14','受付終了',true],
+  ['2027-04-01','過年度情報',true]
 ]) {
   const note=checkPrimary(today);
   assert.equal(!note.hidden, visible, 'primary alert visibility on '+today);
@@ -103,19 +104,17 @@ for (const [time, expected] of [['16:30', '9:00～16:30'], ['16:31', '窓口受�
 }
 
 for (const time of ['16:31', '17:16']) {
-  const deadlineDayNotice = checkPrimary('2026-11-13', time);
-  assert.ok(deadlineDayNotice.textContent.includes('交付申請の公表期限は本日'), 'second deadline day: '+time);
-  assert.ok(deadlineDayNotice.textContent.includes(time === '17:16' ? '電話受付' : '電話で交付申請できるか'), 'second deadline office-hours caveat: '+time);
+  const closed = checkPrimary('2026-11-13', time);
+  assert.ok(closed.textContent.includes('受付終了') && closed.textContent.includes('当初の交付申請期限'),
+    'published closure overrides deadline-day office hours: '+time);
 }
-assert.ok(!checkPrimary('2026-11-14').textContent.includes('過年度'),
-  'November 2026 is still within FY2026 despite an expired application window');
-assert.ok(checkPrimary('2026-11-14').textContent.includes('公表申請期間は終了'),
-  'post-Nov-13 notice must clearly state the published application window ended');
+assert.ok(checkPrimary('2026-11-14').textContent.includes('受付終了'),
+  'current-year notice must clearly show closure');
 assert.ok(checkPrimary('2027-04-01').textContent.includes('過年度'),
   'FY2026 should only be called past-year information from April 2027');
 const dayPrimary = checkPrimary('2026-10-30');
 assert.ok(dayPrimary.textContent.includes('9:00～16:30') && dayPrimary.textContent.includes('8:30～17:15') && dayPrimary.textContent.includes('048-229-7805'), 'primary deadline warning must show official contact hours');
 assert.ok(checkPrimary('2026-10-30','18:05').textContent.includes('郵送先') && check('2026-10-30','川口市','18:05').warning.includes('消印有効'), 'after-hours notices must distinguish official postal destination from unknown postmark acceptance');
-assert.ok(primaryHtml.includes('窓口受付時間は9:00～16:30') && primaryHtml.includes('期限日必着か当日消印有効かは明記されていません'), 'crawlable primary notice must show hours without promising postal acceptance');
+assert.ok(primaryHtml.includes('川口市：2026年11月2日更新') && primaryHtml.includes('2026年度の新規受付が続いている意味ではありません'), 'crawlable primary alert must show FY2026 closure');
 
-console.log('Japan-time grant prerequisite and second-deadline regression cases passed');
+console.log('Japan-time grant closure and historical deadline regression cases passed');
