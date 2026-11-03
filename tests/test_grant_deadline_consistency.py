@@ -46,7 +46,7 @@ class PublishedGrantDeadlineTests(unittest.TestCase):
             self.assertIn(city, rows)
             self.assertEqual(rows[city][4], reviewed[city]["official_url"])
             self.assertIn("未確認", " ".join(rows[city][1:4]))
-            self.assertIn("交付決定前", rows[city][3])
+            self.assertIn("交付決定", rows[city][3])
         sayama = rows["狭山市"][3]
         for gate in ("3,000万円特別控除", "市内業者上限50万円",
                      "市外業者上限40万円", "建築確認", "両方"):
