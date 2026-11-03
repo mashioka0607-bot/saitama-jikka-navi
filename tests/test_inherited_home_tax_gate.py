@@ -7,6 +7,29 @@ OUTPUT = ROOT / "dist" / "tedori-hikaku" / "index.html"
 
 
 class InheritedVacantHomeTaxGateTests(unittest.TestCase):
+    def test_inherited_title_deadline_is_actionable_and_sourced(self):
+        for file in (SOURCE, OUTPUT):
+            html = file.read_text(encoding="utf-8")
+            self.assertEqual(html.count('id="inherited-title-deadline"'), 1)
+            section = html.split('id="inherited-title-deadline"', 1)[1].split("</section>", 1)[0]
+            for expected in (
+                "親名義のままの実家",
+                "2027年3月31日",
+                "2024年4月1日",
+                "相続人申告登記",
+                "所有権移転の相続登記",
+                "登記費用を含めていません",
+                "https://houmukyoku.moj.go.jp/niigata/page000001_00192.html",
+                "https://www.gov-online.go.jp/article/202512/entry-10431.html",
+                'href="#quote-request-template"',
+            ):
+                with self.subTest(file=file.name, expected=expected):
+                    self.assertIn(expected, section)
+            self.assertLess(html.index('id="calc"'), html.index('id="inherited-title-deadline"'))
+            self.assertLess(html.index('id="inherited-title-deadline"'), html.index('id="inherited-home-tax-check"'))
+            self.assertNotIn("data-affiliate", section)
+
+
     def test_inheritance_tax_gate_is_specific_and_sourced(self):
         for file in (SOURCE, OUTPUT):
             html = file.read_text(encoding="utf-8")
