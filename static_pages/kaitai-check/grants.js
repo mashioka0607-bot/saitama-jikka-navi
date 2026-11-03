@@ -34,6 +34,13 @@ if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value
     '久喜市': [['2026-11-30', '交付申請']],
     'ときがわ町': [['2026-12-25', '交付申請']]
   };
+  // Published dates are not proof of a live budget. These three programs
+  // require a municipal check / diagnosis before the final application step.
+  const earlyPrechecks = {
+    '久喜市': '不良空家等の事前診断と必要書類の確認',
+    '熊谷市': '安心安全課への事前相談と対象判定の確認',
+    '深谷市': '不良住宅の事前調査申込み'
+  };
 
   citySelect.addEventListener('change', function () {
     if (!citySelect.value || !result.firstChild) return;
@@ -112,6 +119,14 @@ if(sel&&out){grants.forEach(g=>{const o=document.createElement('option');o.value
               'ただし予算到達による早期終了の可能性があります。' +
               '新規受付・対象条件を自治体公式窓口へ確認し、補助を見込んで先に契約しないでください。';
             if (title) title.textContent = citySelect.value + '：公表期限間近・受付は要確認';
+          } else if (remainingDays <= 30 && Object.prototype.hasOwnProperty.call(earlyPrechecks, citySelect.value)) {
+            // Seven days is too late to begin prerequisite screening in many cases.
+            // This is a preparation reminder, not a claim that an application will be accepted.
+            warning = upcoming[1] + 'の公表期限（' + upcoming[0] + '）まで残り' +
+              remainingDays + '日です。' + earlyPrechecks[citySelect.value] +
+              'が必要です。期限直前の準備では間に合わない可能性があります。' +
+              '受付可否・予算残・申請方法を市公式窓口で確認し、交付決定前に契約・着工しないでください。';
+            if (title) title.textContent = citySelect.value + '：期限まで30日以内・事前準備と受付確認を優先';
           }
         }
       }
