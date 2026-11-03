@@ -40,6 +40,8 @@ def main() -> int:
     ):
         if url not in tedori:
             failures.append(f"official next-step link missing from quote comparison: {url}")
+    if 'id="inherited-home-certificate-steps"' not in tedori or "https://www.city.saitama.lg.jp/001/154/007/001/p048672.html" not in tedori:
+        failures.append("inherited-home tax certificate procedure and official municipal source missing")
     if failures:
         print("SEO/quality gate failed:")
         for item in failures:
