@@ -43,7 +43,11 @@ const cases = [
   ['2026-10-30', '川口市', '本日'],
   ['2026-10-31', '川口市', '期限'],
   ['2026-10-24', '東松山市', ''],
-  ['2026-11-22', '久喜市', ''],
+  ['2026-10-30', '久喜市', ''],
+  ['2026-11-03', '久喜市', '残り27日'],
+  ['2026-11-03', '熊谷市', '残り27日'],
+  ['2026-11-03', '深谷市', '残り27日'],
+  ['2026-11-22', '久喜市', '事前準備'],
   ['2026-11-24', '久喜市', '残り6日'],
   ['2026-11-30', '久喜市', '本日'],
   ['2026-12-01', '久喜市', '公表期限'],
@@ -60,6 +64,15 @@ for (const [date, city, expected] of cases) {
   if (expected) assert.ok(outcome.warning.includes(expected), date + ' / ' + city + ': ' + JSON.stringify(outcome));
   else assert.equal(outcome.warning, '', date + ' / ' + city);
 }
+
+for (const city of ['久喜市', '熊谷市', '深谷市']) {
+  const entry = check('2026-11-03', city);
+  assert.ok(entry.warning.includes('受付可否・予算残') &&
+    entry.warning.includes('交付決定前に契約・着工しない'),
+    '30-day preparation window must not promise available grants: ' + city);
+  assert.ok(entry.title.includes('30日以内'), '30-day gate title: ' + city);
+}
+assert.ok(check('2026-10-30', '久喜市').warning === '', '31 days out must not show 30-day warning');
 
 for (const date of ['2026-11-02', '2026-11-06', '2026-11-12', '2026-11-13']) {
   const warning = check(date, '川口市');
