@@ -37,5 +37,25 @@ class PublishedGrantDeadlineTests(unittest.TestCase):
                 )
 
 
+    def test_sayama_and_kawajima_decision_gates_are_public(self):
+        import json
+        rows = guard.public_rows(guard.PUBLIC_JS.read_text(encoding="utf-8"))
+        data = json.loads(guard.DATA.read_text(encoding="utf-8"))
+        reviewed = {item["municipality"]: item for item in data["municipalities"]}
+        for city in ("狭山市", "川島町"):
+            self.assertIn(city, rows)
+            self.assertEqual(rows[city][4], reviewed[city]["official_url"])
+            self.assertIn("未確認", " ".join(rows[city][1:4]))
+            self.assertIn("交付決定前", rows[city][3])
+        sayama = rows["狭山市"][3]
+        for gate in ("3,000万円特別控除", "市内業者上限50万円",
+                     "市外業者上限40万円", "建築確認", "両方"):
+            self.assertIn(gate, sayama)
+        kawajima = rows["川島町"][3]
+        for gate in ("家財整理", "上限25万円", "解体", "上限100万円",
+                     "併用可否は未確認", "相続人全員"):
+            self.assertIn(gate, kawajima)
+
+
 if __name__ == "__main__":
     unittest.main()
