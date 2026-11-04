@@ -49,6 +49,10 @@ class InheritedVacantHomeTaxGateTests(unittest.TestCase):
             ):
                 with self.subTest(file=file.name, expected=expected):
                     self.assertIn(expected, segment)
+            self.assertEqual(segment.count('id="inherited-home-care-facility"'), 1)
+            self.assertIn("要介護・要支援認定等", segment)
+            self.assertIn("入所していたという理由だけで対象外と決めつけない", segment)
+            self.assertIn("https://www.nta.go.jp/taxes/shiraberu/taxanswer/joto/3307.htm", segment)
             self.assertEqual(segment.count('id="inherited-home-2026-deadline"'), 1)
             self.assertIn("2023年に相続が始まった実家", segment)
             self.assertIn("2026年12月31日", segment)
