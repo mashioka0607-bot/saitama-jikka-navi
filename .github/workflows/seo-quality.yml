@@ -33,6 +33,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_kuki_programs_not_conflated.py' -v
       - name: Verify Koshigaya special vacant-house grant conditions
         run: python -m unittest discover -s tests -p 'test_koshigaya_grant.py' -v
+      - name: Guard Sakado grant all eligible structures demolition condition
+        run: python -m unittest discover -s tests -p 'test_sakado_all_eligible_demolition.py' -v
       - name: Verify crawlable 2026 municipality closure and deadline alerts
         run: python -m unittest discover -s tests -p 'test_grant_alert_html.py' -v
       - name: Validate diagnosis decisions by user intent
