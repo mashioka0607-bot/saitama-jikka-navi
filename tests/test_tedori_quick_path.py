@@ -29,6 +29,18 @@ class TedoriQuickPathTests(unittest.TestCase):
         self.assertIn('埼玉県公式の空き家相談先を探す（残置物対応は個別確認）', html)
         self.assertNotIn('残置物を残したまま査定できる相談先を探す（埼玉県公式）', html)
 
+    def test_official_transaction_comps_distinguish_sale_history_from_appraisal(self):
+        html = self.markup
+        block = re.search(r'<p id="official-transaction-comps-2026">([\\s\\S]*?)</p>', html)
+        self.assertIsNotNone(block)
+        txt = block.group(1)
+        self.assertIn("https://www.reinfolib.mlit.go.jp/", txt)
+        self.assertIn("国土交通省", txt)
+        self.assertIn("過去の取引価格はあなたの実家の査定額でも", txt)
+        self.assertIn("家財を残した現況買取額でもありません", txt)
+        self.assertIn("一律の買取率を掛けて推定しない", txt)
+        self.assertLess(html.index('id="official-transaction-comps-2026"'), html.index('id="calc"'))
+
     def test_tracking_has_no_user_entered_data_and_no_affiliate_url(self):
         html = self.markup
         self.assertEqual(html.count('id="tedori-quick-path-measure"'), 1)
