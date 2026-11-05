@@ -15,7 +15,7 @@ class ClearanceQuoteBasisTests(unittest.TestCase):
             self.assertIn("片付け費用60万円・家財の買取額18万円・支払額42万円", html)
             self.assertIn("事業者の自己申告による1件の事例", html)
             self.assertIn("平均相場", html)
-            self.assertIn("42万円と18万円を同時に入力すると買取分を二重に差し引き", html)
+            self.assertIn("相殺済みの42万円と家財買取18万円を同時に入力すると、買取額を二重に計上し、仲介の手取りを実際より18万円多く計算します。", html)
 
     def test_input_disclaimer_is_next_to_the_2_separate_cost_fields(self):
         html = OUTPUT.read_text(encoding="utf-8")
