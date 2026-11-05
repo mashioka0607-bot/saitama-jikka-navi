@@ -29,6 +29,8 @@ jobs:
         run: node tests/test_grant_deadline_guard.js
       - name: Verify municipal grant deadlines against reviewed source data
         run: python -m unittest discover -s tests -p 'test_grant_deadline_consistency.py' -v
+      - name: Prevent mixing Kuki demolition and reuse grant cutoffs
+        run: python -m unittest discover -s tests -p 'test_kuki_programs_not_conflated.py' -v
       - name: Verify Koshigaya special vacant-house grant conditions
         run: python -m unittest discover -s tests -p 'test_koshigaya_grant.py' -v
       - name: Verify crawlable 2026 municipality closure and deadline alerts
