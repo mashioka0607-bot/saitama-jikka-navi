@@ -77,6 +77,23 @@ class GrantAlertHtmlTests(unittest.TestCase):
         self.assertIn("2026-11-13は当初の交付申請期限", row)
         self.assertNotIn("公表期限内・対象限定", row)
 
+    def test_kumagaya_same_lot_all_buildings_must_be_removed(self):
+        import json
+        grants = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
+        row = next(item for item in grants["municipalities"] if item["municipality"] == "熊谷市")
+        self.assertEqual(row["status_as_of"], "2026-11-06")
+        self.assertIn("すべての建物等を除却", row["note"])
+        self.assertIn("更地", row["note"])
+        self.assertIn("2026-11-30", row["deadline"])
+        alert = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        paragraph = alert.split("<strong>熊谷市：2026年度", 1)[1].split("</p>", 1)[0]
+        for phrase in ("同一敷地内", "すべての建物等を除却", "更地", "一部の建物", "上限30万円", row["official_url"]):
+            self.assertIn(phrase, paragraph)
+        js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
+        selector_row = next(line for line in js.splitlines() if line.startswith("['熊谷市'"))
+        for phrase in ("同一敷地内", "すべてを除却", "更地", row["official_url"]):
+            self.assertIn(phrase, selector_row)
+
     def test_fukaya_precheck_deadline_is_crawlable_and_not_misrepresented_as_application(self):
         page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
         notice = page.split('id="grant-2026-primary-alert"', 1)[1].split("</section>", 1)[0]
