@@ -71,6 +71,7 @@ jobs:
           grep -q 'id="handover-three-routes"' dist/tedori-hikaku/index.html
           grep -q '契約後に更地渡し' dist/tedori-hikaku/index.html
           grep -q 'https://www.city.saitama.lg.jp/001/154/007/001/p112598.html' dist/tedori-hikaku/index.html
+          grep -q 'https://www.city.sakado.lg.jp/site/akiya/46113.html' dist/tedori-hikaku/index.html
           grep -q '実際の不動産査定額ではありません' dist/tedori-hikaku/index.html
       - name: Show generated discovery files
         run: |
