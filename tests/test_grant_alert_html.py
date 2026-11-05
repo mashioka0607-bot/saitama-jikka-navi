@@ -77,6 +77,17 @@ class GrantAlertHtmlTests(unittest.TestCase):
         self.assertIn("2026-11-13は当初の交付申請期限", row)
         self.assertNotIn("公表期限内・対象限定", row)
 
+    def test_kawaguchi_december_consultation_is_sourced_and_not_a_grant_reopening(self):
+        page = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        notice = page.split('id="kawaguchi-dec-2026-free-consult"', 1)[1].split("</p>", 1)[0]
+        for phrase in ("相続・空き家無料大相談会", "2026年11月4日", "2026年12月19日",
+                       "10:00〜16:00", "浦和コミュニティセンター",
+                       "2026年度除却補助金の受付再開ではありません",
+                       "https://www.city.kawaguchi.lg.jp/soshiki/01130/040/akiyatoutaisaku/53071.html"):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, notice)
+        self.assertLess(page.index("今年度の受付は終了"), page.index('id="kawaguchi-dec-2026-free-consult"'))
+
     def test_kumagaya_same_lot_all_buildings_must_be_removed(self):
         import json
         grants = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
