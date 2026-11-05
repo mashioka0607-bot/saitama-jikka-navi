@@ -21,5 +21,19 @@ class StaticTrustFooterTests(unittest.TestCase):
                 self.assertIn('href="/operator/"', footer)
 
 
+    def test_saitama_november_2026_public_consult_is_city_scoped(self):
+        page = (ROOT / "static_pages" / "shindan" / "index.html").read_text(encoding="utf-8")
+        notice = page.split('id="saitama-nov2026-free-consult"', 1)[1].split("</section>", 1)[0]
+        for phrase in ("さいたま市内の実家", "2026年11月28日",
+                       "武蔵浦和コミュニティセンター", "11月5日〜27日",
+                       "12組", "募集終了・内容変更",
+                       "https://www.city.saitama.lg.jp/001/154/007/001/p133208.html",
+                       'href="/tedori-hikaku/"',
+                       "他市町村に一律適用される制度ではなく"):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, notice)
+
+
+
 if __name__ == "__main__":
     unittest.main()
