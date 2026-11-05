@@ -31,7 +31,7 @@ class TedoriQuickPathTests(unittest.TestCase):
 
     def test_official_transaction_comps_distinguish_sale_history_from_appraisal(self):
         html = self.markup
-        block = re.search(r'<p id="official-transaction-comps-2026">([\\s\\S]*?)</p>', html)
+        block = re.search(r'<p id="official-transaction-comps-2026">(.*?)</p>', html, re.DOTALL)
         self.assertIsNotNone(block)
         txt = block.group(1)
         self.assertIn("https://www.reinfolib.mlit.go.jp/", txt)
