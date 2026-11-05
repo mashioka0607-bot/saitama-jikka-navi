@@ -52,5 +52,19 @@ class QuoteTypeDisclosureTests(unittest.TestCase):
         self.assertNotIn("gtag('event','affiliate_click'", self.script)
 
 
+    def test_pre_quote_broker_license_and_official_enforcement_sources(self):
+        marker = 'id="quote-company-license-check-2026"'
+        self.assertEqual(self.html.count(marker), 1)
+        self.assertLess(self.html.index(marker), self.html.index('id="quote-request-template"'))
+        for source in (
+            'https://etsuran2.mlit.go.jp/TAKKEN/',
+            'https://www.pref.saitama.lg.jp/a1106/takkensoudan-main/takkengyousya-kantokusyobun.html',
+            'https://www.pref.saitama.lg.jp/a1106/takkenmenkyo/etsuran.html',
+        ):
+            self.assertIn(source, self.html)
+        self.assertIn('処分情報の掲載対象・期間には限り', self.html)
+        self.assertIn('宅建業免許番号（該当する場合）', self.html)
+
+
 if __name__ == '__main__':
     unittest.main()
