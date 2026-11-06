@@ -95,3 +95,52 @@ assert.ok(html.includes('一般廃棄物収集運搬業'), 'municipal licensing 
 assert.ok(html.includes('追加料金'), 'cost-disclosure checklist missing');
 
 console.log('Diagnosis routing passed: undecided/registration/cleanup/sale/keep + ownership unverified cases.');
+
+
+// Both city-event banners must stop prompting for applications after the
+// published cutoff, and disappear after the event (Japan local date).
+function consultationAt(pageHtml, sectionId, applyThrough, eventThrough, date) {
+  const open = pageHtml.match(new RegExp('<section[^>]*id="' + sectionId + '"[^>]*>'));
+  assert.ok(open, 'published event section missing: ' + sectionId);
+  assert.ok(open[0].includes('data-consultation-application-through="' + applyThrough + '"'));
+  assert.ok(open[0].includes('data-consultation-event-through="' + eventThrough + '"'));
+  const eventBody = pageHtml.slice(pageHtml.indexOf(open[0]), pageHtml.indexOf('</section>', pageHtml.indexOf(open[0])));
+  assert.ok(eventBody.includes('data-consultation-application-closed hidden'), 'closed-state fallback missing');
+  const guard = pageHtml.split('<script id="municipal-consultation-deadline-guard">')[1]?.split('</script>')[0];
+  assert.ok(guard, 'date guard missing');
+  const note = {hidden:true};
+  const section = {
+    hidden:false,
+    dataset:{consultationApplicationThrough:applyThrough, consultationEventThrough:eventThrough},
+    querySelector:selector => selector === '[data-consultation-application-closed]' ? note : null
+  };
+  const doc = {querySelectorAll:selector => {
+    assert.equal(selector, '[data-consultation-event-through]');
+    return [section];
+  }};
+  const fakeIntl = {DateTimeFormat:class {
+    constructor(locale, opts) {assert.equal(opts.timeZone, 'Asia/Tokyo');}
+    format() {return date;}
+  }};
+  vm.runInNewContext(guard, {document:doc, Intl:fakeIntl, Date});
+  return {hidden:section.hidden, deadlineNoticeVisible:!note.hidden};
+}
+const priceHtml = fs.readFileSync('static_pages/tedori-hikaku/index.html','utf8');
+const diagnosisHtml = fs.readFileSync('static_pages/shindan/index.html','utf8');
+for (const [page, id, cutoff, event, cases] of [
+  [priceHtml, 'saitama-price-consult-20261124','2026-11-13','2026-11-24', [
+    ['2026-11-07',false,false],['2026-11-13',false,false],
+    ['2026-11-14',false,true],['2026-11-24',false,true],['2026-11-25',true,false]
+  ]],
+  [diagnosisHtml, 'saitama-nov2026-free-consult','2026-11-27','2026-11-28', [
+    ['2026-11-07',false,false],['2026-11-27',false,false],
+    ['2026-11-28',false,true],['2026-11-29',true,false]
+  ]]
+]) {
+  for (const [day, hidden, notice] of cases) {
+    const outcome = consultationAt(page,id,cutoff,event,day);
+    assert.equal(outcome.hidden,hidden,id+': visibility on '+day);
+    assert.equal(outcome.deadlineNoticeVisible,notice,id+': cutoff notice on '+day);
+  }
+}
+console.log('Japan-time municipal consultation application and event expiry passed.');
