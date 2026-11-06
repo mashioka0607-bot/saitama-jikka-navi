@@ -35,6 +35,14 @@ class StaticTrustFooterTests(unittest.TestCase):
 
 
 
+    def test_december_2026_public_consult_expires_after_event(self):
+        page = (ROOT / "static_pages" / "kaitai-check" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="kawaguchi-dec-2026-free-consult" data-consultation-event-through="2026-12-19"', page)
+        self.assertIn("today > decemberConsult.dataset.consultationEventThrough", page)
+        self.assertIn("decemberConsult.hidden = true", page)
+        self.assertIn("https://www.city.kawaguchi.lg.jp/soshiki/01130/040/akiyatoutaisaku/53071.html", page)
+
+
     def test_item_safekeeping_before_clearance_warning(self):
         page = (ROOT / "static_pages" / "shindan" / "index.html").read_text(encoding="utf-8")
         self.assertEqual(page.count('id="valuable-items-before-clearance"'), 1)
