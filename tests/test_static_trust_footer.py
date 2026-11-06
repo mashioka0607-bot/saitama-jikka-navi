@@ -35,5 +35,21 @@ class StaticTrustFooterTests(unittest.TestCase):
 
 
 
+    def test_item_safekeeping_before_clearance_warning(self):
+        page = (ROOT / "static_pages" / "shindan" / "index.html").read_text(encoding="utf-8")
+        self.assertEqual(page.count('id="valuable-items-before-clearance"'), 1)
+        notice = page.split('id="valuable-items-before-clearance"', 1)[1].split("</section>", 1)[0]
+        for phrase in (
+            "貴金属・時計・ブランド品",
+            "家族・相続人",
+            "買取見込額は確定するまで収入とみなさない",
+            "貴金属を強引に買い取られる",
+            "https://www.pref.saitama.lg.jp/b0304/shohisoudan/jirei/sonota/houmonkounyu.html",
+            "この案内は特定の買取業者への紹介ではありません",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, notice)
+
+
 if __name__ == "__main__":
     unittest.main()
