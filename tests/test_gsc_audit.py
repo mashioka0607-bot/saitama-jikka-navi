@@ -124,8 +124,8 @@ class GSCExportTests(unittest.TestCase):
         self.assertEqual(audit.classify("実家 家財 買取")[1], "/faq/")
         self.assertEqual(audit.classify("実家 片付け前 売却")[1], "/tedori-hikaku/")
         rows, has_page = self.parse(
-            "Query,Page,Clicks,Impressions,Position\\n"
-            "再建築不可 土地 売却 埼玉,https://saitama-jikka-navi.pages.dev/kaitai-check/,1,70,12\\n"
+            "Query,Page,Clicks,Impressions,Position\n"
+            "再建築不可 土地 売却 埼玉,https://saitama-jikka-navi.pages.dev/kaitai-check/,1,70,12\n"
         )
         result = audit.analyze(rows, has_page, 28)
         match = next(c for c in result["clusters"]
