@@ -28,6 +28,8 @@ def main() -> int:
         failures.append("real appraisal comparison v2 missing from curated page")
     if 'id="result-next" class="button" data-context="tedori_result_public_quote"' not in tedori:
         failures.append("post-comparison CTA must lead to the official Saitama quote directory")
+    if 'tedori-missing-price-warning' not in tedori or 'e.stopImmediatePropagation()' not in tedori:
+        failures.append("missing or zero property prices must block the comparison and paid CTA")
     if 'result.insertBefore(next,publicParagraph)' not in (ROOT / "deploy.py").read_text(encoding="utf-8"):
         failures.append("approved affiliate CTA must appear beside the comparison result")
     if "window.gtag('event',rows.length>=2?'real_appraisal_compare':'real_appraisal_single_quote'" not in tedori:
