@@ -68,6 +68,16 @@ REAL_ESTATE_DECISION = re.compile(
     r"|残置物.*(?:買取|査定)"
 )
 
+# Payment timing is a separate intent: "cannot afford cleanup" alone does
+# not establish intent to sell the house, while "settle from sale proceeds" does.
+# Keep these separate for future GSC/ASP lead-quality evaluation.
+COST_PAYMENT_INTENT = re.compile(
+    r"(?:片[付づ]け|家財処分|遺品整理|残置物|解体).*(?:費用|代金|支払|払えない|後払い|立替|分割|精算)"
+    r"|(?:費用|代金|支払|払えない|後払い|立替|分割|精算).*(?:片[付づ]け|家財処分|遺品整理|残置物|解体)"
+)
+PROPERTY_SALE_PAYMENT = re.compile(r"売却代金|売買代金|売却|家を売|不動産を売|売ったお金")
+COST_LIQUIDITY = re.compile(r"払えない|お金がない|後払い|立替|分割|先払い|資金不足")
+
 # First matching class wins. These are hypotheses, not keyword-volume estimates.
 CLUSTERS = (
     ("片付け前・残置物あり売却", "/tedori-hikaku/",
@@ -154,6 +164,13 @@ def read_export(path: Path) -> tuple[list[dict], bool]:
 
 def classify(query: str) -> tuple[str, str]:
     normal = re.sub(r"\s+", "", query).casefold()
+    # A financial constraint does not by itself imply a property-sale lead.
+    # Explicit sale-proceeds queries are different from unpaid cleanup alone.
+    if COST_PAYMENT_INTENT.search(normal):
+        if PROPERTY_SALE_PAYMENT.search(normal):
+            return "片付け費用×売却代金精算", "/tedori-hikaku/"
+        if COST_LIQUIDITY.search(normal):
+            return "片付け費用×支払困難（売却未確定）", "/shindan/"
     # A8-style household buyback/clearance intent is NOT automatically intent
     # to sell the real estate. Suggest the neutral FAQ, never a property CTA.
     if CONTENTS_ONLY.search(normal) and not REAL_ESTATE_DECISION.search(normal):

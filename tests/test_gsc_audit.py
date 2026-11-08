@@ -61,6 +61,34 @@ class GSCExportTests(unittest.TestCase):
         self.assertEqual(clusters["家財買取・不用品処分（住宅売却未確定）"]["target"], "/faq/")
         self.assertEqual(clusters["片付け前・残置物あり売却"]["impressions"], 70)
 
+    def test_cleanup_payment_intent_requires_sale_signal(self):
+        # Demand for a payment plan is not automatically a qualified property-sale lead.
+        examples = {
+            "実家 片付け費用 払えない": ("片付け費用×支払困難（売却未確定）", "/shindan/"),
+            "実家 片付け 後払い": ("片付け費用×支払困難（売却未確定）", "/shindan/"),
+            "遺品整理 費用 立替": ("片付け費用×支払困難（売却未確定）", "/shindan/"),
+            "実家 片付け費用 売却代金から精算": ("片付け費用×売却代金精算", "/tedori-hikaku/"),
+            "片付け費用 売却後 払う": ("片付け費用×売却代金精算", "/tedori-hikaku/"),
+            "実家 片付け 後払い 売却": ("片付け費用×売却代金精算", "/tedori-hikaku/"),
+        }
+        for query, expected in examples.items():
+            with self.subTest(query=query):
+                self.assertEqual(audit.classify(query), expected)
+        self.assertEqual(audit.classify("実家 家財 買取")[1], "/faq/")
+        self.assertEqual(audit.classify("残置物 そのまま 売却")[1], "/tedori-hikaku/")
+
+        rows, has_page = self.parse(
+            "Query,Page,Clicks,Impressions,Position\\n"
+            "実家 片付け費用 払えない,https://saitama-jikka-navi.pages.dev/shindan/,0,60,12\\n"
+            "実家 片付け費用 売却代金から精算,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,12\\n"
+        )
+        report = audit.analyze(rows, has_page, 28)
+        clusters = {x["cluster"]: x for x in report["clusters"]}
+        self.assertEqual(clusters["片付け費用×支払困難（売却未確定）"]["impressions"], 60)
+        self.assertEqual(clusters["片付け費用×支払困難（売却未確定）"]["target"], "/shindan/")
+        self.assertEqual(clusters["片付け費用×売却代金精算"]["impressions"], 70)
+        self.assertEqual(clusters["片付け費用×売却代金精算"]["target"], "/tedori-hikaku/")
+
     def test_gsc_plan_separates_contents_only_from_property_sale(self):
         """The editorial GSC plan must agree with the audited intent router."""
         import json
