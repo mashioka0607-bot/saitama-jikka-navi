@@ -110,6 +110,29 @@ class GSCExportTests(unittest.TestCase):
             "/tedori-hikaku/"
         )
 
+    def test_difficult_land_sale_intent_is_distinct_from_household_buyback(self):
+        examples = {
+            "再建築不可 土地 売却 埼玉": "/kaitai-check/",
+            "未接道 土地 買取": "/kaitai-check/",
+            "狭小地 売れない 埼玉": "/kaitai-check/",
+        }
+        for query, target in examples.items():
+            with self.subTest(query=query):
+                cluster, actual = audit.classify(query)
+                self.assertEqual(target, actual)
+                self.assertEqual("再建築不可・未接道・狭小地×土地売却", cluster)
+        self.assertEqual(audit.classify("実家 家財 買取")[1], "/faq/")
+        self.assertEqual(audit.classify("実家 片付け前 売却")[1], "/tedori-hikaku/")
+        rows, has_page = self.parse(
+            "Query,Page,Clicks,Impressions,Position\\n"
+            "再建築不可 土地 売却 埼玉,https://saitama-jikka-navi.pages.dev/kaitai-check/,1,70,12\\n"
+        )
+        result = audit.analyze(rows, has_page, 28)
+        match = next(c for c in result["clusters"]
+                     if c["cluster"] == "再建築不可・未接道・狭小地×土地売却")
+        self.assertEqual(match["target"], "/kaitai-check/")
+        self.assertEqual(match["impressions"], 70)
+
     def test_query_only_does_not_invent_landing_page(self):
         rows, has_page = self.parse(
             "Query,Clicks,Impressions,CTR,Position\n"
