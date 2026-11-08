@@ -78,9 +78,9 @@ class GSCExportTests(unittest.TestCase):
         self.assertEqual(audit.classify("残置物 そのまま 売却")[1], "/tedori-hikaku/")
 
         rows, has_page = self.parse(
-            "Query,Page,Clicks,Impressions,Position\\n"
-            "実家 片付け費用 払えない,https://saitama-jikka-navi.pages.dev/shindan/,0,60,12\\n"
-            "実家 片付け費用 売却代金から精算,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,12\\n"
+            "Query,Page,Clicks,Impressions,Position\n"
+            "実家 片付け費用 払えない,https://saitama-jikka-navi.pages.dev/shindan/,0,60,12\n"
+            "実家 片付け費用 売却代金から精算,https://saitama-jikka-navi.pages.dev/tedori-hikaku/,1,70,12\n"
         )
         report = audit.analyze(rows, has_page, 28)
         clusters = {x["cluster"]: x for x in report["clusters"]}
