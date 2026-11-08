@@ -46,4 +46,10 @@ assert.match(compare({broker:35}), /特例上限（税込33万円）を超えて
 // The special ceiling applies only to sale prices <= 8 million yen.
 assert.doesNotMatch(compare({sale:801, broker:33}), /low-price-fee-scenario/);
 assert.doesNotMatch(compare({sale:0, broker:0, buy:0}), /low-price-fee-scenario/);
-console.log('Brokerage fee special-case guard passed: 300/800 threshold, 33 limit, no silent override.');
+// Avoid presenting a plausible but invented comparison on the first visit.
+assert.match(html, /id="sale"[^>]*value=""/, 'sale price must start empty');
+assert.match(html, /id="buy"[^>]*value=""/, 'as-is buyout price must start empty');
+const noQuote = compare({sale:0, broker:0, buy:0});
+assert.match(noQuote, /売却価格と現況買取価格の両方を入力してください/);
+assert.doesNotMatch(noQuote, /片付け＋仲介：約/, 'an unquoted property must not show proceeds');
+console.log('Brokerage fee guard and blank-price initial state passed.');
