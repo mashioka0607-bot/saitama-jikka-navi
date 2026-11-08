@@ -46,11 +46,12 @@ if (not hero_match or markup.count('<section class="hero">') != 1
         or 'id="tedori_real_quotes_v2"' not in markup):
     raise RuntimeError('Tedori quick-path anchor or comparison target missing')
 quick_path = """<section class="section notice" id="tedori-quick-path" aria-label="手取り比較への入口">
-<h2>今の状況から、すぐ比較を始める</h2>
-<p>まだ査定がなければ概算を、査定が届いていれば各社の残置物負担まで含む比較を使えます。いずれも登録や送信は不要です。</p>
-<p><a class="button" href="#calc" data-compare-stage="estimate">査定前：概算で比較する</a>
-<a class="button" href="#tedori_real_quotes_v2" data-compare-stage="real_quotes">査定後：最大3社の手取りを比較する</a></p>
-<small>計算は税前の概算です。入力した住所・金額を当サイトへ送る機能ではありません。</small>
+<h2>査定の有無に合わせて、次の行動を選ぶ</h2>
+<p>査定がまだなければ、先に同条件の査定依頼文を用意してください。仲介売却・現況買取の両方の金額があれば概算手取りを比較できます。各社の見積書があれば残置物の負担も含めて比較できます。</p>
+<p><a class="button" href="#quote-request-template" data-compare-stage="request_quote">査定なし：同条件の見積依頼文へ</a>
+<a class="button" href="#calc" data-compare-stage="estimate">2つの価格あり：概算比較へ</a>
+<a class="button" href="#tedori_real_quotes_v2" data-compare-stage="real_quotes">査定書あり：最大3社を比較へ</a></p>
+<small>価格が未入力・0円では概算比較の結果を出しません。計算は税前の概算で、入力内容を当サイトに送る機能はありません。</small>
 </section>
 <script id="tedori-quick-path-measure">(function(){
 const nav=document.getElementById('tedori-quick-path');
@@ -392,6 +393,14 @@ for required in ('id="quote-request-template"', 'id="quote-request-text"', 'id="
                  '残置物を残して引き渡す場合', '売買契約書や別紙'):
     if required not in tedori:
         raise RuntimeError(f'Deploy blocked: real-quote request template missing: {required}')
+
+# Ensure a visitor without appraisal numbers is directed to a quote request,
+# not to a calculator that intentionally rejects missing prices.
+for anchor, stage in (('#quote-request-template', 'request_quote'),
+                      ('#calc', 'estimate'),
+                      ('#tedori_real_quotes_v2', 'real_quotes')):
+    if f'href="{anchor}" data-compare-stage="{stage}"' not in tedori:
+        raise RuntimeError(f'Deploy blocked: pre/post-appraisal quick path missing: {stage}')
 
 for required_label in ('家財・不用品の買取額', '残置物の処分・撤去で自己負担する額'):
     if required_label not in tedori:
