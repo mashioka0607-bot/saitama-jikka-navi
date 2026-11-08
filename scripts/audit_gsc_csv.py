@@ -78,6 +78,14 @@ COST_PAYMENT_INTENT = re.compile(
 PROPERTY_SALE_PAYMENT = re.compile(r"売却代金|売買代金|売却|家を売|不動産を売|売ったお金")
 COST_LIQUIDITY = re.compile(r"払えない|お金がない|後払い|立替|分割|先払い|資金不足")
 
+# Physically difficult land is a distinct sales pathway: never hide a
+# non-buildable / unconnected / tiny lot among generic house-cleanup queries.
+# Require an explicit sale/marketability or land qualifier, not a bare adjective.
+DIFFICULT_LAND_INTENT = re.compile(
+    r"(?:再建築不可|未接道|狭小地|売れない土地).*(?:土地|売却|買取|売れない)"
+    r"|(?:土地|売却|買取|売れない).*(?:再建築不可|未接道|狭小地)"
+)
+
 # First matching class wins. These are hypotheses, not keyword-volume estimates.
 CLUSTERS = (
     ("片付け前・残置物あり売却", "/tedori-hikaku/",
@@ -171,6 +179,10 @@ def classify(query: str) -> tuple[str, str]:
             return "片付け費用×売却代金精算", "/tedori-hikaku/"
         if COST_LIQUIDITY.search(normal):
             return "片付け費用×支払困難（売却未確定）", "/shindan/"
+    # These leads need a demolition / rebuilding feasibility check before
+    # matching any approved land-sale offer. Qualification is still unproven.
+    if DIFFICULT_LAND_INTENT.search(normal):
+        return "再建築不可・未接道・狭小地×土地売却", "/kaitai-check/"
     # A8-style household buyback/clearance intent is NOT automatically intent
     # to sell the real estate. Suggest the neutral FAQ, never a property CTA.
     if CONTENTS_ONLY.search(normal) and not REAL_ESTATE_DECISION.search(normal):
