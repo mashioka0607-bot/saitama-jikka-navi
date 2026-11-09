@@ -65,6 +65,8 @@ REAL_ESTATE_DECISION = re.compile(
     r"(?:実家|空き家|不動産|残置物|家屋|住宅|家ごと|片付け前).*(?:売却|売る|現況買取)"
     r"|(?:売却|売る).*(?:実家|空き家|不動産|残置物|家屋|住宅)"
     r"|(?:空き家|不動産|家屋|住宅|家ごと)買取"
+    # "家の売却" / "家を売る" explicitly refer to the property, not its contents.
+    r"|(?:家|自宅|建物)(?:の|を|も|そのものを|自体を)(?:売却|売る|売りたい|現況買取)"
     # 残置物 + 家財買取/査定 alone is NOT evidence of a house sale.
     # Explicit property-sale terms (売却/現況買取) above still qualify.
 )
@@ -86,6 +88,7 @@ HOUSEHOLD_SALE = re.compile(
 EXPLICIT_PROPERTY_SALE = re.compile(
     r"(?:実家|空き家|住宅|不動産|家屋|物件|一軒家|戸建て|家ごと)"
     r"(?:を|も|そのものを|自体を)?(?:売却|売る|現況買取)"
+    r"|(?:家|自宅|建物)(?:の|を|も|そのものを|自体を)(?:売却|売る|売りたい|現況買取)"
 )
 COST_LIQUIDITY = re.compile(r"払えない|お金がない|後払い|立替|分割|先払い|資金不足")
 
@@ -199,6 +202,10 @@ def classify(query: str) -> tuple[str, str]:
     # matching any approved land-sale offer. Qualification is still unproven.
     if DIFFICULT_LAND_INTENT.search(normal):
         return "再建築不可・未接道・狭小地×土地売却", "/kaitai-check/"
+    # When both are explicitly being sold, do not drop a qualified home-sale
+    # query into the general/household-only paths or the broad inheritance path.
+    if HOUSEHOLD_SALE.search(normal) and EXPLICIT_PROPERTY_SALE.search(normal):
+        return "片付け前・残置物あり売却", "/tedori-hikaku/"
     # A8-style household buyback/clearance intent is NOT automatically intent
     # to sell the real estate. Suggest the neutral FAQ, never a property CTA.
     if CONTENTS_ONLY.search(normal) and not REAL_ESTATE_DECISION.search(normal):
