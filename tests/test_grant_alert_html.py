@@ -15,7 +15,7 @@ class GrantAlertHtmlTests(unittest.TestCase):
                        "2026年11月2日更新", "今年度の受付は終了", "2026年10月30日",
                        "事前診断の依頼期限（2026年10月30日）は経過しました", "11月13日",
                        "2026年度の新規受付が続いている意味ではありません", "2027年1月29日",
-                       "次年度の募集有無", "2026年10月27日", "白岡市", "2026年10月13日時点",
+                       "次年度の募集有無", "2026年10月27日", "白岡市", "2026年11月6日更新",
                        "30万円", "家財道具の処分費用は対象外",
                        "工事完了から30日以内", "2027年3月12日",
                        "2027年3月31日", "2028年3月10日",
@@ -41,6 +41,24 @@ class GrantAlertHtmlTests(unittest.TestCase):
 
 
 
+
+    def test_shiraoka_closed_status_is_reflected_in_public_selector_and_notice(self):
+        import json
+        source = json.loads((ROOT / "data/demolition_grants_2026.json").read_text(encoding="utf-8"))
+        shiraoka = next(m for m in source["municipalities"] if m["municipality"] == "白岡市")
+        self.assertEqual(shiraoka["status_as_of"], "2026-11-06")
+        self.assertIn("受付終了", shiraoka["status"])
+        self.assertIn("0円", shiraoka["conversion_angle"])
+        js = (ROOT / "static_pages/kaitai-check/grants.js").read_text(encoding="utf-8")
+        selector = next(line for line in js.splitlines() if line.startswith("['白岡市'"))
+        for phrase in ("2026年度受付終了", "2026-11-06", "新規受付終了", "家財処分費用"):
+            self.assertIn(phrase, selector)
+        self.assertNotIn("残り1件分", selector)
+        html = (ROOT / "static_pages/kaitai-check/index.html").read_text(encoding="utf-8")
+        alert = html.split('id="grant-2026-primary-alert"', 1)[1].split("</section>", 1)[0]
+        for phrase in ("白岡市：2026年11月6日更新", "受付終了", "新規の補助受給を前提に契約・着工しない"):
+            self.assertIn(phrase, alert)
+        self.assertNotIn("残り1件分", alert)
 
     def test_kuki_november_30_demolition_deadline_and_separate_tax_relief_are_crawlable(self):
         import json
