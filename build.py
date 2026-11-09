@@ -85,6 +85,23 @@ $('result-title').textContent=title;$('do').textContent=todo;$('dont').textConte
 write('shindan',layout('実家片付けの進め方診断','6つの状況から、埼玉県内の実家・空き家で今やることと契約前の確認順序、公的相談先を整理します。',shindan,'/shindan/'))
 
 faq='''<section class="hero"><h1>よくある質問</h1></section><section class="section"><h2>片付けてから査定すべき？</h2><p>必ずしも先に全処分する必要はありません。重要書類・形見・価値ある物を確認し、家財が残る状態での査定可否や処分費負担を確認してから処分範囲を決めてください。</p><p><a href="/tedori-hikaku/">片付け後の仲介と現況買取の手取りを比較する</a></p><h2>家財の買取と不用品回収を、一括で頼んでも大丈夫？</h2><p>売れる可能性のある家具・家電・骨董品・楽器などは、捨てる前に買取の可否を確認できます。ただし「中古品を買い取ること」と「売れなかった家庭ごみを収集・運搬すること」は別の業務です。家庭ごみの収集運搬は、原則として実家の所在地の市区町村による一般廃棄物収集運搬業の許可・委託等を受けた主体に依頼してください。古物商許可や産業廃棄物収集運搬業許可だけで家庭ごみを回収できるわけではありません。</p><p>見積時には「買取対象と金額」「売れない物の収集運搬主体と許可・委託」「処分費・追加料金」を分けて確認しましょう。買取が成立しない品もあるため、査定額を確定した収入として先に計上しないでください。</p><p><a href="https://www.city.fujimino.saitama.jp/soshikiichiran/kankyoka/haikibutsutaisakugakari/kateigomi/17310.html" target="_blank" rel="noopener">ふじみ野市公式：無許可の回収業者への注意</a>／<a href="/tedori-hikaku/">買取額と家財処分費を別々にして手取りを比較する</a></p><p><strong>さいたま市で遺品整理を依頼する場合：</strong>市は遺品を「ごみ」と「ごみ以外」に分別し、家庭ごみは遺族が市の施設へ自己搬入するか、遺品整理に対応可能な同市の一般廃棄物収集運搬許可業者に依頼するよう案内しています。家電リサイクル対象品目は取扱区分も別途確認してください。<a href="https://www.city.saitama.lg.jp/001/006/010/003/p125526.html" target="_blank" rel="noopener">さいたま市公式：遺品整理のごみ処理方法・対応可能な許可業者一覧（2026年6月22日更新）</a>。この案内は他市町村での許可や収集可否を保証しません。</p><div class="notice"><strong>自治体ごとの制度は一律ではありません（坂戸市の例）</strong><p>坂戸市は2026年11月5日、空き家等に限定した一般廃棄物収集運搬の特別許可制度を案内しています。申込みは坂戸市公式ページで案内されているLINE登録から、ごみ回収プラットフォーム「Dustalk」を開き、許可業者の概算見積もりを受けてから現地確認へ進む流れです。概算・現地見積もりは無料と案内されています。リユース品の買取額は回収費用から差し引く方式で、見積もり時に対象品・費用・取扱条件を確認してください。連携先や許可業者・申込方法は坂戸市公式で最新情報を確かめ、他市町村でも使えるとは考えないでください。</p><p><a href="https://www.city.sakado.lg.jp/soshiki/65/62488.html" target="_blank" rel="noopener">坂戸市公式：空き家限定の一括片付け制度（2026年11月5日更新）</a></p><p>なお、同市の空き家解体補助金（2026年9月28日受付再開）は、家財道具の運搬・処分費を補助対象に含みません。交付決定前に解体工事を着手した場合も対象外です。<a href="https://www.city.sakado.lg.jp/soshiki/37/28358.html" target="_blank" rel="noopener">坂戸市公式：解体補助の対象経費・申請条件</a>を確認し、家財処分費と解体費は別々に比較してください。</p><p><a href="/tedori-hikaku/">家財買取・処分費を分けて、売却時の税前手取りを比較</a> ／ <a href="/kaitai-check/">解体する前の確認事項</a></p></div><h2>遠方で管理できません</h2><p>郵便物の確認・換気・通水・庭木の手入れなど必要な管理を整理し、鍵預かり、作業写真の報告、追加料金を同じ条件で比較してください。市町村ごとに事業者・サービス範囲が異なるため、県の公的案内から実家の所在地に対応する相談先を確認できます。</p><p><a href="https://www.pref.saitama.lg.jp/a1106/akiyakanrisyatouroku.html" target="_blank" rel="noopener">埼玉県公式：空き家の持ち主応援隊（管理・売却等の相談先）</a></p></section>'''
+# 2026-11-06 Kumagaya municipal primary notices: time-limited direct delivery restrictions.
+# Keep this in the existing disposal FAQ, not a thin municipality landing page.
+# Start hidden and reveal only during the published period in Japan time; an
+# expired static deploy must never present the historical closure as current.
+faq += '''<section class="section notice" id="kumagaya-waste-bulletin-202611" hidden>
+<h2>熊谷市で実家のごみを持ち込む方へ（2026年11月6日発表）</h2>
+<p><strong>江南清掃センターでは2026年11月9日から12月中旬まで、設備修繕に伴い全てのごみの直接搬入を停止</strong>すると熊谷市が案内しています。ほかの施設への搬入がすべて停止するという意味ではありません。実家の片付けを予約する前に、搬入先と直近の再開状況を公式案内で確認してください。<a href="https://www.city.kumagaya.lg.jp/kurashi/kankyo/gomirecycle/hannyuteishi.html" target="_blank" rel="noopener">熊谷市公式：江南清掃センター搬入停止</a></p>
+<p id="kumagaya-crusher-bulletin-202611"><strong>熊谷衛生センター・深谷清掃センター・江南清掃センター</strong>では、2026年11月9日〜20日、せん定枝・可燃性粗大ごみ・畳など破砕機を使用するごみの直接搬入も停止と案内されています。11月23日頃の再開予定は確約ではありません。<a href="https://www.city.kumagaya.lg.jp/kurashi/kankyo/gomirecycle/oosatokouikihasaiki.html" target="_blank" rel="noopener">熊谷市公式：破砕機を使用するごみの搬入停止</a></p>
+<p><small>この案内は2026年11月6日公表の一時的な情報です。収集日や業者の許可等を一律に変更するものではありません。実際の搬入可否・再開日は各施設の公式情報でご確認ください。</small></p>
+</section><script id="kumagaya-waste-bulletin-date-guard">(function(){
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+  const today = parts.year+'-'+parts.month+'-'+parts.day;
+  if(today >= '2026-11-09' && today <= '2026-12-15') {
+    document.getElementById('kumagaya-waste-bulletin-202611').hidden=false;
+    if(today > '2026-11-23') document.getElementById('kumagaya-crusher-bulletin-202611').hidden=true;
+  }
+})();</script>'''
 write('faq',layout('よくある質問','実家片付け・相続空き家のよくある質問。',faq,'/faq/'))
 # Editorial transparency and data-use disclosure: render from the actual deployment config.
 # Do not publish fictitious contact information or claim GA4/ASP activation before configured.
