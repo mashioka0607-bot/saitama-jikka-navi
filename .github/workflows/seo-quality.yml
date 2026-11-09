@@ -91,6 +91,8 @@ jobs:
             echo 'Statewide FAQ must not present Kawagoe-only services as a default.'
             exit 1
           fi
+      - name: Verify temporary Kumagaya waste disposal alert expires automatically
+        run: node tests/test_kumagaya_waste_alert.js
       - name: Guard homepage positioning
         run: |
           test -f dist/index.html
