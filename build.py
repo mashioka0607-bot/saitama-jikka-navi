@@ -102,6 +102,15 @@ faq += '''<section class="section notice" id="kumagaya-waste-bulletin-202611" hi
     if(today > '2026-11-23') document.getElementById('kumagaya-crusher-bulletin-202611').hidden=true;
   }
 })();</script>'''
+# 2026-11-02 Kuki notice: the new block-specific household waste calendars
+# take effect 2026-11-30. Keep the change in the existing FAQ, not a thin city page.
+# This is a permanent rule transition: both calendar links remain date-specific.
+faq += '''<section class="section notice" id="kuki-20261130-waste-calendar">
+<h2>久喜市で実家の片付けを予定している方へ（2026年11月30日から分別・収集日が変更）</h2>
+<p>久喜市は2026年11月30日から、市内各地区で異なる家庭ごみ・資源物の分別区分を統一します。<strong>分別方法・出し方・収集日が変わり、地区によって変更点が異なります。</strong>片付け日や回収依頼の日程を確定する前に、実家の所在地に対応するブロックの公式カレンダーをご確認ください。</p>
+<p><a href="https://www.city.kuki.lg.jp/machizukuri/gomi/bunbetsu/1007473.html" target="_blank" rel="noopener">久喜市公式：2026年11月29日までのカレンダー</a>／<a href="https://www.city.kuki.lg.jp/machizukuri/gomi/bunbetsu/1013707.html" target="_blank" rel="noopener">久喜市公式：11月30日からの地区別カレンダー（2026年11月2日更新）</a></p>
+<p><small>市の収集区分変更は、ごみの直接搬入先の受付可否や民間業者の収集運搬許可を自動的に保証するものではありません。大量の家財を処理する場合は、対象品目・搬入方法・費用・許可等を別途確認してください。</small></p>
+</section>'''
 write('faq',layout('よくある質問','実家片付け・相続空き家のよくある質問。',faq,'/faq/'))
 # Editorial transparency and data-use disclosure: render from the actual deployment config.
 # Do not publish fictitious contact information or claim GA4/ASP activation before configured.

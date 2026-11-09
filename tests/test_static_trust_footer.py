@@ -59,5 +59,20 @@ class StaticTrustFooterTests(unittest.TestCase):
                 self.assertIn(phrase, notice)
 
 
+    def test_kuki_november_30_waste_calendar_change_is_scoped_and_dated(self):
+        page = (ROOT / "dist" / "faq" / "index.html").read_text(encoding="utf-8")
+        self.assertEqual(page.count('id="kuki-20261130-waste-calendar"'), 1)
+        notice = page.split('id="kuki-20261130-waste-calendar"', 1)[1].split("</section>", 1)[0]
+        for phrase in (
+            "久喜市", "2026年11月30日", "地区によって変更点が異なります",
+            "2026年11月29日まで",
+            "https://www.city.kuki.lg.jp/machizukuri/gomi/bunbetsu/1007473.html",
+            "https://www.city.kuki.lg.jp/machizukuri/gomi/bunbetsu/1013707.html",
+            "民間業者の収集運搬許可を自動的に保証するものではありません",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, notice)
+
+
 if __name__ == "__main__":
     unittest.main()
