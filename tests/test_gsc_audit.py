@@ -63,6 +63,19 @@ class GSCExportTests(unittest.TestCase):
         self.assertEqual(clusters["家財買取・不用品処分（住宅売却未確定）"]["target"], "/faq/")
         self.assertEqual(clusters["片付け前・残置物あり売却"]["impressions"], 70)
 
+    def test_household_sale_with_home_location_does_not_imply_real_estate_sale(self):
+        # Location words (実家, 空き家) are not proof that the HOUSE is being sold.
+        examples = {
+            "実家の家財売却": "/faq/",
+            "空き家の家具を売る": "/faq/",
+            "実家 家財売却代金で片付け費用を精算": "/faq/",
+            "実家の家財を売却し、実家も売却": "/tedori-hikaku/",
+            "片付け費用を売却代金から精算": "/tedori-hikaku/",
+        }
+        for query, expected in examples.items():
+            with self.subTest(query=query):
+                self.assertEqual(audit.classify(query)[1], expected)
+
     def test_cleanup_payment_intent_requires_sale_signal(self):
         # Demand for a payment plan is not automatically a qualified property-sale lead.
         examples = {
