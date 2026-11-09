@@ -65,7 +65,8 @@ REAL_ESTATE_DECISION = re.compile(
     r"(?:実家|空き家|不動産|残置物|家屋|住宅|家ごと|片付け前).*(?:売却|売る|現況買取)"
     r"|(?:売却|売る).*(?:実家|空き家|不動産|残置物|家屋|住宅)"
     r"|(?:空き家|不動産|家屋|住宅|家ごと)買取"
-    r"|残置物.*(?:買取|査定)"
+    # 残置物 + 家財買取/査定 alone is NOT evidence of a house sale.
+    # Explicit property-sale terms (売却/現況買取) above still qualify.
 )
 
 # Payment timing is a separate intent: "cannot afford cleanup" alone does
