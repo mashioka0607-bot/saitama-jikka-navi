@@ -77,6 +77,16 @@ COST_PAYMENT_INTENT = re.compile(
     r"|(?:費用|代金|支払|払えない|後払い|立替|分割|精算).*(?:片[付づ]け|家財処分|遺品整理|残置物|解体)"
 )
 PROPERTY_SALE_PAYMENT = re.compile(r"売却代金|売買代金|売却|家を売|不動産を売|売ったお金")
+# "実家の家財売却" describes selling possessions, not the property. The
+# existence of "実家" or "空き家" elsewhere in the query is not enough to
+# turn an explicit household sale into a qualified real-estate lead.
+HOUSEHOLD_SALE = re.compile(
+    r"(?:家財|家具|家電|不用品|遺品|楽器)(?:の|を|も|だけ|のみ)?(?:売却|売る)"
+)
+EXPLICIT_PROPERTY_SALE = re.compile(
+    r"(?:実家|空き家|住宅|不動産|家屋|物件|一軒家|戸建て|家ごと)"
+    r"(?:を|も|そのものを|自体を)?(?:売却|売る|現況買取)"
+)
 COST_LIQUIDITY = re.compile(r"払えない|お金がない|後払い|立替|分割|先払い|資金不足")
 
 # Physically difficult land is a distinct sales pathway: never hide a
@@ -173,6 +183,11 @@ def read_export(path: Path) -> tuple[list[dict], bool]:
 
 def classify(query: str) -> tuple[str, str]:
     normal = re.sub(r"\s+", "", query).casefold()
+    # Explicitly selling house contents takes priority over generic mention of
+    # "売却代金": it might mean proceeds from selling furniture, not the house.
+    # An explicit sale of the property itself overrides this guard.
+    if HOUSEHOLD_SALE.search(normal) and not EXPLICIT_PROPERTY_SALE.search(normal):
+        return "家財買取・不用品処分（住宅売却未確定）", "/faq/"
     # A financial constraint does not by itself imply a property-sale lead.
     # Explicit sale-proceeds queries are different from unpaid cleanup alone.
     if COST_PAYMENT_INTENT.search(normal):
