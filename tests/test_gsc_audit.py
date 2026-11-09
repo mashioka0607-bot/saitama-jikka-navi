@@ -68,6 +68,13 @@ class GSCExportTests(unittest.TestCase):
         examples = {
             "実家の家財売却": "/faq/",
             "空き家の家具を売る": "/faq/",
+            "実家の家具を売却": "/faq/",
+            # Both assets are being sold: avoid suppressing a qualified home-sale query.
+            "家財売却と家の売却": "/tedori-hikaku/",
+            "空き家の家具を売る 家を売却": "/tedori-hikaku/",
+            "実家の家財を売却して家も売却": "/tedori-hikaku/",
+            "家財の売却を検討 建物も売却": "/tedori-hikaku/",
+            "実家の家具を売却した後、家を売る": "/tedori-hikaku/",
             "実家 家財売却代金で片付け費用を精算": "/faq/",
             "実家の家財を売却し、実家も売却": "/tedori-hikaku/",
             "片付け費用を売却代金から精算": "/tedori-hikaku/",
