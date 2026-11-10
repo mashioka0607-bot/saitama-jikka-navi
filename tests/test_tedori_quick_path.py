@@ -22,7 +22,7 @@ class TedoriQuickPathTests(unittest.TestCase):
         html = self.markup
         self.assertIn('href="#settle-clearance-from-sale" data-compare-stage="payment"', html)
         self.assertEqual(html.count('id="settle-clearance-from-sale"'), 1)
-        block = re.search(r'<section class="section notice" id="settle-clearance-from-sale">([\\s\\S]*?)</section>', html)
+        block = re.search(r'<section class="section notice" id="settle-clearance-from-sale">([\s\S]*?)</section>', html)
         self.assertIsNotNone(block)
         content = block.group(1)
         for phrase in ('売却代金からの精算', '後払い', '契約先が認めた場合', '現況買取',
