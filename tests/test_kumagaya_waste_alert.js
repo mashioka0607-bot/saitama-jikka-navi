@@ -7,6 +7,8 @@ const html = fs.readFileSync('dist/faq/index.html', 'utf8');
 assert.match(html, /id="kumagaya-waste-bulletin-202611" hidden/);
 assert.match(html, /https:\/\/www\.city\.kumagaya\.lg\.jp\/kurashi\/kankyo\/gomirecycle\/hannyuteishi\.html/);
 assert.match(html, /https:\/\/www\.city\.kumagaya\.lg\.jp\/kurashi\/kankyo\/gomirecycle\/oosatokouikihasaiki\.html/);
+assert.match(html, /https:\/\/www\.city\.fukaya\.saitama\.jp\/topics\/20871\.html/);
+assert.match(html, /破砕機を使用しないごみの搬入と、ごみ収集所への通常のごみ出しは継続/);
 const match = html.match(/<script id="kumagaya-waste-bulletin-date-guard">([\s\S]*?)<\/script>/);
 assert.ok(match, 'Japan-date expiry guard should be present');
 
@@ -31,6 +33,9 @@ function flags(atUtc) {
 assert.equal(flags('2026-11-08T14:59:00Z')['kumagaya-waste-bulletin-202611'].hidden, true);
 assert.equal(flags('2026-11-08T15:01:00Z')['kumagaya-waste-bulletin-202611'].hidden, false);
 assert.equal(flags('2026-11-20T12:00:00Z')['kumagaya-crusher-bulletin-202611'].hidden, false);
+// Deep-facility restriction was published through Nov 20, not Nov 23.
+assert.equal(flags('2026-11-20T14:59:00Z')['kumagaya-crusher-bulletin-202611'].hidden, false);
+assert.equal(flags('2026-11-20T15:01:00Z')['kumagaya-crusher-bulletin-202611'].hidden, true);
 assert.equal(flags('2026-11-24T00:00:00Z')['kumagaya-crusher-bulletin-202611'].hidden, true);
 assert.equal(flags('2026-12-15T13:00:00Z')['kumagaya-waste-bulletin-202611'].hidden, false);
 assert.equal(flags('2026-12-15T15:01:00Z')['kumagaya-waste-bulletin-202611'].hidden, true);

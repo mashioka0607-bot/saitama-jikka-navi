@@ -90,16 +90,16 @@ faq='''<section class="hero"><h1>よくある質問</h1></section><section class
 # Start hidden and reveal only during the published period in Japan time; an
 # expired static deploy must never present the historical closure as current.
 faq += '''<section class="section notice" id="kumagaya-waste-bulletin-202611" hidden>
-<h2>熊谷市で実家のごみを持ち込む方へ（2026年11月6日発表）</h2>
+<h2>熊谷市・深谷市で実家のごみを持ち込む方へ（2026年11月6日発表）</h2>
 <p><strong>江南清掃センターでは2026年11月9日から12月中旬まで、設備修繕に伴い全てのごみの直接搬入を停止</strong>すると熊谷市が案内しています。ほかの施設への搬入がすべて停止するという意味ではありません。実家の片付けを予約する前に、搬入先と直近の再開状況を公式案内で確認してください。<a href="https://www.city.kumagaya.lg.jp/kurashi/kankyo/gomirecycle/hannyuteishi.html" target="_blank" rel="noopener">熊谷市公式：江南清掃センター搬入停止</a></p>
-<p id="kumagaya-crusher-bulletin-202611"><strong>熊谷衛生センター・深谷清掃センター・江南清掃センター</strong>では、2026年11月9日〜20日、せん定枝・可燃性粗大ごみ・畳など破砕機を使用するごみの直接搬入も停止と案内されています。11月23日頃の再開予定は確約ではありません。<a href="https://www.city.kumagaya.lg.jp/kurashi/kankyo/gomirecycle/oosatokouikihasaiki.html" target="_blank" rel="noopener">熊谷市公式：破砕機を使用するごみの搬入停止</a></p>
+<p id="kumagaya-crusher-bulletin-202611"><strong>熊谷衛生センター・深谷清掃センター・江南清掃センター</strong>では、2026年11月9日〜20日、せん定枝・可燃性粗大ごみ・畳など破砕機を使用するごみの直接搬入も停止と案内されています。11月23日頃の再開予定は確約ではありません。<strong>深谷市公式は、破砕機を使用しないごみの搬入と、ごみ収集所への通常のごみ出しは継続</strong>と案内しています。対象品を確認し、再開状況を公式情報でご確認ください。<a href="https://www.city.kumagaya.lg.jp/kurashi/kankyo/gomirecycle/oosatokouikihasaiki.html" target="_blank" rel="noopener">熊谷市公式：破砕機を使用するごみの搬入停止</a>／<a href="https://www.city.fukaya.saitama.jp/topics/20871.html" target="_blank" rel="noopener">深谷市公式：粗大ごみ等の搬入停止（2026年11月6日更新）</a></p>
 <p><small>この案内は2026年11月6日公表の一時的な情報です。収集日や業者の許可等を一律に変更するものではありません。実際の搬入可否・再開日は各施設の公式情報でご確認ください。</small></p>
 </section><script id="kumagaya-waste-bulletin-date-guard">(function(){
   const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
   const today = parts.year+'-'+parts.month+'-'+parts.day;
   if(today >= '2026-11-09' && today <= '2026-12-15') {
     document.getElementById('kumagaya-waste-bulletin-202611').hidden=false;
-    if(today > '2026-11-23') document.getElementById('kumagaya-crusher-bulletin-202611').hidden=true;
+    if(today > '2026-11-20') document.getElementById('kumagaya-crusher-bulletin-202611').hidden=true;
   }
 })();</script>'''
 # 2026-11-02 Kuki notice: the new block-specific household waste calendars
