@@ -49,6 +49,7 @@ quick_path = """<section class="section notice" id="tedori-quick-path" aria-labe
 <h2>査定の有無に合わせて、次の行動を選ぶ</h2>
 <p>査定がまだなければ、先に同条件の査定依頼文を用意してください。仲介売却・現況買取の両方の金額があれば概算手取りを比較できます。各社の見積書があれば残置物の負担も含めて比較できます。</p>
 <p><a class="button" href="#quote-request-template" data-compare-stage="request_quote">査定なし：同条件の見積依頼文へ</a>
+<a class="button" href="#settle-clearance-from-sale" data-compare-stage="payment">先払いできない：支払条件を確認</a>
 <a class="button" href="#calc" data-compare-stage="estimate">2つの価格あり：概算比較へ</a>
 <a class="button" href="#tedori_real_quotes_v2" data-compare-stage="real_quotes">査定書あり：最大3社を比較へ</a></p>
 <small>価格が未入力・0円では概算比較の結果を出しません。計算は税前の概算で、入力内容を当サイトに送る機能はありません。</small>
