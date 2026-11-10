@@ -18,6 +18,19 @@ class TedoriQuickPathTests(unittest.TestCase):
         self.assertIn('id="calc"', html)
         self.assertIn('id="tedori_real_quotes_v2"', html)
 
+    def test_payment_constraints_have_direct_non_guaranteed_route(self):
+        html = self.markup
+        self.assertIn('href="#settle-clearance-from-sale" data-compare-stage="payment"', html)
+        self.assertEqual(html.count('id="settle-clearance-from-sale"'), 1)
+        block = re.search(r'<section class="section notice" id="settle-clearance-from-sale">([\s\S]*?)</section>', html)
+        self.assertIsNotNone(block)
+        content = block.group(1)
+        for phrase in ('売却代金からの精算', '後払い', '契約先が認めた場合', '現況買取',
+                       '決済時の支払い', '手付金', '売却不成立', '解約料',
+                       'href="#quote-request-template"'):
+            self.assertIn(phrase, content)
+        self.assertLess(html.index('id="tedori-quick-path"'), html.index('id="settle-clearance-from-sale"'))
+
     def test_paths_are_visible_above_explanations(self):
         html = self.markup
         self.assertLess(html.index('id="tedori-quick-path"'), html.index('id="sample-value-disclosure"'))
